@@ -641,6 +641,9 @@ groups:
   - name: &brawlBugFixGroup Modern Brawl Bug Fix
     after: [ default ]
 
+  - name: &flatMapGroup Flat World Map Framework
+    after: [ default ]
+
   - name: &imChildPatcherGroup Immersive Children Patcher
     after: [ default ]
 
@@ -648,7 +651,9 @@ groups:
     after: [ *imChildPatcherGroup ]
 
   - name: &bashedPatchGroup Bashed Patch
-    after: [ *xEditMergedPatchGroup ]
+    after:
+      - *flatMapGroup
+      - *xEditMergedPatchGroup
 
   - name: &smashedPatchGroup Smashed Patch
     after: [ *xEditMergedPatchGroup ]
@@ -14411,6 +14416,7 @@ plugins:
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/29932/'
         name: 'Flat World Map Framework'
+    group: *flatMapGroup
   - name: 'Water for ENB - Patch - FWMF Marked Clean Map 4K.esp'
     after: [ 'FWMF SE Marked Clean Map 4K.esp' ]
   - name: 'Water for ENB - Patch - FWMF Marked Old Map 4K.esp'
