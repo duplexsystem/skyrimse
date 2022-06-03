@@ -655,8 +655,11 @@ groups:
       - *noGrassCavesGroup
       - *pceGroup
 
-  - name: &ocsGroup Open Cities
+  - name: &atlasMapMarkersGroup Atlas Map Markers
     after: [ *luxGroup ]
+
+  - name: &ocsGroup Open Cities
+    after: [ *atlasMapMarkersGroup ]
 
   - name: &noGrassCitiesGroup No grass in cities
     after: [ *ocsGroup ]
@@ -14382,6 +14385,7 @@ plugins:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/20466/'
         name: 'Atlas Map Markers DV'
   - name: 'Atlas Legendary.esp'
+    group: *atlasMapMarkersGroup
     inc: [ 'Open Cities Skyrim.esp' ]
     clean:
       - crc: 0xF9673261
@@ -14389,6 +14393,7 @@ plugins:
       - crc: 0xE1DB000E
         util: 'SSEEdit v4.0.4'
   - name: 'Atlas Legendary OCS.esp'
+    group: *atlasMapMarkersGroup
     req: [ 'Open Cities Skyrim.esp' ]
   - name: 'Atlas Compass Tweaks.esp'
     clean:
@@ -14399,6 +14404,7 @@ plugins:
 
   - name: 'Atlas Map Markers.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/24104/' ]
+    group: *atlasMapMarkersGroup
     after:
       - 'Complete Alchemy & Cooking Overhaul.esp'
       - 'MLU.esp'
