@@ -641,11 +641,14 @@ groups:
   - name: &brawlBugFixGroup Modern Brawl Bug Fix
     after: [ default ]
 
-  - name: &requiemPatcherGroup Requiem for the Indifferent
+  - name: &bashedPatchGroup Bashed Patch
     after: [ default ]
 
+  - name: &requiemPatcherGroup Requiem for the Indifferent
+    after: [ *bashedPatchGroup ]
+
   - name: &synthesisGroup Synthesis
-    after: [ default ]
+    after: [ *bashedPatchGroup ]
 
   - name: &dynDOLODGroup DynDOLOD
     after:
@@ -1722,6 +1725,7 @@ plugins:
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/25395/' ]
 
   - name: 'Bashed Patch.*\.esp'
+    group: *bashedPatchGroup
     after:
       - 'SSEMerged.esp'
       - 'One ImCh Patch.esp'
