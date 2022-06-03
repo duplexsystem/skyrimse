@@ -638,6 +638,9 @@ globals:
 groups:
   - name: default
 
+  - name: &brawlBugFixGroup Modern Brawl Bug Fix
+    after: [ default ]
+
   - name: &requiemPatcherGroup Requiem for the Indifferent
     after: [ default ]
 
@@ -1568,6 +1571,7 @@ plugins:
 
   - name: 'Modern Brawl Bug Fix.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/1473/' ]
+    group: *brawlBugFixGroup
 
   - name: 'MorthalMillFix.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/1594/' ]
