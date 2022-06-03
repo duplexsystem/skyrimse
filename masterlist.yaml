@@ -650,11 +650,18 @@ groups:
   - name: &bashedPatchGroup Bashed Patch
     after: [ *xEditMergedPatchGroup ]
 
+  - name: &zEditPatchGroup zEdit patch
+    after: [ *xEditMergedPatchGroup ]
+
   - name: &requiemPatcherGroup Requiem for the Indifferent
-    after: [ *bashedPatchGroup ]
+    after:
+      - *bashedPatchGroup
+      - *zEditPatchGroup
 
   - name: &synthesisGroup Synthesis
-    after: [ *bashedPatchGroup ]
+    after:
+      - *bashedPatchGroup
+      - *zEditPatchGroup
 
   - name: &dynDOLODGroup DynDOLOD
     after:
@@ -1770,6 +1777,7 @@ plugins:
 
   - name: 'zPatch.esp'
     url: [ 'https://github.com/z-edit/zedit' ]
+    group: *zEditPatchGroup
 
 ###### Resources & Frameworks ######
   - name: 'Gamepad++.esp'
