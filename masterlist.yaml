@@ -641,8 +641,16 @@ groups:
   - name: &brawlBugFixGroup Modern Brawl Bug Fix
     after: [ default ]
 
-  - name: &flatMapGroup Flat World Map Framework
+  - name: &noGrassCavesGroup No grass in caves
     after: [ default ]
+
+  - name: &noGrassCitiesGroup No grass in cities
+    after: [ default ]
+
+  - name: &flatMapGroup Flat World Map Framework
+    after:
+      - *noGrassCavesGroup
+      - *noGrassCitiesGroup
 
   - name: &imChildPatcherGroup Immersive Children Patcher
     after: [ default ]
@@ -7178,6 +7186,7 @@ plugins:
 
   - name: 'NoGrassINCaves.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/12431/' ]
+    group: *noGrassCavesGroup
     clean:
       - crc: 0xE88623EA
         util: 'SSEEdit v4.0.3h (Hotfix 1)'
@@ -7188,6 +7197,7 @@ plugins:
 
   - name: 'NoGrassINCities.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/18768/' ]
+    group: *noGrassCitiesGroup
 
   - name: 'NorthernGrass.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/25459/' ]
