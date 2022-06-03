@@ -638,8 +638,11 @@ globals:
 groups:
   - name: default
 
-  - name: &occlusionGroup Occlusion
+  - name: &dynDOLODGroup DynDOLOD
     after: [ default ]
+
+  - name: &occlusionGroup Occlusion
+    after: [ *dynDOLODGroup ]
 
 plugins:
 ###### Official Game Files ######
@@ -1716,6 +1719,7 @@ plugins:
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/32382/'
         name: 'Dynamic Distant Objects LOD - DynDOLOD'
+    group: *dynDOLODGroup
     req:
       - <<: *PapyrusUtil
         condition: 'version("DynDOLOD.esm", "2.45", >=) and not file("SKSE/Plugins/DynDOLOD.DLL")'
