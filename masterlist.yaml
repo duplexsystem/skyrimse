@@ -656,16 +656,16 @@ groups:
       - *pceGroup
 
   - name: &atlasMapMarkersGroup Atlas Map Markers
-    after: [ *luxGroup ]
+    after: [ default ]
 
   - name: &ocsGroup Open Cities
-    after: [ *atlasMapMarkersGroup ]
+    after: [ *pceGroup ]
 
   - name: &noGrassCitiesGroup No grass in cities
     after: [ *ocsGroup ]
 
   - name: &flatMapGroup Flat World Map Framework
-    after: [ *noGrassCitiesGroup ]
+    after: [ *ocsGroup ]
 
   - name: &imChildPatcherGroup Immersive Children Patcher
     after: [ default ]
@@ -675,7 +675,9 @@ groups:
 
   - name: &bashedPatchGroup Bashed Patch
     after:
+      - *atlasMapMarkersGroup
       - *flatMapGroup
+      - *noGrassCitiesGroup
       - *xEditMergedPatchGroup
 
   - name: &smashedPatchGroup Smashed Patch
