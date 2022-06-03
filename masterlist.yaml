@@ -644,8 +644,11 @@ groups:
   - name: &imChildPatcherGroup Immersive Children Patcher
     after: [ default ]
 
-  - name: &bashedPatchGroup Bashed Patch
+  - name: &xEditMergedPatchGroup xEdit Merged Patch
     after: [ *imChildPatcherGroup ]
+
+  - name: &bashedPatchGroup Bashed Patch
+    after: [ *xEditMergedPatchGroup ]
 
   - name: &requiemPatcherGroup Requiem for the Indifferent
     after: [ *bashedPatchGroup ]
@@ -1756,6 +1759,7 @@ plugins:
 
   - name: 'SSEMerged.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/164/' ]
+    group: *xEditMergedPatchGroup
     after:
       - 'One ImCh Patch.esp'
       - 'One ImCh Patcher.esp'
