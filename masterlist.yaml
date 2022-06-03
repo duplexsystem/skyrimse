@@ -656,17 +656,17 @@ groups:
   - name: &zEditPatchGroup zEdit Patch
     after: [ *xEditMergedPatchGroup ]
 
-  - name: &requiemPatcherGroup Requiem for the Indifferent
+  - name: &allaPatcherGroup Automated Leveled List Addition Patcher
     after:
       - *bashedPatchGroup
       - *smashedPatchGroup
       - *zEditPatchGroup
 
+  - name: &requiemPatcherGroup Requiem for the Indifferent
+    after: [ *allaPatcherGroup ]
+
   - name: &synthesisGroup Synthesis
-    after:
-      - *bashedPatchGroup
-      - *smashedPatchGroup
-      - *zEditPatchGroup
+    after: [ *allaPatcherGroup ]
 
   - name: &dynDOLODGroup DynDOLOD
     after:
@@ -1741,6 +1741,7 @@ plugins:
 ###### Modding Tools - Generated Files ######
   - name: 'Automated Leveled List Addition.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/25395/' ]
+    group: **allaPatcherGroup
 
   - name: 'Bashed Patch.*\.esp'
     group: *bashedPatchGroup
