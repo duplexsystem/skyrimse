@@ -641,8 +641,11 @@ groups:
   - name: &brawlBugFixGroup Modern Brawl Bug Fix
     after: [ default ]
 
-  - name: &bashedPatchGroup Bashed Patch
+  - name: &imChildPatcherGroup Immersive Children Patcher
     after: [ default ]
+
+  - name: &bashedPatchGroup Bashed Patch
+    after: [ *imChildPatcherGroup ]
 
   - name: &requiemPatcherGroup Requiem for the Indifferent
     after: [ *bashedPatchGroup ]
@@ -4450,6 +4453,7 @@ plugins:
           - lang: pt_PT
             text: 'Recorde-se de executar o script SSEEdit incluído **MXPF - One ImCh Patcher** cada vez que você instale ou desinstale um mod. Use o nome recomendado de patch **One ImCh Patch** ou **One ImCh Patcher** para ordenação correta. Instruções para correr este patcher podem ser encontrada na página de descrição de [Immersive Children](https://www.nexusmods.com/skyrimspecialedition/mods/15001/). '
   - name: 'One ImCh Patch.*\.esp'
+    group: *imChildPatcherGroup
 
   - name: 'Killable Children.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/1108/' ]
