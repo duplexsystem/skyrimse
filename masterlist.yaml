@@ -641,8 +641,13 @@ groups:
   - name: &requiemPatcherGroup Requiem for the Indifferent
     after: [ default ]
 
+  - name: &synthesisGroup Synthesis
+    after: [ default ]
+
   - name: &dynDOLODGroup DynDOLOD
-    after: [ *requiemPatcherGroup ]
+    after:
+      - *requiemPatcherGroup
+      - *synthesisGroup
 
   - name: &occlusionGroup Occlusion
     after: [ *dynDOLODGroup ]
@@ -1746,6 +1751,7 @@ plugins:
 
   - name: 'Synthesis.esp'
     url: [ 'https://github.com/Mutagen-Modding/Synthesis/' ]
+    group: *synthesisGroup
 
   - name: 'zPatch.esp'
     url: [ 'https://github.com/z-edit/zedit' ]
