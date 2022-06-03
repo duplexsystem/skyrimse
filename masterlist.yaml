@@ -14427,10 +14427,10 @@ plugins:
 
   - name: 'Dawnguard Map Markers.esp'
     url: [ 'https://www.afkmods.com/index.php?/files/file/1896-dawnguard-map-markers/' ]
-    after:
-      - 'Atlas Legendary.esp'
-      - 'Atlas Legendary OCS.esp'
-      - 'Atlas Map Markers.esp'
+    # after:
+    #   - 'Atlas Legendary.esp'
+    #   - 'Atlas Legendary OCS.esp'
+    #   - 'Atlas Map Markers.esp'
     clean:
       - crc: 0xAA2F3309
         util: 'SSEEdit v4.0.3'
