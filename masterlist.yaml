@@ -638,6 +638,9 @@ globals:
 groups:
   - name: default
 
+  - name: &occlusionGroup Occlusion
+    after: [ default ]
+
 plugins:
 ###### Official Game Files ######
   - name: 'Update.esm'
@@ -1721,6 +1724,7 @@ plugins:
     url:
       - link: 'https://stepmodifications.org/forum/topic/13451-xlodgen-terrain-lod-beta-76-for-fnv-fo3-fo4-fo4vr-tes5-sse-tes5vr-enderal-enderalse/'
         name: 'xLODGen Occlusion'
+    group: *occlusionGroup
     after: [ 'DynDOLOD.esp' ]
     msg: [ *runxLODGen ]
 
