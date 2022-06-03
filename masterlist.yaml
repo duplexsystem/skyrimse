@@ -641,11 +641,16 @@ groups:
   - name: &brawlBugFixGroup Modern Brawl Bug Fix
     after: [ default ]
 
+  - name: &pceGroup Palaces and Castles Enhanced
+    after: [ default ]
+
   - name: &noGrassCavesGroup No grass in caves
     after: [ default ]
 
   - name: &luxGroup Lux
-    after: [ *noGrassCavesGroup ]
+    after:
+      - *noGrassCavesGroup
+      - *pceGroup
 
   - name: &ocsGroup Open Cities
     after: [ *luxGroup ]
@@ -20664,6 +20669,7 @@ plugins:
 
   - name: 'Palaces Castles Enhanced.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/1819/' ]
+    group: *pceGroup
     inc: [ 'Vaults of Skyrim 1.0 NEXUS.esp' ]
     msg:
       - <<: *patch3rdParty_LotD
