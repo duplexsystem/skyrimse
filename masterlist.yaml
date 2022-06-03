@@ -650,17 +650,22 @@ groups:
   - name: &bashedPatchGroup Bashed Patch
     after: [ *xEditMergedPatchGroup ]
 
-  - name: &zEditPatchGroup zEdit patch
+  - name: &smashedPatchGroup Smashed Patch
+    after: [ *xEditMergedPatchGroup ]
+
+  - name: &zEditPatchGroup zEdit Patch
     after: [ *xEditMergedPatchGroup ]
 
   - name: &requiemPatcherGroup Requiem for the Indifferent
     after:
       - *bashedPatchGroup
+      - *smashedPatchGroup
       - *zEditPatchGroup
 
   - name: &synthesisGroup Synthesis
     after:
       - *bashedPatchGroup
+      - *smashedPatchGroup
       - *zEditPatchGroup
 
   - name: &dynDOLODGroup DynDOLOD
@@ -1763,6 +1768,7 @@ plugins:
 
   - name: 'Smashed Patch.esp'
     url: [ 'https://www.nexusmods.com/skyrim/mods/90987/' ]
+    group: *smashedPatchGroup
 
   - name: 'SSEMerged.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/164/' ]
