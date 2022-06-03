@@ -644,12 +644,15 @@ groups:
   - name: &noGrassCavesGroup No grass in caves
     after: [ default ]
 
+  - name: &luxGroup Lux
+    after: [ *noGrassCavesGroup ]
+
   - name: &noGrassCitiesGroup No grass in cities
     after: [ default ]
 
   - name: &flatMapGroup Flat World Map Framework
     after:
-      - *noGrassCavesGroup
+      - *luxGroup
       - *noGrassCitiesGroup
 
   - name: &imChildPatcherGroup Immersive Children Patcher
@@ -3541,6 +3544,7 @@ plugins:
 
   - name: 'Lux.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/43158/' ]
+    group: *luxGroup
     tag:
       - C.Climate
       - C.ImageSpace
