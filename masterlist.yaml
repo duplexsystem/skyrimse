@@ -647,13 +647,14 @@ groups:
   - name: &luxGroup Lux
     after: [ *noGrassCavesGroup ]
 
+  - name: &ocsGroup Open Cities
+    after: [ *luxGroup ]
+
   - name: &noGrassCitiesGroup No grass in cities
-    after: [ default ]
+    after: [ *ocsGroup ]
 
   - name: &flatMapGroup Flat World Map Framework
-    after:
-      - *luxGroup
-      - *noGrassCitiesGroup
+    after: [ *noGrassCitiesGroup ]
 
   - name: &imChildPatcherGroup Immersive Children Patcher
     after: [ default ]
@@ -7965,6 +7966,7 @@ plugins:
     url:
       - 'https://www.afkmods.com/index.php?/files/file/1905-open-cities-skyrim/'
       - 'https://bethesda.net/en/mods/skyrim/mod-detail/2918135/'
+    group: *ocsGroup
     after: [ 'Palaces Castles Enhanced.esp' ]
     msg:
       - <<: *patchProvided
