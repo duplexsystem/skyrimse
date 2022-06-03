@@ -638,8 +638,11 @@ globals:
 groups:
   - name: default
 
-  - name: &dynDOLODGroup DynDOLOD
+  - name: &requiemPatcherGroup Requiem for the Indifferent
     after: [ default ]
+
+  - name: &dynDOLODGroup DynDOLOD
+    after: [ *requiemPatcherGroup ]
 
   - name: &occlusionGroup Occlusion
     after: [ *dynDOLODGroup ]
@@ -8061,6 +8064,7 @@ plugins:
         condition: 'active("Requiem - No Messages.esp")'
   - name: 'Requiem Record Fixes.esm'
   - name: 'Requiem for the Indifferent.esp'
+    group: *requiemPatcherGroup
 
   - name: 'Requiem - Minor Arcana - Roleplaying.esp'
     url:
