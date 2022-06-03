@@ -665,7 +665,9 @@ groups:
     after: [ *ocsGroup ]
 
   - name: &flatMapGroup Flat World Map Framework
-    after: [ *ocsGroup ]
+    after:
+      - *luxGroup
+      - *ocsGroup
 
   - name: &imChildPatcherGroup Immersive Children Patcher
     after: [ default ]
