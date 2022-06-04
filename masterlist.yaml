@@ -647,11 +647,16 @@ groups:
   - name: &immersiveCitizensGroup Immersive Citizens
     after: [ default ]
 
+  - name: &rdoGroup Relationship Dialogue Overhaul
+    after: [ *immersiveCitizensGroup ]
+
   - name: &crfGroup Cutting Room Floor
     after: [ *touringCarriagesGroup ]
 
   - name: &gdoSEGroup Guard Dialogue Overhaul SE
-    after: [ *crfGroup ]
+    after:
+      - *crfGroup
+      - *rdoGroup
 
   - name: &altStartLALGroup Alternate Start LAL
     after: [ *gdoSEGroup ]
@@ -12261,6 +12266,7 @@ plugins:
         name: 'Relationship Dialogue Overhaul - RDO SE'
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/42068/'
         name: 'Relationship Dialogue Overhaul Lite Fixed'
+    group: *rdoGroup
     after:
       - '018Auri.esp'
       - 'Immersive Citizens - AI Overhaul.esp'
