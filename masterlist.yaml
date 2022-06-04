@@ -644,6 +644,9 @@ groups:
   - name: &touringCarriagesGroup Touring Carriages
     after: [ default ]
 
+  - name: &crfGroup Cutting Room Floor
+    after: [ *touringCarriagesGroup ]
+
   - name: &immersiveCitizensGroup Immersive Citizens
     after: [ *touringCarriagesGroup ]
 
@@ -667,6 +670,7 @@ groups:
   - name: &ocsGroup Open Cities
     after:
       - *altStartLALGroup
+      - *crfGroup
       - *pceGroup
 
   - name: &noGrassCitiesGroup No grass in cities
@@ -17637,6 +17641,7 @@ plugins:
       - 'https://www.nexusmods.com/skyrimspecialedition/mods/276/'
       - 'https://www.afkmods.com/index.php?/files/file/978-cutting-room-floor/'
       - 'https://bethesda.net/en/mods/skyrim/mod-detail/2955350/'
+    group: *crfGroup
     after:
       - name: 'TouringCarriages.esp'
         condition: '(is_master("Cutting Room Floor.esp") and is_master("TouringCarriages.esp")) or (not is_master("Cutting Room Floor.esp") and not is_master("TouringCarriages.esp"))'
