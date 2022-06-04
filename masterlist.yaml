@@ -644,11 +644,11 @@ groups:
   - name: &touringCarriagesGroup Touring Carriages
     after: [ default ]
 
-  - name: &crfGroup Cutting Room Floor
-    after: [ *touringCarriagesGroup ]
-
   - name: &immersiveCitizensGroup Immersive Citizens
     after: [ default ]
+
+  - name: &crfGroup Cutting Room Floor
+    after: [ *touringCarriagesGroup ]
 
   - name: &gdoSEGroup Guard Dialogue Overhaul SE
     after: [ *crfGroup ]
