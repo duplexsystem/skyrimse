@@ -650,8 +650,11 @@ groups:
   - name: &immersiveCitizensGroup Immersive Citizens
     after: [ *touringCarriagesGroup ]
 
+  - name: &gdoSEGroup Guard Dialogue Overhaul SE
+    after: [ *crfGroup ]
+
   - name: &altStartLALGroup Alternate Start LAL
-    after: [ default ]
+    after: [ *gdoSEGroup ]
 
   - name: &pceGroup Palaces and Castles Enhanced
     after: [ *immersiveCitizensGroup ]
@@ -670,7 +673,6 @@ groups:
   - name: &ocsGroup Open Cities
     after:
       - *altStartLALGroup
-      - *crfGroup
       - *pceGroup
 
   - name: &noGrassCitiesGroup No grass in cities
@@ -12029,6 +12031,7 @@ plugins:
         name: 'Guard Dialogue Overhaul Redux'
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/22075/'
         name: 'Guard Dialogue Overhaul SE'
+    group: *gdoSEGroup
     after:
       - 'Ambriel.esp'
       - 'Cutting Room Floor.esp'
