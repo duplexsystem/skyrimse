@@ -641,8 +641,11 @@ groups:
   - name: &brawlBugFixGroup Modern Brawl Bug Fix
     after: [ default ]
 
-  - name: &immersiveCitizensGroup Immersive Citizens
+  - name: &touringCarriagesGroup Touring Carriages
     after: [ default ]
+
+  - name: &immersiveCitizensGroup Immersive Citizens
+    after: [ *touringCarriagesGroup ]
 
   - name: &altStartLALGroup Alternate Start LAL
     after: [ default ]
@@ -8361,6 +8364,7 @@ plugins:
   - name: 'TouringCarriages.*\.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/15948/' ]
   - name: 'TouringCarriages.esp'
+    group: *touringCarriagesGroup
     after:
       - name: 'MoreToSay.esp'
         condition: 'not is_master("TouringCarriages.esp")'
