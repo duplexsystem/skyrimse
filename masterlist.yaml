@@ -644,6 +644,9 @@ groups:
   - name: &immersiveCitizensGroup Immersive Citizens
     after: [ default ]
 
+  - name: &altStartLALGroup Alternate Start LAL
+    after: [ default ]
+
   - name: &pceGroup Palaces and Castles Enhanced
     after: [ *immersiveCitizensGroup ]
 
@@ -659,7 +662,9 @@ groups:
     after: [ default ]
 
   - name: &ocsGroup Open Cities
-    after: [ *pceGroup ]
+    after:
+      - *altStartLALGroup
+      - *pceGroup
 
   - name: &noGrassCitiesGroup No grass in cities
     after: [ *ocsGroup ]
@@ -12499,6 +12504,7 @@ plugins:
       - 'https://www.nexusmods.com/skyrimspecialedition/mods/272/'
       - 'https://www.afkmods.com/index.php?/files/file/270-alternate-start-live-another-life/'
       - 'https://bethesda.net/en/mods/skyrim/mod-detail/2918710/'
+    group: *altStartLALGroup
     inc:
       - 'Original Opening Scene.esp'
       - 'Random Alternate Start.esp'
