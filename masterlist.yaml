@@ -240,7 +240,7 @@ prelude:
       subs:
         - 'SKSE'
         - '[Skyrim Script Extender](https://skse.silverlock.org)'
-      condition: 'file("SKSE/Plugins/([^\.]+\.dll)") and not file("../skse64_loader.exe")'
+      condition: 'file("SKSE/Plugins/([^\.]+\.dll)") and not file("../skse(64|vr)_loader\.exe")'
 
     - &scriptExtenderRequiredScripts
       type: warn
@@ -248,7 +248,7 @@ prelude:
       subs:
         - 'Skyrim Script Extender'
         - '[SKSE](https://skse.silverlock.org)'
-      condition: 'not file("scripts/skse.pex") and file("../skse64_loader.exe")'
+      condition: 'not file("scripts/skse.pex") and ((file("../SkyrimSE.exe") and not file("SkyrimVR.esm") and file("../skse64_loader.exe")) or (file("../SkyrimVR.exe") and file("SkyrimVR.esm") and file("../sksevr_loader.exe")))'
 
 common:
 # File Anchors
@@ -272,10 +272,22 @@ common:
   - &ENBSeries
     name: '../d3d11.dll'
     display: '[ENBSeries SE](http://enbdev.com/download_mod_tesskyrimse.htm)'
+    condition: 'not file("SkyrimVR.esm")'
+
+  - &ENBSeries_VR
+    name: '../d3d11.dll'
+    display: '[ENBSeries VR](http://enbdev.com/download_mod_tesskyrimvr.html)'
+    condition: 'file("../SkyrimVR.exe") and file("SkyrimVR.esm")'
 
   - &EngineFixes
     name: 'SKSE/Plugins/EngineFixes.dll'
     display: '[SSE Engine Fixes](https://www.nexusmods.com/skyrimspecialedition/mods/17230/)'
+    condition: 'not file("SkyrimVR.esm")'
+
+  - &EngineFixes_VR
+    name: 'SKSE/Plugins/EngineFixesVR.dll'
+    display: '[Engine Fixes VR](https://github.com/rollingrock/EngineFixesVR/releases)'
+    condition: 'file("../SkyrimVR.exe") and file("SkyrimVR.esm")'
 
   - &FlatMapMarkers
     name: 'SKSE/Plugins/FlatMapMarkersSSE.dll'
@@ -297,6 +309,12 @@ common:
   - &JContainers
     name: 'SKSE/Plugins/JContainers64.dll'
     display: '[JContainers SE](https://www.nexusmods.com/skyrimspecialedition/mods/16495/)'
+    condition: 'not file("SkyrimVR.esm")'
+
+  - &JContainers_VR
+    name: 'SKSE/Plugins/JContainersVR.dll'
+    display: '[JContainers VR](https://www.nexusmods.com/skyrimspecialedition/mods/16495/)'
+    condition: 'file("../SkyrimVR.exe") and file("SkyrimVR.esm")'
 
   - &LotD_v5
     name: 'LegacyoftheDragonborn.esm'
@@ -326,10 +344,27 @@ common:
   - &SilentVoice
     name: 'SKSE/Plugins/Fuz Ro D''oh.dll'
     display: '[Fuz Ro D-oh - Silent Voice](https://www.nexusmods.com/skyrimspecialedition/mods/15109/)'
+    condition: 'not file("SkyrimVR.esm")'
+
+  - &SilentVoice_VR
+    name: 'SKSE/Plugins/Fuz Ro D''oh.dll'
+    display: '[Fuz Ro D-oh - Silent Voice VR (Alpha 3)](https://www.nexusmods.com/skyrimspecialedition/mods/91644)'
+    condition: 'file("../SkyrimVR.exe") and file("SkyrimVR.esm")'
 
   - &SKSE
     name: '../skse64_loader.exe'
     display: '[Skyrim Script Extender](https://skse.silverlock.org)'
+    condition: 'readable("../SkyrimSE.exe") and not file("SkyrimVR.esm") and not file("../skse64_loader.exe")'
+
+  - &SKSE_VR
+    name: '../sksevr_loader.exe'
+    display: '[Skyrim Script Extender VR](https://skse.silverlock.org)'
+    condition: 'readable("../SkyrimVR.exe") and file("SkyrimVR.esm") and not file("../sksevr_loader.exe")'
+
+  - &VR_PerkExtender
+    name: 'SKSE/Plugins/VRPerkExtender.dll'
+    display: '[VR Perk Extender](https://www.nexusmods.com/skyrimspecialedition/mods/16330/)'
+    condition: 'file("../SkyrimVR.exe") and file("SkyrimVR.esm")'
 
   - &SPID
     name: 'skse/plugins/po3_SpellPerkItemDistributor.dll'
@@ -367,7 +402,13 @@ common:
   - &missingRequirementAddrLibforPlugin
     <<: *missingRequirementXforPlugin
     subs: [ '[Address Library](https://www.nexusmods.com/skyrimspecialedition/mods/32444/)' ]
-    condition: 'readable("../SkyrimSE.exe") and ((not file("SKSE/Plugins/version-1-5-16-0.bin") and product_version("../SkyrimSE.exe", "1.5.16.0", ==)) or (not file("SKSE/Plugins/version-1-5-23-0.bin") and product_version("../SkyrimSE.exe", "1.5.23.0", ==)) or (not file("SKSE/Plugins/version-1-5-3-0.bin") and product_version("../SkyrimSE.exe", "1.5.3.0", ==)) or (not file("SKSE/Plugins/version-1-5-39-0.bin") and product_version("../SkyrimSE.exe", "1.5.39.0", ==)) or (not file("SKSE/Plugins/version-1-5-50-0.bin") and product_version("../SkyrimSE.exe", "1.5.50.0", ==)) or (not file("SKSE/Plugins/version-1-5-53-0.bin") and product_version("../SkyrimSE.exe", "1.5.53.0", ==)) or (not file("SKSE/Plugins/version-1-5-62-0.bin") and product_version("../SkyrimSE.exe", "1.5.62.0", ==)) or (not file("SKSE/Plugins/version-1-5-73-0.bin") and product_version("../SkyrimSE.exe", "1.5.73.0", ==)) or (not file("SKSE/Plugins/version-1-5-80-0.bin") and product_version("../SkyrimSE.exe", "1.5.80.0", ==)) or (not file("SKSE/Plugins/version-1-5-97-0.bin") and product_version("../SkyrimSE.exe", "1.5.97.0", ==)) or (not file("SKSE/Plugins/versionlib-1-6-317-0.bin") and product_version("../SkyrimSE.exe", "1.6.317.0", ==)) or (not file("SKSE/Plugins/versionlib-1-6-318-0.bin") and product_version("../SkyrimSE.exe", "1.6.318.0", ==)) or (not file("SKSE/Plugins/versionlib-1-6-323-0.bin") and product_version("../SkyrimSE.exe", "1.6.323.0", ==)) or (not file("SKSE/Plugins/versionlib-1-6-342-0.bin") and product_version("../SkyrimSE.exe", "1.6.342.0", ==)) or (not file("SKSE/Plugins/versionlib-1-6-353-0.bin") and product_version("../SkyrimSE.exe", "1.6.353.0", ==)) or (not file("SKSE/Plugins/versionlib-1-6-629-0.bin") and product_version("../SkyrimSE.exe", "1.6.629.0", ==)) or (not file("SKSE/Plugins/versionlib-1-6-640-0.bin") and product_version("../SkyrimSE.exe", "1.6.640.0", ==)) or (not file("SKSE/Plugins/versionlib-1-6-659-0.bin") and product_version("../SkyrimSE.exe", "1.6.659.0", ==)))'
+    condition: 'readable("../SkyrimSE.exe") and not file("SkyrimVR.esm") and ((not file("SKSE/Plugins/version-1-5-16-0.bin") and product_version("../SkyrimSE.exe", "1.5.16.0", ==)) or (not file("SKSE/Plugins/version-1-5-23-0.bin") and product_version("../SkyrimSE.exe", "1.5.23.0", ==)) or (not file("SKSE/Plugins/version-1-5-3-0.bin") and product_version("../SkyrimSE.exe", "1.5.3.0", ==)) or (not file("SKSE/Plugins/version-1-5-39-0.bin") and product_version("../SkyrimSE.exe", "1.5.39.0", ==)) or (not file("SKSE/Plugins/version-1-5-50-0.bin") and product_version("../SkyrimSE.exe", "1.5.50.0", ==)) or (not file("SKSE/Plugins/version-1-5-53-0.bin") and product_version("../SkyrimSE.exe", "1.5.53.0", ==)) or (not file("SKSE/Plugins/version-1-5-62-0.bin") and product_version("../SkyrimSE.exe", "1.5.62.0", ==)) or (not file("SKSE/Plugins/version-1-5-73-0.bin") and product_version("../SkyrimSE.exe", "1.5.73.0", ==)) or (not file("SKSE/Plugins/version-1-5-80-0.bin") and product_version("../SkyrimSE.exe", "1.5.80.0", ==)) or (not file("SKSE/Plugins/version-1-5-97-0.bin") and product_version("../SkyrimSE.exe", "1.5.97.0", ==)) or (not file("SKSE/Plugins/versionlib-1-6-317-0.bin") and product_version("../SkyrimSE.exe", "1.6.317.0", ==)) or (not file("SKSE/Plugins/versionlib-1-6-318-0.bin") and product_version("../SkyrimSE.exe", "1.6.318.0", ==)) or (not file("SKSE/Plugins/versionlib-1-6-323-0.bin") and product_version("../SkyrimSE.exe", "1.6.323.0", ==)) or (not file("SKSE/Plugins/versionlib-1-6-342-0.bin") and product_version("../SkyrimSE.exe", "1.6.342.0", ==)) or (not file("SKSE/Plugins/versionlib-1-6-353-0.bin") and product_version("../SkyrimSE.exe", "1.6.353.0", ==)) or (not file("SKSE/Plugins/versionlib-1-6-629-0.bin") and product_version("../SkyrimSE.exe", "1.6.629.0", ==)) or (not file("SKSE/Plugins/versionlib-1-6-640-0.bin") and product_version("../SkyrimSE.exe", "1.6.640.0", ==)) or (not file("SKSE/Plugins/versionlib-1-6-659-0.bin") and product_version("../SkyrimSE.exe", "1.6.659.0", ==)))'
+  
+  # &missingRequirementXforPlugin
+  - &missingRequirementVRAddrLibforPlugin
+    <<: *missingRequirementXforPlugin
+    subs: [ '[VR Address Library](https://www.nexusmods.com/skyrimspecialedition/mods/58101/)' ]
+    condition: 'readable("../SkyrimVR.exe") and file("SkyrimVR.esm") and product_version("../SkyrimVR.exe", "1.4.15.0", ==) and not file("SKSE/Plugins/version-1-4-15-0.csv")'
 
   # &patch3rdParty
   - &patch3rdParty_AOOPH
@@ -456,10 +497,14 @@ common:
       - '[Umgak''s Vokrii Compatibility Patch Compendium](https://www.nexusmods.com/skyrimspecialedition/mods/26278/)'
 
   # &requiresMCM_X
-  - &requiresMCM
+  - &requiresMCM_SkyUISE
     <<: *requiresMCM_X
     subs: [ '[SkyUI SE](https://www.nexusmods.com/skyrimspecialedition/mods/12604/)' ]
-    condition: 'not active("SkyUI_SE.esp")'
+    condition: 'file("../SkyrimSE.exe") and not file("SkyrimVR.esm") and not active("SkyUI_SE.esp")'
+  - &requiresMCM_VR
+    <<: *requiresMCM_X
+    subs: [ '[SkyUI VR](https://github.com/Odie/skyui-vr/releases/)' ]
+    condition: 'file("../SkyrimVR.exe") and file("SkyrimVR.esm") and not active("SkyUI_SE.esp")'
 
   # &requiresX
   - &requiresBashOrSmash
@@ -478,6 +523,11 @@ common:
     subs:
       - '**Skyrim Script Extender**'
       - '**Skyrim SE**'
+  - &versionSkseIncSVR
+    <<: *versionXIncY
+    subs:
+      - '**Skyrim Script Extender VR**'
+      - '**Skyrim VR**'
 
 bash_tags:
   - 'Actors.ACBS'
@@ -559,45 +609,59 @@ globals:
   # Skyrim AE Game Runtime
   - <<: *versionOldX
     subs: [ '**Skyrim Anniversary Update**' ]
-    condition: 'not file("../Galaxy64.dll") and not file("../EOSSDK-Win64-Shipping.dll") and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.317.0", >=) and product_version("../SkyrimSE.exe", "1.6.1130.0", <)'
+    condition: 'not file("../Galaxy64.dll") and not file("../EOSSDK-Win64-Shipping.dll") and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.317.0", >=) and product_version("../SkyrimSE.exe", "1.6.1130.0", <) and not file("SkyrimVR.esm")'
   - <<: *versionUpToDateX
     subs: [ '**Skyrim Anniversary Update**' ]
-    condition: 'not file("../Galaxy64.dll") and not file("../EOSSDK-Win64-Shipping.dll") and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.1130.0", >=)'
+    condition: 'not file("../Galaxy64.dll") and not file("../EOSSDK-Win64-Shipping.dll") and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.1130.0", >=) and not file("SkyrimVR.esm")'
   # Skyrim SE GOG Game Runtime
   - <<: *versionOldX
     subs: [ '**Skyrim SE GOG**' ]
-    condition: 'file("../Galaxy64.dll") and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.659.0", <)'
+    condition: 'file("../Galaxy64.dll") and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.659.0", <) and not file("SkyrimVR.esm")'
   - <<: *versionUpToDateX
     subs: [ '**Skyrim SE GOG**' ]
-    condition: 'file("../Galaxy64.dll") and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.659.0", >=)'
+    condition: 'file("../Galaxy64.dll") and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.659.0", >=) and not file("SkyrimVR.esm")'
   # Skyrim SE EGS Game Runtime
   - <<: *versionOldX
     subs: [ '**Skyrim SE Epic Games**' ]
-    condition: 'file("../EOSSDK-Win64-Shipping.dll") and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.678.0", <)'
+    condition: 'file("../EOSSDK-Win64-Shipping.dll") and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.678.0", <) and not file("SkyrimVR.esm")'
   - <<: *versionUpToDateX
     subs: [ '**Skyrim SE Epic Games**' ]
-    condition: 'file("../EOSSDK-Win64-Shipping.dll") and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.678.0", >=)'
+    condition: 'file("../EOSSDK-Win64-Shipping.dll") and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.678.0", >=) and not file("SkyrimVR.esm")'
   # Skyrim SE Game Runtime
   - <<: *versionOldX
     subs: [ '**Skyrim SE**' ]
-    condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.5.97.0", <)'
+    condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.5.97.0", <) and not file("SkyrimVR.esm")'
   - <<: *versionUpToDateX
     subs: [ '**Skyrim SE**' ]
-    condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.5.97.0", ==)'
+    condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.5.97.0", ==) and not file("SkyrimVR.esm")'
+  # Skyrim VR Game Runtime
+  - <<: *versionOldX
+    subs: [ '**Skyrim VR**' ]
+    condition: 'readable("../SkyrimVR.exe") and product_version("../SkyrimVR.exe", "1.4.15.0", <) and file("SkyrimVR.esm")'
+  - <<: *versionUpToDateX
+    subs: [ '**Skyrim VR**' ]
+    condition: 'readable("../SkyrimVR.exe") and product_version("../SkyrimVR.exe", "1.4.15.0", >=) and file("SkyrimVR.esm")'
   # SKSE AE
   - <<: *versionOldX
     subs: [ '**[SKSE Anniversary Edition](https://skse.silverlock.org)**' ]
-    condition: 'not file("../Galaxy64.dll") and not file("../EOSSDK-Win64-Shipping.dll") and file("../skse64_loader.exe") and version("../skse64_loader.exe", "0.2.2.6", <) and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.317.0", >=)'
+    condition: 'not file("../Galaxy64.dll") and not file("../EOSSDK-Win64-Shipping.dll") and file("../skse64_loader.exe") and version("../skse64_loader.exe", "0.2.2.6", <) and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.317.0", >=) and not file("SkyrimVR.esm")'
   - <<: *versionUpToDateX
     subs: [ '**SKSE Anniversary Edition**' ]
-    condition: 'not file("../Galaxy64.dll") and not file("../EOSSDK-Win64-Shipping.dll") and version("../skse64_loader.exe", "0.2.2.6", >=) and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.317.0", >=)'
+    condition: 'not file("../Galaxy64.dll") and not file("../EOSSDK-Win64-Shipping.dll") and version("../skse64_loader.exe", "0.2.2.6", >=) and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.317.0", >=) and not file("SkyrimVR.esm")'
   # SKSE SE
   - <<: *versionOldX
     subs: [ '**[SKSE Special Edition](https://skse.silverlock.org)**' ]
-    condition: 'file("../skse64_loader.exe") and version("../skse64_loader.exe", "0.2.0.20", <) and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.317.0", <)'
+    condition: 'file("../skse64_loader.exe") and version("../skse64_loader.exe", "0.2.0.20", <) and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.317.0", <) and not file("SkyrimVR.esm")'
   - <<: *versionUpToDateX
     subs: [ '**SKSE Special Edition**' ]
-    condition: 'version("../skse64_loader.exe", "0.2.0.20", ==) and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.317.0", <)'
+    condition: 'version("../skse64_loader.exe", "0.2.0.20", ==) and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.317.0", <) and not file("SkyrimVR.esm")'
+  # SKSE VR
+  - <<: *versionOldX
+    subs: [ '**[SKSE VR](https://skse.silverlock.org)**' ]
+    condition: 'version("../sksevr_loader.exe", "0.2.0.12", <) and readable("../SkyrimVR.exe") and file("SkyrimVR.esm")'
+  - <<: *versionUpToDateX
+    subs: [ '**SKSE VR**' ]
+    condition: 'version("../sksevr_loader.exe", "0.2.0.12", >=) and readable("../SkyrimVR.exe") and file("SkyrimVR.esm")'
 
 # Version Compatibility
   # SKSE AE - Game Runtime
@@ -627,7 +691,7 @@ globals:
     condition: 'file("../EOSSDK-Win64-Shipping.dll") and file("../skse64_loader.exe")'
   # SKSE SE - Game Runtime
   - <<: *versionSkseIncSSE
-    condition: 'file("../skse(vr)?_loader.exe") and not file("../skse64_loader.exe")'
+    condition: 'file("../SkyrimSE.exe") and not file("SkyrimVR.esm") and file("../skse(?:vr)?_loader.exe") and not file("../skse64_loader.exe")'
   - <<: *versionSkseIncSSE
     condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.5.50.0", ==) and version("../skse64_loader.exe", "0.2.0.8", <) and file("../skse64_loader.exe")'
   - <<: *versionSkseIncSSE
@@ -640,6 +704,13 @@ globals:
     condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.5.80.0", ==) and version("../skse64_loader.exe", "0.2.0.16", <) and file("../skse64_loader.exe")'
   - <<: *versionSkseIncSSE
     condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.5.97.0", ==) and version("../skse64_loader.exe", "0.2.0.17", <) and file("../skse64_loader.exe")'
+  # SKSE VR - Game Runtime
+  - <<: *versionSkseIncSVR
+    condition: 'readable("../SkyrimVR.exe") and file("SkyrimVR.esm") and file("../skse(?:64)?_loader.exe") and not file("../sksevr_loader.exe")'
+  - <<: *versionSkseIncSVR
+    condition: 'product_version("../SkyrimVR.exe", "1.3.64.0", ==) and version("../sksevr_loader.exe", "0.2.0.8", <) and file("../sksevr_loader.exe")'
+  - <<: *versionSkseIncSVR
+    condition: 'product_version("../SkyrimVR.exe", "1.4.15.0", ==) and version("../sksevr_loader.exe", "0.2.0.9", <) and file("../sksevr_loader.exe")'
   # ENBSeries
   - <<: *versionXIncY
     subs:
@@ -666,12 +737,18 @@ globals:
       - 'SKSE'
       - '[Skyrim Script Extender](https://skse.silverlock.org) Special Edition'
     condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.5.97.0", <=) and not file("../skse64_loader.exe") and file("SKSE/Plugins/([^\.]+\.dll)")'
+  # Missing VR
+  - <<: *scriptExtenderMissing
+    subs:
+      - 'SKSE_VR'
+      - '[Skyrim Script Extender](https://skse.silverlock.org) Special Edition'
+    condition: 'readable("../SkyrimVR.exe") and not file("../sksevr_loader.exe") and file("SKSE/Plugins/([^\.]+\.dll)")'    
   # Required Scripts
   - <<: *scriptExtenderRequiredScripts
     subs:
       - 'Skyrim Script Extender'
       - '[SKSE](https://skse.silverlock.org)'
-    condition: 'not file("scripts/skse.pex") and file("../skse64_loader.exe")'
+    condition: 'not file("scripts/skse.pex") and ((file("../SkyrimSE.exe") and not file("SkyrimVR.esm") and file("../skse64_loader.exe")) or (file("../SkyrimVR.exe") and file("SkyrimVR.esm") and file("../sksevr_loader.exe")))'
 
 # Missing Requirements
   # ENBSeries
@@ -906,6 +983,12 @@ plugins:
         itm: 384
         udr: 92
         nav: 3
+      # VR v1.4.15.0
+      - <<: *quickClean
+        crc: 0xDE522C22
+        util: '[TES5VREdit v4.0.4](https://www.nexusmods.com/skyrimspecialedition/mods/164)'
+        itm: 203
+        udr: 91
   - name: 'Dawnguard.esm'
     group: *mainGroup
     tag:
@@ -916,11 +999,11 @@ plugins:
       - Invent.Remove
       - Relev
     msg:
-      # (v1.5.97, 0xADFC1487) after QAC, (v1.6.640, 0x2FE9FD3B) after QAC, (GOG v1.6.659, 0x4B45E434) after QAC, (EGS v1.6.678, 0x63B4EBD1) after QAC
+      # (v1.5.97, 0xADFC1487) after QAC, (v1.6.640, 0x2FE9FD3B) after QAC, (GOG v1.6.659, 0x4B45E434) after QAC, (EGS v1.6.678, 0x63B4EBD1) after QAC, (VR v1.4.15.0, 0x06537D98) after QAC
       - <<: *wildEdits
         type: say
         subs: [ '[**Dawnguard.esm** Wild Edits Cleaning Guide](https://tes5edit.github.io/docs/7-mod-cleaning-and-error-checking.html#AppendixBManuallyCleaningDawnguard)' ]
-        condition: '(checksum("Dawnguard.esm", ADFC1487) or checksum("Dawnguard.esm", 2FE9FD3B) or checksum("Dawnguard.esm", 4B45E434) or checksum("Dawnguard.esm", 63B4EBD1)) and not active("Unofficial Skyrim Special Edition Patch.esp")'
+        condition: '(checksum("Dawnguard.esm", ADFC1487) or checksum("Dawnguard.esm", 2FE9FD3B) or checksum("Dawnguard.esm", 4B45E434) or checksum("Dawnguard.esm", 63B4EBD1)) or checksum("Dawnguard.esm", 06537D98) and not active("Unofficial Skyrim Special Edition Patch.esp")'
     dirty:
       # v1.5.97
       - <<: *quickClean
@@ -957,6 +1040,13 @@ plugins:
         itm: 849
         udr: 82
         nav: 59
+      # VR v1.4.15.0
+      - <<: *quickClean
+        crc: 0x85E4F13D
+        util: '[TES5VREdit v4.0.4](https://www.nexusmods.com/skyrimspecialedition/mods/164)'
+        itm: 773
+        udr: 82
+        nav: 57
   - name: 'HearthFires.esm'
     group: *mainGroup
     tag:
@@ -995,6 +1085,13 @@ plugins:
       - <<: *quickClean
         crc: 0x53C7FE02
         util: '[SSEEdit v4.0.4](https://www.nexusmods.com/skyrimspecialedition/mods/164)'
+        itm: 221
+        udr: 11
+        nav: 5
+      # VR v1.4.15.0
+      - <<: *quickClean
+        crc: 0xC9662E10
+        util: '[TES5VREdit v4.0.4](https://www.nexusmods.com/skyrimspecialedition/mods/164)'
         itm: 221
         udr: 11
         nav: 5
@@ -1047,6 +1144,22 @@ plugins:
         itm: 87
         udr: 8
         nav: 1
+      # VR v1.4.15.0
+      - <<: *quickClean
+        crc: 0x0977457C
+        util: '[TES5VREdit v4.0.4](https://www.nexusmods.com/skyrimspecialedition/mods/164)'
+        itm: 81
+        udr: 8
+        nav: 1
+  - name: 'SkyrimVR.esm'
+    group: *mainGroup
+    after: [ 'Dragonborn.esm' ]
+
+    dirty:
+      - <<: *quickClean
+        crc: 0xD36F5D34
+        util: '[TES5VREdit v4.0.4](https://www.nexusmods.com/skyrimspecialedition/mods/164)'
+        itm: 6
 
 ###### Creation Club ######
   - name: 'cc[a-z]{3}sse\d{3}[-_]\w+\.es[lm]'
@@ -1749,7 +1862,12 @@ plugins:
         subs:
           - '1.6.629'
           - 'Skyrim Special Edition'
-        condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.629.0", <) and version("Unofficial Skyrim Special Edition Patch.esp", "4.2.8", >=)'
+        condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.629.0", <) and not file("SkyrimVR.esm") and version("Unofficial Skyrim Special Edition Patch.esp", "4.2.8", >=)'
+      - <<: *versionXIncY
+        subs:
+          - 'Unofficial Skyrim Special Edition Patch'
+          - 'Skyrim VR'
+        condition: 'version("Unofficial Skyrim Special Edition Patch.esp", "4.2.6", >=) or (version("Unofficial Skyrim Special Edition Patch.esp", "4.2.6", <) and readable("../SkyrimVR.exe") and file("SkyrimVR.esm") and not active("Skyrim VR SSE USSEP Compatibility Mod.esp"))'
     clean:
       - crc: 0xF82ECF21
         util: 'SSEEdit v4.0.4c'
@@ -2127,7 +2245,9 @@ plugins:
 
   - name: 'WM Flora Fixes.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/28197/' ]
-    req: [ *SKSE ]
+    req:
+      - SKSE
+      - SKSE_VR
     inc:
       - name: 'scripts/foxHarvestFix.pex'
         display: 'Brutal Flora Harvest Fix'
@@ -2220,30 +2340,44 @@ plugins:
 ###### Resources & Frameworks ######
   - name: 'Gamepad++.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/27007/' ]
-    msg: [ *requiresMCM ]
+    msg:
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     req:
       - *JContainers
+      - *JContainers_VR
       - *SKSE
+      - *SKSE_VR
 
   - name: 'iEquip.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/27008/' ]
-    msg: [ *requiresMCM ]
+    msg:
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     req:
       - *JContainers
+      - *JContainers_VR
       - *SKSE
+      - *SKSE_VR
 
   - name: 'NQS_NamedQuicksaves.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/16840/' ]
-    msg: [ *requiresMCM ]
+    msg:
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     req:
       - *SKSE
+      - *SKSE_VR
       - *EngineFixes
+      - *EngineFixes_VR
 
   - name: 'RaceMenu.esp'
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/19080/'
         name: 'RaceMenu Special Edition'
-    req: [ *SKSE ]
+    req:
+      - *SKSE
+      - *SKSE_VR
     inc:
       - 'CharacterMakingExtender.esp'
       - 'EnhancedCharacterEdit.esp'
@@ -2261,13 +2395,19 @@ plugins:
   - name: 'SkyUI_SE.esp'
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/12604/'
+      - link: 'https://github.com/Odie/skyui-vr/releases/'
         name: 'SkyUI'
     group: *fixesGroup
-    req: [ *SKSE ]
+    req:
+      - *SKSE
+      - *SKSE_VR
+      - name: 'SKSE/Plugins/skyrimvrtools.dll'
+        condition: 'readable("../SkyrimVR.exe") and file("SkyrimVR.esm")'
+        display: '[Skyrim VR Tools](https://www.nexusmods.com/skyrimspecialedition/mods/27782/)'
     msg:
       - <<: *alsoUseX
         subs: [ '[SkyUI SE - Flashing Savegames Fix](https://www.nexusmods.com/skyrimspecialedition/mods/20406/)' ]
-        condition: 'not file("interface/quest_journal.swf") or checksum("interface/quest_journal.swf", 44FB8C35)'
+        condition: 'not file("interface/quest_journal.swf") and file("../SkyrimSE.exe") and not file("SkyrimVR.esm") or checksum("interface/quest_journal.swf", 44FB8C35)'
       - <<: *essentialFiles
         subs: [ '**scripts/ski_playerloadgamealias.pex**' ]
         condition: 'checksum("scripts/ski_playerloadgamealias.pex", 8B234B3B) or (not file("scripts/ski_playerloadgamealias.pex") and ((active("SofiaFollower.esp") and checksum("SofiaFollower.bsa", 2F513E13)) or (active("ConfigureCommentaryRate.esp") and checksum("ConfigureCommentaryRate.bsa", EF4CBA70)) or (active("Thunderchild - Epic Shout Package.esp") and checksum("Thunderchild - Epic Shout Package.bsa", A599B10F))))'
@@ -2439,14 +2579,17 @@ plugins:
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/17763/' ]
     req:
       - *SKSE
+      - *SKSE_VR
       - *JContainers
+      - *JContainers_VR
     inc:
       - 'Backshields.esl'
       - 'Backshields.esp'
       - name: 'SKSE/Plugins/SimpleDualSheath.dll'
         display: 'Simple Dual Sheath'
     msg:
-      - *requiresMCM
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
       - <<: *requiresX
         subs: [ '[XP32 Maximum Skeleton](https://www.nexusmods.com/skyrimspecialedition/mods/1988/)' ]
         condition: 'not file("XPMSE.esp")'
@@ -2470,6 +2613,9 @@ plugins:
       - <<: *alsoUseX
         subs: [ '[ENB Helper](https://www.nexusmods.com/skyrimspecialedition/mods/23174/)' ]
         condition: 'file("../skse64_loader.exe") and file("../d3d11.dll") and not file("skse/plugins/ENBHelperSE.dll")'
+      - <<: *alsoUseX
+        subs: [ '[ENB Helper VR](https://www.nexusmods.com/skyrimspecialedition/mods/25142/)' ]
+        condition: 'file("../sksevr_loader.exe") and file("../d3d11.dll") and not file("skse/plugins/ENBHelperVR.dll")'
     clean:
       - crc: 0x19AE5E09
         util: 'SSEEdit v4.0.4b'
@@ -2531,7 +2677,8 @@ plugins:
         condition: 'not checksum("meshes/actors/character/animations/animatedeatingredux/fnis_animatedeatingredux_list.txt", 3317BFC6) and not file("tools/GenerateFNIS_for_Users/GenerateFNISforUsers.exe")'
     tag: [ Sound ]
     msg:
-      - *requiresMCM
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
       - <<: *patchIncluded
         type: warn
         subs: [ 'FNIS' ]
@@ -2587,7 +2734,12 @@ plugins:
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/31667/' ]
     req: [ *NemesisEngine ]
     msg:
-      - *requiresMCM
+      - *requiresMCM_SkyUISE
+      - type: say
+        content:
+          - lang: en
+            text: 'This file may become corrupted. To resolve this, reinstall Nemesis PCEA.esp and run the Nemesis Unlimited Behavior Engine.exe again.'
+      - *requiresMCM_VR
       - type: say
         content:
           - lang: en
@@ -2626,14 +2778,25 @@ plugins:
       - <<: *patch3rdParty
         type: warn
         subs:
+          - 'Skyrim VR'
+          - '[XP32 First Person Skeleton CTD Bugfix for VR](https://www.nexusmods.com/skyrimspecialedition/mods/34301/)'
+        condition: 'not checksum("meshes/actors/character/_1stperson/skeleton.nif", D3F2B285) and not active("Skyrim VR SSE USSEP Compatibility Mod.esp")'
+      - <<: *patch3rdParty
+        type: warn
+        subs:
           - 'Undeath Remastered'
           - '[Undeath - XPMSSE - Strange Runes - Skeleton Patch](https://www.nexusmods.com/skyrimspecialedition/mods/50694/)'
         condition: 'active("Undeath.esp") and not checksum("meshes/actors/dragonpriest/character assets/skeleton.nif", 8BBCBBDD) and not checksum("meshes/actors/dragonpriest/character assets/skeleton.nif", 6FEF769A)'
-      - <<: *requiresMCM
-        condition: 'file("scripts/XPMSEMCM.pex") and not active("SkyUI_SE.esp")'
+      - <<: *requiresMCM_SkyUISE
+        condition: 'file("scripts/XPMSEMCM.pex") and file("../SkyrimSE.exe") and not file("SkyrimVR.esm") and not active("SkyUI_SE.esp")'
+      - <<: *requiresMCM_VR
+        condition: 'file("scripts/XPMSEMCM.pex") and file("../SkyrimVR.exe")  and file("SkyrimVR.esm") and not active("SkyUI_SE.esp")'
       - <<: *requiresResources
         subs: [ '[RaceMenu Special Edition](https://www.nexusmods.com/skyrimspecialedition/mods/19080/). Only install **skse/plugins/skee64.dll** and **skse/plugins/skee64.ini**, and **scripts/nioverride.pex** from **RaceMenu.BSA** when using Enhanced Character Edit or MCM Version of **XPMSE.esp**' ]
-        condition: 'checksum("XPMSE.esp", 776BAB77) and (not file("scripts/nioverride.pex") or not file("skse/plugins/skee64.dll") or not file("skse/plugins/skee64.ini"))'
+        condition: 'checksum("XPMSE.esp", 776BAB77) and not file("SkyrimVR.esm") and (not file("scripts/nioverride.pex") or not file("skse/plugins/skee64.dll") or not file("skse/plugins/skee64.ini"))'
+      - <<: *requiresResources
+        subs: [ '[RaceMenu Special Edition](https://www.nexusmods.com/skyrimspecialedition/mods/19080/). Only install **skse/plugins/skeevr.dll** and **skse/plugins/skeevr.ini**, and **scripts/nioverride.pex** from **RaceMenu.BSA** when using Enhanced Character Edit or MCM Version of **XPMSE.esp**' ]
+        condition: 'checksum("XPMSE.esp", 776BAB77) and file("SkyrimVR.esm") and (not file("scripts/nioverride.pex") or not file("skse/plugins/skeevr.dll") or not file("skse/plugins/skeevr.ini"))'
 
 ###### AudioVisual - Models & Textures ######
   - name: '(4thUnknownAncientShroudedReplacer|Patch - \(4thUnknown - Ancient Shrouded Armor Replacer\) - .*)\.esp'
@@ -2933,7 +3096,9 @@ plugins:
         display: '[MCM Helper](https://www.nexusmods.com/skyrimspecialedition/mods/53000/)'
       - name: 'SKSE/Plugins/po3_Tweaks.dll'
         display: '[powerofthree''s Tweaks](https://www.nexusmods.com/skyrimspecialedition/mods/51073/)'
-    msg: [ *missingRequirementAddrLibforPlugin ]
+    msg:
+      - *missingRequirementAddrLibforPlugin
+      - *missingRequirementVRAddrLibforPlugin
     clean:
       - crc: 0x0CDDB7E2
         util: 'SSEEdit v4.0.4c'
@@ -3085,7 +3250,9 @@ plugins:
 
   - name: 'JS Emissive Eyes SE - Johnskyrim.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/60108/' ]
-    msg: [ *requiresMCM ]
+    msg:
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     tag:
       - Actors.Spells
       - R.AddSpells
@@ -4013,9 +4180,12 @@ plugins:
       - <<: *patchIncluded
         subs: [ 'Myrwatch (Creation Club)' ]
         condition: 'active("cceejsse002-tower.esl") and not active("RealisticWaterTwo - Myrwatch Patch.esp")'
-      - <<: *requiresMCM
+      - <<: *requiresMCM_SkyUISE
         type: say
-        condition: 'file("scripts/RealisticWaterTwoMCM.pex") and not active("SkyUI_SE.esp")'
+        condition: 'file("scripts/RealisticWaterTwoMCM.pex") and file("../SkyrimSE.exe") and not file("SkyrimVR.esm") and not active("SkyUI_SE.esp")'
+      - <<: *requiresMCM_VR
+        type: say
+        condition: 'file("scripts/RealisticWaterTwoMCM.pex") and file("../SkyrimVR.exe")  and file("SkyrimVR.esm") and not active("SkyUI_SE.esp")'
     tag:
       - ObjectBounds
       - Sound
@@ -5213,14 +5383,17 @@ plugins:
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/29243/'
         name: 'Storm Lightning'
-    req: [ *SKSE ]
+    req:
+      - *SKSE
+      - *SKSE_VR
     inc:
       - 'mintylightningmod.esp'
       - 'MPAB.esp'
     msg:
       - <<: *compatNotes
         subs: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/29243/' ]
-      - *requiresMCM
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     clean:
       # ESL
       - crc: 0xCF86C796
@@ -5638,6 +5811,7 @@ plugins:
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/31300/' ]
     req:
       - *SKSE
+      - *SKSE_VR
       - *HDT_SMP
     msg:
       - <<: *requiresX
@@ -6331,6 +6505,9 @@ plugins:
       - <<: *patchProvided
         subs: [ 'Unofficial Skyrim Special Edition Patch' ]
         condition: 'active("Unofficial Skyrim Special Edition Patch.esp") and checksum("PAN_NPCs_DG.esp", 6C01DB11)'
+      - <<: *patchProvided
+        subs: [ 'VR' ]
+        condition: 'file("../SkyrimVR.exe") and file("SkyrimVR.esm") and checksum("Meshes\Actors\Character\FaceGenData\FaceGeom\Skyrim.esm\000135E6.NIF", 1C7AB506)'
     clean:
       - crc: 0x6C01DB11
         util: 'SSEEdit v4.0.3'
@@ -6771,8 +6948,10 @@ plugins:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/52075/'
         name: 'Pussycats SSE'
     msg:
-      - <<: *requiresMCM
-        condition: 'not active("SkyUI_SE.esp") and version("Pussycats.esp", "2.0.2", >=)'
+      - <<: *requiresMCM_SkyUISE
+        condition: 'not active("SkyUI_SE.esp") and file("../SkyrimSE.exe") and not file("SkyrimVR.esm") and version("Pussycats.esp", "2.0.2", >=)'
+      - <<: *requiresMCM_VR
+        condition: 'not active("SkyUI_SE.esp") and file("../SkyrimVR.exe") and file("SkyrimVR.esm") and version("Pussycats.esp", "2.0.2", >=)'
       - <<: *obsolete
         subs: [ '[Pussycats SSE](https://www.nexusmods.com/skyrimspecialedition/mods/52075/)' ]
         condition: 'version("Pussycats.esp", "2.0.2", <)'
@@ -6906,8 +7085,12 @@ plugins:
 
   - name: 'Toccata.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/12713/' ]
-    msg: [ *requiresMCM ]
-    req: [ *SKSE ]
+    msg:
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
+    req:
+      - *SKSE
+      - *SKSE_VR
     clean:
       # version: 1.4.2
       - crc: 0xAA9D9F35
@@ -6934,7 +7117,9 @@ plugins:
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/598/'
         name: 'Buxom Wench Yuriana'
-    req: [ *SilentVoice ]
+    req:
+      - *SilentVoice
+      - *SilentVoice_VR
     msg:
       - *patch3rdParty_SRPC_Redux
       - <<: *requiresX
@@ -7119,7 +7304,8 @@ plugins:
       - <<: *patchProvided
         subs: [ 'Wyrmstooth' ]
         condition: 'active("Wyrmstooth.esp") and not active("Deadly Dragons - Wyrmstooth.esp")'
-      - *requiresMCM
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     tag:
       - Actors.ACBS
       - Actors.Perks.Add
@@ -7307,6 +7493,7 @@ plugins:
     req:
       - *PapyrusExtender
       - *SKSE
+      - *SKSE_VR
       - *SPID
       - name: 'SKSE/Plugins/BehaviorDataInjector.dll'
         display: '[Behavior Data Injector](https://www.nexusmods.com/skyrimspecialedition/mods/78159/)'
@@ -7350,7 +7537,8 @@ plugins:
       - <<: *patchUnavailable
         subs: [ 'Serio''s Enhanced Dragons Redone' ]
         condition: 'active("Serio''s Enhanced Dragons Redone.esp")'
-      - *requiresMCM
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     tag:
       - Actors.ACBS
       - Actors.DeathItem
@@ -7631,7 +7819,8 @@ plugins:
       - <<: *patchProvided
         subs: [ 'Ultimate Dragons SE' ]
         condition: 'active("UltimateDragons.esp") and not active("SEDR Ultimate Dragons Compatibility Patch.esp") and not active("SEDR DD UD Compatibility Patch.esp") and not active("SEDR KSDO2 UD Compatibility Patch.esp") and not active("SEDR Ultimate Deadly Enhanced Dragons Overhaul Patch.esp")'
-      - *requiresMCM
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     tag:
       - Actors.ACBS
       - SpellStats
@@ -7675,7 +7864,8 @@ plugins:
           - 'Wintersun - Faiths of Skyrim'
           - '[Wintersun - More Patches](https://www.nexusmods.com/skyrimspecialedition/mods/24228/)'
         condition: 'active("Wintersun - Faiths of Skyrim.esp") and not active("Wintersun - SIC Patch.esp")'
-      - *requiresMCM
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
       - type: say
         content:
           - lang: en
@@ -7948,7 +8138,9 @@ plugins:
       - 'Immersive Citizens - OCS patch.esp'
     req:
       - <<: *SKSE
-        condition: 'version("MarkekrausSentientChairsOfSkyrim.esp", "4.1.0", >=)'
+        condition: 'file("../SkyrimSE.exe") and not file("SkyrimVR.esm") and version("MarkekrausSentientChairsOfSkyrim.esp", "4.1.0", >=)'
+      - <<: *SKSE_VR
+        condition: 'file("../SkyrimVR.exe") and file("SkyrimVR.esm") and version("MarkekrausSentientChairsOfSkyrim.esp", "4.1.0", >=)'
     clean:
       - crc: 0x96C5D33E
         util: 'SSEEdit v4.0.4'
@@ -9206,7 +9398,9 @@ plugins:
   - name: 'Dynamic Things Alternative.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/49250/' ]
     req: [ *PapyrusExtender ]
-    msg: [ *requiresMCM ]
+    msg:
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     clean:
       - crc: 0xB8631D40
         util: 'SSEEdit v4.0.3'
@@ -9385,7 +9579,8 @@ plugins:
       - <<: *alsoUseX
         subs: [ '[JContainers](https://www.nexusmods.com/skyrimspecialedition/mods/16495/)' ]
         condition: 'active("SkyUI_SE.esp") and not file("SKSE/Plugins/JContainers64.dll")'
-      - *requiresMCM
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     clean:
       - crc: 0x0F22CA44
         util: 'SSEEdit v4.0.4c'
@@ -9396,7 +9591,9 @@ plugins:
 
   - name: 'MarkekrausCheatJewelry.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/58973/' ]
-    req: [ *SKSE ]
+    req:
+      - *SKSE
+      - *SKSE_VR
     clean:
       - crc: 0xDDE13D1B
         util: 'SSEEdit v4.0.4'
@@ -9406,7 +9603,9 @@ plugins:
 
   - name: 'MarkekrausCheatPowers.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/58892/' ]
-    req: [ *SKSE ]
+    req:
+      - *SKSE
+      - *SKSE_VR
     clean:
       - crc: 0x0AABCA29
         util: 'SSEEdit v4.0.4'
@@ -9424,8 +9623,12 @@ plugins:
     msg: [ *obsolete ]
 
   - name: 'Master of Disguise - Special Edition.esp'
-    url: [ 'https://letsplaywithfire.com/releases/file/master-of-disguise/' ]
-    req: [ *SKSE ]
+    url:
+      - link: 'https://letsplaywithfire.com/releases/file/master-of-disguise/'
+        name: 'Master of Disguise'
+    req:
+      - *SKSE
+      - *SKSE_VR
     msg:
       - <<: *alsoUseX
         subs: [ '**[Bug Fixes](https://www.nexusmods.com/skyrimspecialedition/mods/33261/)** OR **[Scrambled Bugs](https://www.nexusmods.com/skyrimspecialedition/mods/43532/)**' ]
@@ -9433,7 +9636,9 @@ plugins:
       - <<: *compatNotes
         subs: [ 'https://wiki.fireundubh.com/mods/master-of-disguise#compatibility' ]
       - *missingRequirementAddrLibforPlugin
-      - *requiresMCM
+      - *missingRequirementVRAddrLibforPlugin
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     tag:
       - Actors.DeathItem
       - Factions
@@ -9525,8 +9730,9 @@ plugins:
         name: 'Pause After Loading Screens'
     req:
       - *SKSE
+      - *SKSE_VR
       - name: 'SKSE/Plugins/ConsoleUtilSSE.dll'
-        display: '[ConsoleUtilSSE](https://www.nexusmods.com/skyrimspecialedition/mods/24858/)'
+        display: '[ConsoleUtilSSE NG](https://www.nexusmods.com/skyrimspecialedition/mods/76649/)'
     clean:
       - crc: 0x7186B706
         util: 'SSEEdit v4.0.4b'
@@ -9676,7 +9882,9 @@ plugins:
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/14098/'
         name: 'Simply Knock'
-    req: [ *SKSE ]
+    req:
+      - *SKSE
+      - *SKSE_VR
     msg:
       - <<: *alsoUseX
         subs: [ '[Simply Knock - Tower Stone Fix](https://www.nexusmods.com/skyrimspecialedition/mods/41590/)' ]
@@ -9685,7 +9893,13 @@ plugins:
         type: error
         subs: [ '[Simply Knock SKSE64 DLL](https://www.nexusmods.com/skyrimspecialedition/mods/24297/) **OR** [Simply Knock DLL for AE](https://www.nexusmods.com/skyrimspecialedition/mods/77283/)' ]
         condition: 'version("../skse64_loader.exe", "0.2.0.7", >) and checksum("SKSE/Plugins/SimplyKnock.dll", A442045A)'
-      - <<: *requiresMCM
+      - <<: *patchUpdateAvailable
+        type: error
+        subs: [ '[Simply Knock SKSEVR DLL](https://www.nexusmods.com/skyrimspecialedition/mods/24297/)' ]
+        condition: 'file("../sksevr_loader.exe") and checksum("SKSE/Plugins/SimplyKnock.dll", A442045A)'
+      - <<: *requiresMCM_SkyUISE
+        type: error
+      - <<: *requiresMCM_VR
         type: error
       - <<: *requiresX
         type: error
@@ -9712,8 +9926,12 @@ plugins:
 
   - name: 'Snotgurg Simple Drop Lit Torches.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/14490/' ]
-    msg: [ *requiresMCM ]
-    req: [ *SKSE ]
+    msg:
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
+    req:
+      - *SKSE
+      - *SKSE_VR
     clean:
       - crc: 0x376873D2
         util: 'SSEEdit v4.0.3'
@@ -9738,11 +9956,16 @@ plugins:
 
   - name: 'SwiftPotion.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/12293/' ]
-    msg: [ *requiresMCM ]
+    msg:
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     req:
       - <<: *JContainers
-        condition: 'file("scripts/_AP_Main.pex")'
+        condition: 'file("scripts/_AP_Main.pex") and file("../SkyrimSE.exe") and not file("SkyrimVR.esm")'
+      - <<: *JContainers_VR
+        condition: 'file("scripts/_AP_Main.pex") and file("../SkyrimVR.exe") and file("SkyrimVR.esm")'
       - *SKSE
+      - *SKSE_VR
     clean:
       # version: 3.1 - No JContainers
       - crc: 0x5DEC1D9A
@@ -9765,7 +9988,8 @@ plugins:
         type: warn
         subs: [ 'Reliquary of Myth' ]
         condition: 'active("Reliquary of Myth.esp") and not active("M_ROM__SunHelm.esp")'
-      - *requiresMCM
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     clean:
       - crc: 0x246915B2
         util: 'SSEEdit v4.0.4b'
@@ -10559,7 +10783,9 @@ plugins:
     after:
       - 'Complete Crafting Overhaul_Remastered.esp'
       - 'iNeed.esp'
-    req: [ *SKSE ]
+    req:
+      - *SKSE
+      - *SKSE_VR
     inc:
       - 'BullseyePerkParalyzeBugFixSE.esp'
       - 'FloraRespawnFix.esp'
@@ -10573,7 +10799,8 @@ plugins:
       - ObjectBounds
       - Text
     msg:
-      - *requiresMCM
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
       - <<: *compatIssuesWithX
         subs: [ 'iNeed - Food, Water and Sleep **iNeed.esp** & **iNeed - Extended.esp**' ]
         condition: 'active("iNeed.esp") or active("iNeed - Extended.esp")'
@@ -10596,13 +10823,16 @@ plugins:
     group: *craftingGroup
     after: [ 'WACCF_Armor and Clothing Extension.esp' ]
     inc: [ 'Ars Metallica.esp' ]
-    req: [ *SKSE ]
+    req:
+      - *SKSE
+      - *SKSE_VR
     tag:
       - Graphics
       - Keywords
       - Text
     msg:
-      - *requiresMCM
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
       - <<: *patch3rdParty
         subs:
           - 'Requiem - The Roleplaying Overhaul'
@@ -10981,7 +11211,9 @@ plugins:
   - name: 'Bounty Gold.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/18571/' ]
     after: [ 'Requiem.esp' ]
-    msg: [ *requiresMCM ]
+    msg:
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
 
   - name: 'BuildWithGold.esp'
     url:
@@ -11175,6 +11407,7 @@ plugins:
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/9542/' ]
     after: [ 'You Hunger.esp' ]
   - name: 'EconomyOverhaulandSpeechcraftImprovements.esp'
+    req: [ *VR_PerkExtender ]
     msg:
       - <<: *patchIncluded
         subs: [ 'Complete Alchemy & Cooking Overhaul' ]
@@ -11561,7 +11794,9 @@ plugins:
         condition: 'checksum("Poverty.esp", BD49570C)'
       - name: 'WACCF_BashedPatchLvlListFix.esp'
         condition: 'checksum("Poverty.esp", BD49570C)'
-    msg: [ *requiresMCM ]
+    msg:
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     tag:
       - Delev
       - Invent.Add
@@ -11929,7 +12164,8 @@ plugins:
         condition: 'active("BSHeartland.esm") and not (active("Beyond Bruma - Trade and Barter Patch.esp") or active("Ordinator - Perks of Skyrim.esp"))'
       - <<: *patch3rdParty_LotD
         condition: 'active("LegacyoftheDragonborn.esm") and not active("DBM_TradeBarter_Patch.esp") and version("LegacyoftheDragonborn.esm", "5.0.24", >=)'
-      - *requiresMCM
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
       - <<: *patch3rdParty_RPC
         condition: 'active("Requiem.esp") and not active("Requiem - Trade and Barter.esp")'
       - <<: *patch3rdParty_UVCPC
@@ -12145,7 +12381,9 @@ plugins:
     inc:
       - 'GIST soul trap.esp'
       - 'UFD Enhanced Soultrap.esp'
-    msg: [ *requiresMCM ]
+    msg:
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     clean:
       - crc: 0x71F3F1A3
         util: 'SSEEdit v4.0.3'
@@ -12529,8 +12767,12 @@ plugins:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/8473/'
         name: 'Enchanting Adjustments and Price-Charge Bug Fix'
   - name: 'EnchantingAdjustments.esp'
-    req: [ *SKSE ]
-    msg: [ *requiresMCM ]
+    req:
+      - *SKSE
+      - *SKSE_VR
+    msg:
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     tag:
       - Delev
       - EffectStats
@@ -12679,7 +12921,8 @@ plugins:
       - <<: *patchProvided
         subs: [ 'Rustic Soul Gems Unsorted' ]
         condition: 'file("RUSTIC SOULGEMS - Unsorted( - ESL)?\.esp") and not file("GIST-RusticSoulGems-patch.esp") and not file("RUSTIC SOULGEMS - (Sorted|Unsorted)( - ESL)? - GIST\.esp")'
-      - *requiresMCM
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     clean:
       - crc: 0xC9D0A414
         util: 'SSEEdit v4.0.3g'
@@ -13398,7 +13641,9 @@ plugins:
     inc:
       - 'AcquisitiveSoulGemMultithreaded.esp'
       - 'GIST soul trap.esp'
-    msg: [ *requiresMCM ]
+    msg:
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
   - name: 'UFD Enhanced Soultrap.esl'
     clean:
       - crc: 0x6631183A
@@ -13472,7 +13717,12 @@ plugins:
         condition: 'active("TheChoiceIsYours.esp") and not active("TCIY_Wintersun_Patch.esp")'
       - <<: *patch3rdParty_LotD
         condition: 'active("LegacyoftheDragonborn.esm") and not active("DBM_Wintersun_Patch.esp") and version("LegacyoftheDragonborn.esm", "5.0.24", >=)'
-      - <<: *requiresMCM
+      - <<: *patchProvided
+        subs: [ 'Skyrim VR' ]
+        condition: 'file("../SkyrimVR.exe") and file("SkyrimVR.esm") and active("Wintersun - VR Patch.esp")'
+      - <<: *requiresMCM_SkyUISE
+        type: say
+      - <<: *requiresMCM_VR
         type: say
     tag:
       - Delev
@@ -13572,9 +13822,11 @@ plugins:
     req:
       - *PapyrusUtil
       - *SKSE
+      - *SKSE_VR
     inc: [ 'Convenient Horses.esp' ]
     msg:
-      - *requiresMCM
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
       - <<: *patch3rdParty
         subs:
           - 'Beyond Skyrim - Bruma SE'
@@ -13646,14 +13898,17 @@ plugins:
         name: 'Nether''s Follower Framework (Nexus Mods)'
     group: *followerFrameworksGroup
     after: [ 'Qw_BeyondReach_USSEP Patch.esp' ]
-    req: [ *SKSE ]
+    req:
+      - *SKSE
+      - *SKSE_VR
     inc:
       - 'AmazingFollowerTweaks.esp'
       - 'EFFCore.esm'
       - 'EFFDialogue.esp'
       - 'UFO - Ultimate Follower Overhaul.esp'
     msg:
-      - *requiresMCM
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
       - <<: *alsoUseX
         subs: [ '[Fuz Ro D-oh - Silent Voice](https://www.nexusmods.com/skyrimspecialedition/mods/15109/)' ]
         condition: 'not file("SKSE/Plugins/Fuz Ro D''oh.dll")'
@@ -13679,8 +13934,10 @@ plugins:
   - name: 'Better Hunters.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/3329/' ]
     msg:
-      - <<: *requiresMCM
-        condition: 'not active("SkyUI_SE.esp") and version("Better Hunters.esp", "1.0.1", >=)'
+      - <<: *requiresMCM_SkyUISE
+        condition: 'file("../SkyrimSE.exe") and not file("SkyrimVR.esm") and not active("SkyUI_SE.esp") and version("Better Hunters.esp", "1.0.1", >=)'
+      - <<: *requiresMCM_VR
+        condition: 'file("../SkyrimVR.exe") and file("SkyrimVR.esm") and not active("SkyUI_SE.esp") and version("Better Hunters.esp", "1.0.1", >=)'
       - <<: *wildEdits
         subs: [ 'Remove **00006FBF**, **00009079**, **00009097**, **000093F5**, & **000097D9** from **Better Hunters.esp**.' ]
         condition: 'checksum("Better Hunters.esp", 78B50785) or checksum("Better Hunters.esp", 680D15F3) or checksum("Better Hunters.esp", 34241866) or checksum("Better Hunters.esp", 6043DA88)'
@@ -14116,7 +14373,9 @@ plugins:
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/21296/'
         name: 'Immersive Speechcraft'
-    req: [ *SKSE ]
+    req:
+      - *SKSE
+      - *SKSE_VR
     dirty:
       - <<: *quickClean
         crc: 0x2B1F2BB9
@@ -14235,7 +14494,9 @@ plugins:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/62127/'
         name: 'Nether''s Karliah'
   - name: 'NWS_Karliah.esp'
-    msg: [ *requiresMCM ]
+    msg:
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     tag:
       - Actors.ACBS
       - Actors.AIData
@@ -15402,7 +15663,8 @@ plugins:
       - <<: *patchIncluded
         subs: [ 'The Great City of Solitude' ]
         condition: 'active("The Great City of Solitude.esp") and not active("Immersive Encounters - The Great City of Solitude Patch.esp")'
-      - *requiresMCM
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     tag:
       - Actors.ACBS
       - Actors.AIData
@@ -15945,15 +16207,19 @@ plugins:
       - 'ShoutsCostOneSoul.esp'
     req:
       - <<: *SKSE
-        condition: 'not checksum("Skyrim Unbound.esp", BF3A39A9) and not checksum("Skyrim Unbound.esp", 4C621C50) and not file("../skse64_loader.exe")'
+        condition: 'file("../SkyrimSE.exe") and not checksum("Skyrim Unbound.esp", BF3A39A9) and not checksum("Skyrim Unbound.esp", 4C621C50) and not file("SkyrimVR.esm") and not file("../skse64_loader.exe")'
+      - <<: *SKSE_VR
+        condition: 'file("../SkyrimVR.exe") and not checksum("Skyrim Unbound.esp", BF3A39A9) and not checksum("Skyrim Unbound.esp", 4C621C50) and file("SkyrimVR.esm") and not file("../sksevr_loader.exe")'
     tag:
       - Actors.Spells
       - Invent.Remove
       - Names
       - NPC.DefaultOutfit
     msg:
-      - <<: *requiresMCM
-        condition: 'not checksum("Skyrim Unbound.esp", BF3A39A9) and not checksum("Skyrim Unbound.esp", 4C621C50) and not active("SkyUI_SE.esp")'
+      - <<: *requiresMCM_SkyUISE
+        condition: 'file("../SkyrimSE.exe") and not checksum("Skyrim Unbound.esp", BF3A39A9) and not checksum("Skyrim Unbound.esp", 4C621C50) and not file("SkyrimVR.esm") and not active("SkyUI_SE.esp")'
+      - <<: *requiresMCM_VR
+        condition: 'file("../SkyrimVR.exe") and not checksum("Skyrim Unbound.esp", BF3A39A9) and not checksum("Skyrim Unbound.esp", 4C621C50) and file("SkyrimVR.esm") and not active("SkyUI_SE.esp")'
     clean:
       - crc: 0x37B28DD5
         util: 'SSEEdit v4.0.4c'
@@ -16135,7 +16401,8 @@ plugins:
       - <<: *includesX
         subs: [ '[Sell Unusual Gems - Stones of Barenziah](https://www.nexusmods.com/skyrimspecialedition/mods/17605/)' ]
         condition: 'active("Sell Stones of Barenziah.esp")'
-      - *requiresMCM
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     clean:
       - crc: 0x4383E5A0
         util: 'SSEEdit v4.0.3'
@@ -16150,7 +16417,8 @@ plugins:
     msg:
       - <<: *patch3rdParty_RPC
         condition: 'active("Requiem.esp") and not active("Requiem - Timing is Everything.esp")'
-      - *requiresMCM
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     clean:
       - crc: 0x06689998
         util: 'SSEEdit v4.0.3'
@@ -16276,7 +16544,9 @@ plugins:
       - 'Save the Dark Brotherhood!.esp'
       - 'SaveTheBrotherhood.esp'
       - 'The Brotherhood of Old.esp'
-    req: [ *SKSE ]
+    req:
+      - *SKSE
+      - *SKSE_VR
     msg:
       - <<: *compatIssuesWithX
         subs: [ 'Dark Brotherhood for Good Guys - goodbrother.esp' ]
@@ -16302,7 +16572,9 @@ plugins:
         type: warn
         subs: [ 'Save the Dark Brotherhood' ]
         condition: 'active("SaveTheBrotherhood.esp") and not active("ww_AlternateDBEnding_SaveTheDBPatch.esp")'
-      - <<: *requiresMCM
+      - <<: *requiresMCM_SkyUISE
+        type: say
+      - <<: *requiresMCM_VR
         type: say
     dirty:
       - <<: *quickClean
@@ -16374,6 +16646,7 @@ plugins:
       - 'Real Feeding V3.esp'
       - name: 'Tainted_Blood.esp'
         condition: 'not file("Tainted_Blood_Growl_Compatibility_Patch.esp")'
+    req: [ *VR_PerkExtender ]
     tag:
       - EffectStats
       - Graphics
@@ -16444,7 +16717,8 @@ plugins:
       - name: 'Ordinator - Perks of Skyrim.esp'
         condition: 'checksum("Lock_Overhaul.esp", CD2D19F5)'
     msg:
-      - *requiresMCM
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
       - <<: *useVersion
         type: warn
         subs: [ 'Ordinator - Perks of Skyrim' ]
@@ -16511,6 +16785,7 @@ plugins:
       - name: 'Vokrii - Minimalistic Perks of Skyrim.esp'
         condition: 'file("Vokriinator( Black)?\.esp")'
       - 'Weapons Armor Clothing & Clutter Fixes.esp'
+    req: [ *VR_PerkExtender ]
     inc:
       - 'PerkusMaximus_CombatPlus.esp'
       - 'PerkusMaximus_Mage.esp'
@@ -16612,6 +16887,7 @@ plugins:
     inc:
       - 'Better Vampires.esp'
       - 'Sacrosanct - Vampires of Skyrim.esp'
+    req: [ *VR_PerkExtender ]
     tag:
       - EffectStats
       - Graphics
@@ -16633,6 +16909,7 @@ plugins:
       - 'SanguinairVampirism.esp'
       - 'VampireLordPerksExpanded.esp'
     after: [ 'RaceCompatibilityUSKPOverride.esp' ]
+    req: [ *VR_PerkExtender ]
     tag:
       - EffectStats
       - Graphics
@@ -16693,7 +16970,9 @@ plugins:
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/52768/'
         name: 'Stealth Skills Rebalanced'
-    req: [ *SKSE ]
+    req:
+      - *SKSE
+      - *SKSE_VR
     msg:
       - <<: *useVersion
         subs: [ 'Weapons Armor Clothing and Clutter Fixes' ]
@@ -17412,7 +17691,8 @@ plugins:
           - 'Requiem - The Roleplaying Overhaul'
           - '[Requiem - WACCF CCOR ACE Patches](https://www.nexusmods.com/skyrimspecialedition/mods/31758/)'
         condition: 'active("Requiem.esp") and not active("Requiem - WACCF - ACE.esp")'
-      - *requiresMCM
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     tag:
       - -Invent.Remove
       - -Names
@@ -17644,8 +17924,10 @@ plugins:
       - <<: *patchUpdateAvailable
         subs: [ '[Wearable Lanterns MCM Fix](https://www.nexusmods.com/skyrimspecialedition/mods/25372/)' ]
         condition: 'active("SkyUI_SE.esp") and not file("interface/wearablelanterns/_wl_title.dds") and not file("interface/exported/widgets/wearablelanterns/meter.swf")'
-      - <<: *requiresMCM
-        condition: 'not active("SkyUI_SE.esp") and checksum("scripts/_wl_compatibility.pex", 02E2CA8E)'
+      - <<: *requiresMCM_SkyUISE
+        condition: 'not active("SkyUI_SE.esp") and file("../SkyrimSE.exe") and not file("SkyrimVR.esm") and checksum("scripts/_wl_compatibility.pex", 02E2CA8E)'
+      - <<: *requiresMCM_VR
+        condition: 'not active("SkyUI_SE.esp") and file("../SkyrimVR.exe")  and file("SkyrimVR.esm") and checksum("scripts/_wl_compatibility.pex", 02E2CA8E)'
     clean:
       - crc: 0xA1170B2D
         util: 'SSEEdit v4.0.4b'
@@ -18209,7 +18491,9 @@ plugins:
         util: 'SSEEdit v4.0.4c'
   - name: 'Hothtrooper44_Armor_Ecksstra.esp'
     req: [ 'Hothtrooper44_ArmorCompilation.esp' ]
-    msg: [ *requiresMCM ]
+    msg:
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     clean:
       - crc: 0x561B126F
         util: 'SSEEdit v4.0.4c'
@@ -18625,14 +18909,18 @@ plugins:
 
   - name: 'MarkekrausBarstoolBrawler.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/61354/' ]
-    req: [ *SKSE ]
+    req:
+      - *SKSE
+      - *SKSE_VR
     clean:
       - crc: 0xC64C56A5
         util: 'SSEEdit v4.0.4'
 
   - name: 'MarkekrausChairhammers.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/61304/' ]
-    req: [ *SKSE ]
+    req:
+      - *SKSE
+      - *SKSE_VR
     clean:
       - crc: 0xAB3D127D
         util: 'SSEEdit v4.0.4'
@@ -18641,7 +18929,9 @@ plugins:
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/61168/' ]
     req:
       - <<: *SKSE
-        condition: 'version("MarkekrausChairrows.esp", "2.0.0", >=)'
+        condition: 'file("../SkyrimSE.exe") and not file("SkyrimVR.esm") and version("MarkekrausChairrows.esp", "2.0.0", >=)'
+      - <<: *SKSE_VR
+        condition: 'file("../SkyrimVR.exe") and not file("SkyrimVR.esm") and version("MarkekrausChairrows.esp", "2.0.0", >=)'
     clean:
       - crc: 0x97C6EF29
         util: 'SSEEdit v4.0.4'
@@ -20029,7 +20319,9 @@ plugins:
         name: 'The Republic of Maslea - Chapter one - SSE'
     inc: [ 'MoreBanditCamps.esp' ]
     msg: [ *patch3rdParty_SRPC_Redux ]
-    req: [ *SilentVoice ]
+    req:
+      - *SilentVoice
+      - *SilentVoice_VR
     dirty:
       - <<: *quickClean
         crc: 0x47A6A2ED
@@ -21761,7 +22053,9 @@ plugins:
         condition: '(is_master("CollegeOfWinterholdImmersive.esp") and is_master("TheWulfPanda - Faction Teleport Spells.esp")) or (not is_master("CollegeOfWinterholdImmersive.esp") and not is_master("TheWulfPanda - Faction Teleport Spells.esp"))'
       - name: 'TheWulfPanda - Faction Teleport Spells Less Magicka Increased Cast Time.esp'
         condition: '(is_master("CollegeOfWinterholdImmersive.esp") and is_master("TheWulfPanda - Faction Teleport Spells Less Magicka Increased Cast Time.esp")) or (not is_master("CollegeOfWinterholdImmersive.esp") and not is_master("TheWulfPanda - Faction Teleport Spells Less Magicka Increased Cast Time.esp"))'
-    req: [ *SKSE ]
+    req:
+      - *SKSE
+      - *SKSE_VR
     inc: [ 'MagicalCollegeofWinterhold.esp' ]
     msg:
       - <<: *compatPatch
@@ -21801,7 +22095,8 @@ plugins:
       - <<: *patchUpdateAvailable
         subs: [ '[Immersive College of Winterhold Patch Collection](https://www.nexusmods.com/skyrimspecialedition/mods/67358/) (Unofficial Immersive College of Winterhold Patch)' ]
         condition: 'not active("ICOW Unofficial Patch.esp") and not active("UltimateCollege.esp")'
-      - *requiresMCM
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     tag:
       - Actors.ACBS
       - Actors.AIData
@@ -22367,8 +22662,10 @@ plugins:
   - name: 'FarmhouseChimneys.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/8766/' ]
     msg:
-      - <<: *requiresMCM
-        condition: 'file("scripts/FarmhouseChimneysMCM.pex") and not active("SkyUI_SE.esp")'
+      - <<: *requiresMCM_SkyUISE
+        condition: 'file("../SkyrimSE.exe") and not file("SkyrimVR.esm") and file("scripts/FarmhouseChimneysMCM.pex") and not active("SkyUI_SE.esp")'
+      - <<: *requiresMCM_VR
+        condition: 'file("../SkyrimVR.exe") and not file("SkyrimVR.esm") and file("scripts/FarmhouseChimneysMCM.pex") and not active("SkyUI_SE.esp")'
     dirty:
       - <<: *quickClean
         crc: 0x9BE9AC68
@@ -27070,8 +27367,11 @@ plugins:
       - *PapyrusExtender
       - *PapyrusUtil
       - *SKSE
+      - *SKSE_VR
     inc: [ 'MapleManor.esp' ]
-    msg: [ *requiresMCM ]
+    msg:
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     clean:
       - crc: 0xA9C34FB0
         util: 'SSEEdit v4.0.4c'
@@ -27366,7 +27666,8 @@ plugins:
     tag: [ Text ]
     msg:
       - *patch3rdParty_SRPC_Redux
-      - *requiresMCM
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
     clean:
       - crc: 0x663FAB6A
         util: 'SSEEdit v4.0.3f'
@@ -27552,6 +27853,7 @@ plugins:
     req:
       - *PapyrusExtender
       - *SKSE
+      - *SKSE_VR
     clean:
       - crc: 0xCB190694
         util: 'SSEEdit v4.0.4b'
