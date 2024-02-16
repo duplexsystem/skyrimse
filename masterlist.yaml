@@ -1863,11 +1863,6 @@ plugins:
           - '1.6.629'
           - 'Skyrim Special Edition'
         condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.629.0", <) and not file("SkyrimVR.esm") and version("Unofficial Skyrim Special Edition Patch.esp", "4.2.8", >=)'
-      - <<: *versionXIncY
-        subs:
-          - 'Unofficial Skyrim Special Edition Patch'
-          - 'Skyrim VR'
-        condition: 'version("Unofficial Skyrim Special Edition Patch.esp", "4.2.6", >=) or (version("Unofficial Skyrim Special Edition Patch.esp", "4.2.6", <) and readable("../SkyrimVR.exe") and file("SkyrimVR.esm") and not active("Skyrim VR SSE USSEP Compatibility Mod.esp"))'
     clean:
       - crc: 0xF82ECF21
         util: 'SSEEdit v4.0.4c'
