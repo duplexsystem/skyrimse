@@ -9901,7 +9901,7 @@ plugins:
     msg:
       - <<: *alsoUseX
         subs: [ '[Simply Knock - Tower Stone Fix](https://www.nexusmods.com/skyrimspecialedition/mods/41590/)' ]
-        condition: 'not active("Simply Knock - Tower Stone Fix.esp")'
+        condition: 'not active("Simply Knock - Tower Stone Fix.esp") and not active("Simply DAK Knock Peek.esp")'
       - <<: *patchUpdateAvailable
         type: error
         subs: [ '[Simply Knock SKSE64 DLL](https://www.nexusmods.com/skyrimspecialedition/mods/24297/) **OR** [Simply Knock DLL for AE](https://www.nexusmods.com/skyrimspecialedition/mods/77283/)' ]
@@ -18646,7 +18646,7 @@ plugins:
     after: [ 'Circlets and Masks with all Robes and Hoods.esp' ]
     msg:
       - <<: *patch3rdParty_KPH_WACCF
-        condition: 'active("Weapons Armor Clothing & Clutter Fixes.esp") and not active("imp_helm_legend_WACCF_Patch.esp") and not active("imp_helm_legend_WACCF_AMB_Patch.esp")'
+        condition: 'active("Weapons Armor Clothing & Clutter Fixes.esp") and not active("imp_helm_legend_(BMF_)?WACCF_(AMB_)?Patch\.esp")'
       - <<: *patch3rdParty_RPC
         condition: 'active("Requiem.esp") and not active("Requiem - Improved Closefaced Helmets.esp")'
       - <<: *patch3rdParty
@@ -27738,6 +27738,9 @@ plugins:
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/38508/' ]
     msg:
       - <<: *alreadyInOrFixedByX
+        subs: [ 'Just Knock - Simply Knock Dynamic Activation Key patch' ]
+        condition: 'file("DAK Knock - Andromeda Tower Stone.esp")'
+      - <<: *alreadyInOrFixedByX
         subs: [ 'Simply Knock - Tower Stone Fix' ]
         condition: 'file("Simply Knock - Tower Stone Fix.esp")'
 
@@ -28822,6 +28825,9 @@ plugins:
   - name: 'trawzifiedsSimplyKnockWintersunPatch.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/38137/' ]
     msg:
+      - <<: *alreadyInOrFixedByX
+        subs: [ 'Just Knock - Simply Knock Dynamic Activation Key patch' ]
+        condition: 'file("Simply DAK Knock Peek.esp")'
       - <<: *alreadyInOrFixedByX
         subs: [ 'Simply Knock - Tower Stone Fix' ]
         condition: 'file("Simply Knock - Tower Stone Fix.esp")'
