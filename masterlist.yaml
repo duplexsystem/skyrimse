@@ -2264,6 +2264,10 @@ plugins:
     group: *fixesGroup
     msg: [ *alreadyInOrFixedByScrambledBugs ]
 
+  - name: 'ScriptFixesCompilation.esp'
+    group: 'Fixes & Resources'
+    after: ['Unofficial Skyrim Special Edition Patch.esp']
+
 ###### Modding Tools - Resources ######
   - name: 'FactionSpy.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/17819/' ]
