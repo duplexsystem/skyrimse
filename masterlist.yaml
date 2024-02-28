@@ -3283,6 +3283,13 @@ plugins:
       - crc: 0x65625CA4
         util: 'SSEEdit v4.0.4b'
 
+  - name: 'JS Unique Utopia SE - Rings - (Johnskyrim|.+ Patch)\.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/102226/'
+        name: 'JS Unique Utopia - Rings'
+  - name: 'JS Unique Utopia SE - Rings - Johnskyrim.esp'
+    tag: [ Graphics ]
+
   - name: 'Kanjs - AIO Books Patch\.es[lp]'
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/109877/'
@@ -19022,6 +19029,32 @@ plugins:
         util: '[SSEEdit v4.0.3](https://www.nexusmods.com/skyrimspecialedition/mods/164)'
         itm: 4
 
+  - name: 'NW_(Companions_Replacer_Light|Wolf_Armor_Standalone)\.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/109963/'
+        name: 'Legacy of Ysgramor'
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/111121/'
+        name: 'Legacy of Ysgramor - My patches and fixes SE by Xtudo'
+  - name: 'NW_Companions_Replacer_Light.esp'
+    tag:
+      - Graphics
+      - Keywords
+      - ObjectBounds
+      - Outfits.Add
+      - Outfits.Remove
+      - Stats
+    clean:
+      - crc: 0x6E94D7ED
+        util: 'SSEEdit v4.1.5c EXTREMELY EXPERIMENTAL'
+  - name: 'NW_Wolf_Armor_Standalone.esp'
+    msg:
+      - <<: *alreadyInX
+        subs: [ '**NW_Companions_Replacer_Light.esp**' ]
+        condition: 'active("NW_Companions_Replacer_Light.esp")'
+    clean:
+      - crc: 0x8D62A261
+        util: 'SSEEdit v4.1.5c EXTREMELY EXPERIMENTAL'
+
   - name: 'NW_Sons_of_Skyrim.esp'
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/68656/'
@@ -28187,6 +28220,12 @@ plugins:
       - <<: *useInstead
         subs: [ '[Requiem - Improved Closefaced Helmets.esp](https://www.nexusmods.com/skyrimspecialedition/mods/64410/)' ]
         condition: 'active("Requiem.esp")'
+
+  - name: 'ISC_drinking_sound_fix.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/58623/'
+        name: 'Immersive Sounds Compendium Drinking Sound Fix'
+    tag: [ Sound ]
 
   ### JK's Guild HQ Interiors Patch Collection ###
   # JK's College of Winterhold #
