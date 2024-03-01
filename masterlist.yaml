@@ -2241,8 +2241,8 @@ plugins:
   - name: 'WM Flora Fixes.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/28197/' ]
     req:
-      - SKSE
-      - SKSE_VR
+      - *SKSE
+      - *SKSE_VR
     inc:
       - name: 'scripts/foxHarvestFix.pex'
         display: 'Brutal Flora Harvest Fix'
