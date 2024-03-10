@@ -850,9 +850,15 @@ groups:
     description: 'A group for modules that must load after most other mods.'
     after: [ default ]
 
+  - name: &icaioGroup Immersive Citizens
+    after: [ *lowPriorityGroup ]
+
+  - name: &pceGroup Palaces Castles Enhanced
+    after: [ *icaioGroup ]
+
   - name: &racesGroup Races & Classes
     description: 'A group for modules that modify character Races & Classes.'
-    after: [ *lowPriorityGroup ]
+    after: [ *pceGroup ]
 
   - name: &economyGroup Economy
     description: 'A group for mods that alter the Economy of the game.'
@@ -881,9 +887,12 @@ groups:
     description: 'A group for mods that provide alternative starting choices.'
     after: [ *coreGroup ]
 
+  - name: &ocsGroup Open Cities Skyrim
+    after: [ *altStartGroup ]
+
   - name: &followerFrameworksGroup Follower Frameworks
     description: 'A group for mods that extend the follower system.'
-    after: [ *altStartGroup ]
+    after: [ *ocsGroup ]
 
   - name: &cellMusicGroup Cell Music
     description: 'A group for modules that modify cell music.'
@@ -893,22 +902,19 @@ groups:
     description: 'A group for modules that modify cell encounter zones.'
     after: [ *cellMusicGroup ]
 
-  - name: &interiorLightingGroup Interior Lighting
-    description: 'A group for modules that add/remove and/or fix light bulbs in interiors.'
+  - name: &cellWaterGroup Cell Water
+    description: 'A group for modules that modify cell water.'
     after: [ *cellEncZonesGroup ]
 
+  - name: &cellLightingGroup Cell Weather & Lighting
+    description: 'A group for modules that modify cell weather & lighting.'
+    after: [ *cellWaterGroup ]
+
   - name: &highPriorityGroup High Priority Overrides
-    after: [ *interiorLightingGroup ]
-
-  - name: &cellSettingsGroup Cell Settings
-    description: 'A group for modules that only modify cell settings.'
-    after: [ *highPriorityGroup ]
-
-  - name: &lightingEnhancerGroup Lighting Enhancers
-    after: [ *cellSettingsGroup ]
+    after: [ *cellLightingGroup ]
 
   - name: &lateLoadersGroup Late Loaders
-    after: [ *lightingEnhancerGroup ]
+    after: [ *highPriorityGroup ]
 
   - name: &kSpeakGroup Khajiit Speak
     after: [ *lateLoadersGroup ]
@@ -1843,6 +1849,7 @@ plugins:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/65237/'
         name: 'Unofficial Skyrim Special Edition Patch DV'
     group: *fixesGroup
+    after: [ 'BOS Master Occlusion.esm' ]
     msg:
       - <<: *obsolete
         condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.629.0", >=) and version("Unofficial Skyrim Special Edition Patch.esp", "4.2.9a", <)'
@@ -2343,6 +2350,16 @@ plugins:
     group: *dynamicPatchGroup
 
 ###### Resources & Frameworks ######
+  - name: 'BOS Master Occlusion.esm'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/113023/'
+        name: 'Base Object Swapper - Master Occlusion'
+    group: *fixesGroup
+    msg:
+      - <<: *alsoUseX
+        subs: [ '[Base Object Swapper](https://www.nexusmods.com/skyrimspecialedition/mods/60805/)' ]
+        condition: 'not file("SKSE/Plugins/po3_BaseObjectSwapper.dll")'
+
   - name: 'Gamepad++.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/27007/' ]
     msg:
@@ -3310,6 +3327,22 @@ plugins:
       - crc: 0x8FF1374F
         util: 'SSEEdit v4.1.5c EXTREMELY EXPERIMENTAL'
 
+  - name: 'Kanjs - AIO Soup and Stew\.es[lp]'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/113104/'
+        name: 'Kanjs - Soup and Stew All In One Animated'
+    tag:
+      - Deactivate
+      - Graphics
+  - name: 'Kanjs - AIO Soup and Stew.esl'
+    clean:
+      - crc: 0x1EE58DF0
+        util: 'SSEEdit v4.1.5c EXTREMELY EXPERIMENTAL'
+  - name: 'Kanjs - AIO Soup and Stew.esp'
+    clean:
+      - crc: 0x4572E8D7
+        util: 'SSEEdit v4.1.5c EXTREMELY EXPERIMENTAL'
+
   - name: '(man_clavMask|Clavicus mask Reliquary of Myth Patch|Masque of Trickery|REQ_ClavicusMask_patch|Zims clavicus patch)\.esp'
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/60764/'
@@ -4201,7 +4234,7 @@ plugins:
       - crc: 0xC500C63B
         util: 'SSEEdit v4.0.4c'
   - name: 'RealisticWaterTwo.esp'
-    group: *lateLoadersGroup
+    group: *cellWaterGroup
     msg:
       - <<: *patchIncluded
         subs: [ 'Myrwatch (Creation Club)' ]
@@ -4237,7 +4270,7 @@ plugins:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/30571/'
         name: 'SkyVRaan - Shimmering VR Waters'
   - name: 'VRWaterColor.esp'
-    group: *lateLoadersGroup
+    group: *cellWaterGroup
     after: [ 'RealisticWaterTwo.esp' ]
   - name: 'VRWaterColor-(Blackreach|Volcanic)\.esp'
     after: [ 'VRWaterColor.esp' ]
@@ -4251,14 +4284,14 @@ plugins:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/37061/'
         name: 'Water for ENB'
   - name: 'Water for ENB( \((Mineral Teal|Shades of Skyrim|Tropical Green|Wavy Rivers)\))?\.esp'
-    group: *lateLoadersGroup
+    group: *cellWaterGroup
     inc: [ 'RealisticWaterTwo.esp' ]
     msg:
       - <<: *useOnlyOneX
         subs: [ 'Water for ENB Main ESP' ]
         condition: 'many("Water for ENB( \((Mineral Teal|Shades of Skyrim|Tropical Green|Wavy Rivers)\))?\.esp")'
   - name: 'Water for ENB - Patch - (Clear Underwater|Lakeview Manor Avant Garden EX|Volcanic Water)\.esp'
-    group: *lateLoadersGroup
+    group: *cellWaterGroup
   - name: 'Water for ENB - Patch - FWMF (Marked|Unmarked) (Clean|Dear Diary|Old)(-Dark)?\.esp'
     group: *worldSettingsGroup
 
@@ -4371,7 +4404,7 @@ plugins:
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/1377/'
         name: 'Enhanced Lighting for ENB'
-    group: *lightingEnhancerGroup
+    group: *cellLightingGroup
     inc:
       - 'ELFXEnhancer.esp'
       - 'ELFX - Hardcore.esp'
@@ -4424,7 +4457,7 @@ plugins:
         util: '[SSEEdit v4.0.3](https://www.nexusmods.com/skyrimspecialedition/mods/164)'
         itm: 2
   - name: 'ELFXEnhancer.esp'
-    group: *lightingEnhancerGroup
+    group: *cellLightingGroup
     inc:
       - 'ELE_SSE.esp'
       - 'ELFX - Hardcore.esp'
@@ -4438,7 +4471,7 @@ plugins:
       - crc: 0x06339952
         util: 'SSEEdit v4.0.3'
   - name: 'ELFX - Hardcore.esp'
-    group: *lightingEnhancerGroup
+    group: *cellLightingGroup
     inc:
       - 'ELE_SSE.esp'
       - 'ELFXEnhancer.esp'
@@ -4639,7 +4672,7 @@ plugins:
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/46289/'
         name: 'Improved Fog and Lighting'
-    group: *lightingEnhancerGroup
+    group: *cellLightingGroup
     inc:
       - 'ELE_SSE.esp'
       - 'EnhancedLightsandFX.esp'
@@ -4820,7 +4853,7 @@ plugins:
 
   - name: 'Luminosity Lighting Overhaul.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/16830/' ]
-    group: *lightingEnhancerGroup
+    group: *cellLightingGroup
     inc:
       - 'ELE_SSE.esp'
       - 'ELFXEnhancer.esp'
@@ -4844,7 +4877,7 @@ plugins:
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/43158/'
         name: 'Lux'
-    group: *interiorLightingGroup
+    group: *cellLightingGroup
     tag:
       - C.Location
       - C.Water
@@ -5322,7 +5355,7 @@ plugins:
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/40520/'
         name: 'RLO Interiors - No modified lights sources'
-    group: *interiorLightingGroup
+    group: *cellLightingGroup
     after:
       - name: 'Lux.esp'
         condition: 'version("RLO - Interiors.esp", "5.0.4", >=)'
@@ -5394,7 +5427,7 @@ plugins:
       - crc: 0x48434973
         util: 'SSEEdit v4.0.3h (Hotfix 1)'
   - name: 'WSEnhancer(CW)?\.esp'
-    group: *lightingEnhancerGroup
+    group: *cellLightingGroup
     tag: [ C.Light ]
   - name: 'WSLightFade.esp'
     after: [ 'WSEnhancer.esp' ]
@@ -5652,7 +5685,7 @@ plugins:
   - name: 'TruTorchesSE.esp'
     req: [ *BaseObjSwap ]
   - name: 'TruTorch Lighting - (All Torch Bulb Kind Baseforms|Torch Baseform )\.esp' # sic
-    group: *lightingEnhancerGroup
+    group: *highPriorityGroup
     msg:
       - <<: *useOnlyOneX
         subs: [ 'TruTorch Lighting ESP' ]
@@ -9690,8 +9723,7 @@ plugins:
     url:
       - 'https://www.afkmods.com/index.php?/files/file/1905-open-cities-skyrim/'
       - 'https://bethesda.net/en/mods/skyrim/mod-detail/2918135/'
-    group: *highPriorityGroup
-    after: [ 'Palaces Castles Enhanced.esp' ]
+    group: *ocsGroup
     msg:
       - <<: *patchProvided
         subs: [ 'Bittercup' ]
@@ -9710,8 +9742,8 @@ plugins:
         condition: 'active("ccbgssse020-graycowl.esl") and not active("OCS + Gray Cowl Returns Patch.esp")'
     tag: [ C.Owner ]
     clean:
-      - crc: 0x1D344547
-        util: 'SSEEdit v4.0.4b'
+      - crc: 0x1B9657CC
+        util: 'SSEEdit v4.1.5c EXTREMELY EXPERIMENTAL'
   - name: 'OCS + LOTD5 Patch.esp'
     after:
       - name: 'BluePalaceTerrace-OCS-patch.esp'
@@ -10334,6 +10366,15 @@ plugins:
         crc: 0xF4EC1F03
         util: '[SSEEdit v4.0.2](https://www.nexusmods.com/skyrimspecialedition/mods/164)'
         udr: 24
+
+  - name: 'Disparity.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/110789/'
+        name: 'Disparity SE - Character Classes - Greater Racial Diversity'
+    tag: [ Text ]
+    clean:
+      - crc: 0x7AAF73D9
+        util: 'SSEEdit v4.1.5c EXTREMELY EXPERIMENTAL'
 
   - name: 'DWKaPoTunRace.esp'
     url:
@@ -14323,18 +14364,7 @@ plugins:
       - link: 'https://bethesda.net/en/mods/skyrim/mod-detail/3016198/'
         name: 'Immersive Citizens AI Overhaul (Bethesda.net Mods)'
   - name: 'Immersive Citizens - AI Overhaul.esp'
-    group: *coreGroup
-    after:
-      - name: '3DNPC.esp'
-        condition: '(is_master("Immersive Citizens - AI Overhaul.esp") and is_master("3DNPC.esp")) or (not is_master("Immersive Citizens - AI Overhaul.esp") and not is_master("3DNPC.esp"))'
-      - name: 'Landscape Fixes For Grass Mods.esp'
-        condition: '(is_master("Immersive Citizens - AI Overhaul.esp") and is_master("Landscape Fixes For Grass Mods.esp")) or (not is_master("Immersive Citizens - AI Overhaul.esp") and not is_master("Landscape Fixes For Grass Mods.esp"))'
-      - name: 'SkyrimSewers.esp'
-        condition: '(is_master("Immersive Citizens - AI Overhaul.esp") and is_master("SkyrimSewers.esp")) or (not is_master("Immersive Citizens - AI Overhaul.esp") and not is_master("SkyrimSewers.esp"))'
-      - name: 'Verdant - A Skyrim Grass Plugin SSE Version.esp'
-        condition: '(is_master("Immersive Citizens - AI Overhaul.esp") and is_master("Verdant - A Skyrim Grass Plugin SSE Version.esp")) or (not is_master("Immersive Citizens - AI Overhaul.esp") and not is_master("Verdant - A Skyrim Grass Plugin SSE Version.esp"))'
-      - name: 'ViscousGrass.esp'
-        condition: '(is_master("Immersive Citizens - AI Overhaul.esp") and is_master("ViscousGrass.esp")) or (not is_master("Immersive Citizens - AI Overhaul.esp") and not is_master("ViscousGrass.esp"))'
+    group: *icaioGroup
     inc:
       - 'ASLAO - Front Porch (Breezehome).esp'
       - 'EEKs Arcadia''s Cauldron.esp'
@@ -14369,7 +14399,7 @@ plugins:
         subs: [ 'The Useless Shop and Interior Overhaul **iWil_UselessShopOverhaul.esp**' ]
         condition: 'active("iWil_UselessShopOverhaul.esp")'
       - <<: *compatNotes
-        subs: [ 'http://ai-gamer.com/skyrim/ic-se/#compatibility' ]
+        subs: [ 'http://ai4egames.com/skyrim/ic-se/#compatibility' ]
       - <<: *patchIncluded
         type: error
         subs: [ 'Open Cities' ]
@@ -14392,8 +14422,8 @@ plugins:
       - Relations.Change
       - Relations.Remove
     clean:
-      - crc: 0x5A890755
-        util: 'SSEEdit v4.0.4b'
+      - crc: 0x602F9D9B
+        util: 'SSEEdit v4.1.5c EXTREMELY EXPERIMENTAL'
 
   - name: 'Immersive Speechcraft.esp'
     url:
@@ -14425,9 +14455,12 @@ plugins:
   - name: 'Misc Dialogue Edits.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/28904/' ]
     after:
-      - 'Alternate Start - Live Another Life.esp'
       - 'Immersive Citizens - AI Overhaul.esp'
       - 'Relationship Dialogue Overhaul.esp'
+    tag: [ Actors.Factions ]
+    clean:
+      - crc: 0xF4371E42
+        util: 'SSEEdit v4.1.5c EXTREMELY EXPERIMENTAL'
   - name: 'More Dialogue Options.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/28905/' ]
     after: [ 'Misc Dialogue Edits.esp' ]
@@ -14570,9 +14603,9 @@ plugins:
         name: 'Relationship Dialogue Overhaul - RDO SE'
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/42068/'
         name: 'Relationship Dialogue Overhaul Lite Fixed'
-    after:
-      - '018Auri.esp'
-      - 'Immersive Citizens - AI Overhaul.esp'
+    after: [ '018Auri.esp' ]
+    # Removed load after for Immersive Citizens, as it can lead to hoisting of too many other mods.
+    # Which may not work for every users load order. User can add the rule manually instead.
     msg:
       - <<: *patch3rdParty_AOOPH
         condition: 'active("AI Overhaul.esp") and not active("AI Overhaul - (Relationship Dialogue Overhaul|RDO Updated) Patch\.esp")'
@@ -24216,17 +24249,7 @@ plugins:
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/44797/'
         name: 'Ultimate College of Winterhold - an ICOW and OCW Patch'
-    group: *cellSettingsGroup
-    after:
-      - 'ELE_SSE.esp'
-      - 'ELFXEnhancer.esp'
-      - 'ELFX - Hardcore.esp'
-      - 'Immersive Music.esp'
-      - 'Immersive Music Replacer.esp'
-      - 'Luminosity Lighting Overhaul.esp'
-      - 'Soulmancer Soundtrack - NoVindDun.esp'
-      - 'WSEnhancer.esp'
-      - 'WSEnhancerCW.esp'
+    group: *highPriorityGroup
     inc:
       - name: 'UltimateCollege.esp'
         condition: 'not version("OCW_CellSettings.esp", "100.99.97", >=)'
@@ -24395,7 +24418,7 @@ plugins:
 
   - name: 'Palaces Castles Enhanced.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/1819/' ]
-    group: *highPriorityGroup
+    group: *pceGroup
     inc: [ 'Vaults of Skyrim 1.0 NEXUS.esp' ]
     msg:
       - <<: *compatPatch
