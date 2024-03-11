@@ -887,12 +887,9 @@ groups:
     description: 'A group for mods that provide alternative starting choices.'
     after: [ *coreGroup ]
 
-  - name: &ocsGroup Open Cities Skyrim
-    after: [ *altStartGroup ]
-
   - name: &followerFrameworksGroup Follower Frameworks
     description: 'A group for mods that extend the follower system.'
-    after: [ *ocsGroup ]
+    after: [ *altStartGroup ]
 
   - name: &cellMusicGroup Cell Music
     description: 'A group for modules that modify cell music.'
@@ -910,8 +907,11 @@ groups:
     description: 'A group for modules that modify cell weather & lighting.'
     after: [ *cellWaterGroup ]
 
-  - name: &highPriorityGroup High Priority Overrides
+  - name: &ocsGroup Open Cities Skyrim
     after: [ *cellLightingGroup ]
+
+  - name: &highPriorityGroup High Priority Overrides
+    after: [ *ocsGroup ]
 
   - name: &lateLoadersGroup Late Loaders
     after: [ *highPriorityGroup ]
@@ -2157,6 +2157,14 @@ plugins:
         util: '[SSEEdit v4.0.3](https://www.nexusmods.com/skyrimspecialedition/mods/164)'
         itm: 7
 
+  - name: '.*NavFixes\.es[lp]'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/52641/'
+        name: 'Navigator - Navmesh Fixes'
+  - name: 'Navigator-NavFixes.esl'
+    group: *fixesGroup
+    # Do not clean - ITMs are intentional according to the author.
+
   - name: 'Raven Rock - Fix Exit on Horseback.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/14075/' ]
     msg:
@@ -2166,6 +2174,13 @@ plugins:
     clean:
       - crc: 0xBF9B55EB
         util: 'SSEEdit v4.0.3h (Hotfix 1)'
+
+  - name: 'ScriptFixesCompilation.esp'
+    url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/105144/' ]
+    group: *fixesGroup
+    after: ['Unofficial Skyrim Special Edition Patch.esp']
+    req: [ *SKSE ]
+    msg: [ *requiresMCM ]
 
   - name: 'Skyrim Project Optimization - (No Homes - )?Full( ESL)? Version\.esm'
     url:
@@ -2212,6 +2227,7 @@ plugins:
   - name: 'Unofficial Skyrim Modders Patch.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/49616/' ]
     group: *fixesGroup
+    after: [ 'ScriptFixesCompilation.esp' ]
     inc: [ 'Unofficial Skyrim Modders Patch VR.esp' ]
     tag:
       - Actors.ACBS
@@ -4283,17 +4299,54 @@ plugins:
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/37061/'
         name: 'Water for ENB'
-  - name: 'Water for ENB( \((Mineral Teal|Shades of Skyrim|Tropical Green|Wavy Rivers)\))?\.esp'
+  - name: 'Water for ENB( \((Mineral Teal|Shades of Skyrim|Tropical Green|Vanilla|Wavy Rivers)\))?\.esp'
     group: *cellWaterGroup
     inc: [ 'RealisticWaterTwo.esp' ]
     msg:
       - <<: *useOnlyOneX
         subs: [ 'Water for ENB Main ESP' ]
-        condition: 'many("Water for ENB( \((Mineral Teal|Shades of Skyrim|Tropical Green|Wavy Rivers)\))?\.esp")'
-  - name: 'Water for ENB - Patch - (Clear Underwater|Lakeview Manor Avant Garden EX|Volcanic Water)\.esp'
-    group: *cellWaterGroup
-  - name: 'Water for ENB - Patch - FWMF (Marked|Unmarked) (Clean|Dear Diary|Old)(-Dark)?\.esp'
-    group: *worldSettingsGroup
+        condition: 'many("Water for ENB( \((Mineral Teal|Shades of Skyrim|Tropical Green|Vanilla|Wavy Rivers)\))?\.esp")'
+    tag: [ -C.Location ]
+  - name: 'Water for ENB.esp'
+    tag: [ C.Water ]
+  ### Water ENB - Customization Plugins ###
+  - name: 'Water for ENB - Patch - (Clear Interior Water|Clear Underwater|Transparent Horse Trough Water|Volcanic Water)\.esp'
+    after:
+      - 'Water for ENB.esp'
+      - 'Water for ENB (Mineral Teal).esp'
+      - 'Water for ENB (Shades of Skyrim).esp'
+      - 'Water for ENB (Tropical Green).esp'
+      - 'Water for ENB (Vanilla).esp'
+      - 'Water for ENB (Wavy Rivers).esp'
+  - name: 'Water for ENB - Patch - Blue Volcanic Water.esp'
+    after:
+      - 'Water for ENB.esp'
+      - 'Water for ENB (Shades of Skyrim).esp'
+      - 'Water for ENB (Wavy Rivers).esp'
+    inc: [ 'Water for ENB - Patch - Volcanic Water.esp' ]
+  - name: 'Water for ENB - Patch - Clear Creek Water.esp'
+    inc: [ 'Water for ENB - Patch - Muddy Creek Water.esp' ]
+  ### Water ENB - Compatibility Patches ###
+  - name: 'Water for ENB - Patch - (Cabbage ENB|Lakeview Manor Avant Garden EX)\.esp'
+    after:
+      - 'Water for ENB.esp'
+      - 'Water for ENB (Mineral Teal).esp'
+      - 'Water for ENB (Shades of Skyrim).esp'
+      - 'Water for ENB (Tropical Green).esp'
+      - 'Water for ENB (Vanilla).esp'
+      - 'Water for ENB (Wavy Rivers).esp'
+  - name: 'Water for ENB - Patch - (JKs Ragged Flagon|No Interior Fog)\.esp'
+    after: [ 'Water for ENB (Shades of Skyrim).esp' ]
+  - name: 'Water for ENB - Patch - ELFX Shadows.esp'
+    req: [ 'ELFX Shadows.esp' ]
+  - name: 'Water for ENB - Patch - Expanded Towns and Cities.esp'
+    after:
+      - 'ETaC - Complete.esp'
+      - 'ETaC - Riverwood.esp'
+  - name: 'Water for ENB - Patch - Lakeview Manor Avant Garden EX.esp'
+    req: [ 'HF_Lakeview_AvantGarden_EX.esp' ]
+  - name: 'Water for ENB - Patch - No Interior Fog.esp'
+    req: [ 'no interior fog ussep.esp' ]
 
   - name: 'Wavy Waters.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/25880/' ]
@@ -4963,16 +5016,6 @@ plugins:
       - C.Climate
       - C.ImageSpace
       - C.Light
-  - name: 'Lux Orbis( - .*)?\.esp'
-    url:
-      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/56095/'
-        name: 'Lux Orbis'
-  - name: 'Lux Orbis - Cutting Room Floor patch.esp'
-    dirty:
-      - <<: *quickClean
-        crc: 0x86D0CC7F
-        util: '[SSEEdit v4.0.4c](https://www.nexusmods.com/skyrimspecialedition/mods/164)'
-        itm: 4
   - name: 'Lux - RedBag''s Solitude patch.esp'
     tag: [ C.Light ]
   - name: 'Lux - Rodryk''s Dragonbridge patch.esp'
@@ -5037,6 +5080,22 @@ plugins:
       - C.Climate
       - C.ImageSpace
       - C.Light
+  - name: 'Great City of JK''s Redbag Solitude patch.esp'
+    dirty:
+      - <<: *reqManualFix
+        crc: 0xAFCF09AF
+        util: '[SSEEdit v4.0.3h (Hotfix 1)](https://www.nexusmods.com/skyrimspecialedition/mods/164)'
+        nav: 14
+  ### Lux - Patch Hub ###
+  - name: 'Lux - Water for ENB patch.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/113002/'
+        name: 'Lux - Patch Hub'
+    after:
+      - 'Lux - USSEP patch.esp'
+      - 'Lux - CC Fish patch.esp'
+    tag: [ C.Water ]
+  ### Lux - 3rd party Patches ###
   - name: 'Lux x ICOW patch.esp'
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/81448/'
@@ -5047,50 +5106,17 @@ plugins:
         util: '[SSEEdit v4.0.4c](https://www.nexusmods.com/skyrimspecialedition/mods/164)'
         itm: 3655
         udr: 165
-  - name: 'Great City of JK''s Redbag Solitude patch.esp'
+
+  - name: 'Lux Orbis( - .*)?\.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/56095/'
+        name: 'Lux Orbis'
+  - name: 'Lux Orbis - Cutting Room Floor patch.esp'
     dirty:
-      - <<: *reqManualFix
-        crc: 0xAFCF09AF
-        util: '[SSEEdit v4.0.3h (Hotfix 1)](https://www.nexusmods.com/skyrimspecialedition/mods/164)'
-        nav: 14
-  # Lux - Language Packs
-  - name: 'Lux FR.esp'
-    after:
-      - 'Lux - BleakFalls Barrow patch.esp'
-      - 'Lux - Blue Palace Terrace patch 3.esp'
-      - 'Lux - Breezehome by Lupus patch.esp'
-      - 'Lux - Crimson Blood Armor patch.esp'
-      - 'Lux - Distinct Interiors patch.esp'
-      - 'Lux - Distinct Silver Blood inn patch.esp'
-      - 'Lux - Embershard Mine patch.esp'
-      - 'Lux - Halted Stream Camp patch.esp'
-      - 'Lux - HSTNF compatibility patch.esp'
-      - 'Lux - JK''s Angelines Aromatics patch.esp'
-      - 'Lux - JK''s Arcadia''s Cauldron patch.esp'
-      - 'Lux - JK''s Bannered Mare patch.esp'
-      - 'Lux - JK''s Bee and Barb patch.esp'
-      - 'Lux - JK''s Belethor''s General Goods patch.esp'
-      - 'Lux - JK''s Bits and Pieces patch.esp'
-      - 'Lux - JK''s Blue Palace patch.esp'
-      - 'Lux - JK''s Dragonsreach patch.esp'
-      - 'Lux - JK''s Drunken Huntsman patch.esp'
-      - 'Lux - JK''s New Gnisis Cornerclub patch.esp'
-      - 'Lux - JK''s Radiant Raiment patch.esp'
-      - 'Lux - JK''s Sadris Used Wares patch.esp'
-      - 'Lux - JK''s Sleeping Giant inn patch.esp'
-      - 'Lux - JK''s Warmaidens patch.esp'
-      - 'Lux - Mara Valentine patch.esp'
-      - 'Lux - RedBag''s Solitude patch.esp'
-      - 'Lux - Silver Blood inn overhaul.esp'
-      - 'Lux - SoS compatibility patch.esp'
-      - 'Lux - Steepfall Burrow patch.esp'
-      - 'Lux - Ustengrav Revisited patch.esp'
-      - 'Lux - WhiteRiver Watch patch.esp'
-    tag: [ C.Name ]
-  - name: 'Lux - SoS compatibility patch FR.esp'
-    after:
-      - 'Lux - SoS compatibility patch.esp'
-      - 'Lux FR.esp'
+      - <<: *quickClean
+        crc: 0x86D0CC7F
+        util: '[SSEEdit v4.0.4c](https://www.nexusmods.com/skyrimspecialedition/mods/164)'
+        itm: 4
 
   - name: 'mintylightningmod.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/8778/' ]
@@ -9762,13 +9788,6 @@ plugins:
       - Outfits.Add
       - Outfits.Remove
     # Do not clean - ITMs are intentional according to the author.
-
-  - name: 'OPHybrid.esp'
-    url:
-      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/104477/'
-        name: 'Curse of the Dragonborn - REDUX'
-    group: *earlyLoadersGroup
-
   - name: 'OWL Challenge Mode.esp'
     clean:
       - crc: 0x85EFA58A
@@ -9781,6 +9800,12 @@ plugins:
     clean:
       - crc: 0x179FB51D
         util: 'SSEEdit v4.0.4c'
+
+  - name: 'OPHybrid.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/104477/'
+        name: 'Curse of the Dragonborn - REDUX'
+    group: *earlyLoadersGroup
 
   - name: 'Pause after loading.esp'
     url:
