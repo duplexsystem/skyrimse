@@ -2179,8 +2179,12 @@ plugins:
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/105144/' ]
     group: *fixesGroup
     after: ['Unofficial Skyrim Special Edition Patch.esp']
-    req: [ *SKSE ]
-    msg: [ *requiresMCM ]
+    req:
+      - *SKSE
+      - *SKSE_VR
+    msg:
+      - *requiresMCM_SkyUISE
+      - *requiresMCM_VR
 
   - name: 'Skyrim Project Optimization - (No Homes - )?Full( ESL)? Version\.esm'
     url:
