@@ -1877,6 +1877,9 @@ plugins:
       - crc: 0xB3AB07FD
         util: 'SSEEdit v4.0.4'
 
+  - name: 'Skyrim VR SSE USSEP Compatibility Mod.esp'
+    group: *fixesGroup
+
   - name: 'Unofficial (Skyrim Creation Club Content|Arcane Accessories|(Arcane Archer|Expanded Crossbow|Saturalia Holiday) Pack|Arms of Chaos|Bittercup|Bloodchill Manor|Bone Wolf|Bow of Shadows|Chrysamere|Civil War Champions|(Daedric|Dragon|Dwarven|Ebony|Elven Hunter|Iron|Netch Leather|Orcish|Silver|Spell Knight|Stalhrim Fur|Steel Soldier|Vigil Enforcer) ?(Mail|Plate|Scaled?)? Armor(s| Set)?|Dawnfang and Duskfang|Dead Man''s Dread|Divine Crusader|Dwarven (Armored Mudcrab|Home)|Elite Crossbows|Farming|Forgotten Seasons|Gallows Hall|Ghosts of the Tribunal|Goblins|Goldbrand|Gray Cowl Returns|Headmans Cleaver|Hendraheim|Lord''s Mail|Myrwatch|Necromantic Grimoire|Nix-Hound|Nordic Jewelry|Pets of Skyrim|Plague of the Dead|Redguard Elite Armaments|Ruin''s Edge|Shadowfoot Sanctum|Shadowrend|Staff of Sheogorath|Stendarr''s Hammer|Sunder & Wraithguard|The (Cause|Contest)|Tundra Homestead|Umbra|Wild Horses) Patch\.esl'
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/18975/'
@@ -14960,6 +14963,9 @@ plugins:
     clean:
       - crc: 0xC915ABE0
         util: 'SSEEdit v4.1.5b EXTREMELY EXPERIMENTAL'
+
+  - name: 'ASLAL - Skyrim VR Patch.esp'
+    group: *altStartGroup
 
   - name: 'Alternate Start -- New Beginnings.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/4939/' ]
