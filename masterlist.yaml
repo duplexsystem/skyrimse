@@ -19462,6 +19462,12 @@ plugins:
         condition: 'active("Complete Crafting Overhaul_Remastered.esp") and not active("Immersive Weapons_CCOR_Patch.esp")'
       - <<: *patch3rdParty_KPH_WACCF
         condition: 'active("Weapons Armor Clothing & Clutter Fixes.esp") and not active("Complete Crafting Overhaul_Remastered.esp") and not active("Immersive Weapons_WACCF_Patch.esp")'
+      - <<: *patch3rdParty
+        type: warn
+        subs:
+          - 'A Rose in the Snow - Reborn'
+          - '[Patch for A Rose in the Snow - Reborn and Immersive Weapons](https://www.nexusmods.com/skyrimspecialedition/mods/149020/)'
+        condition: 'active("A Rose in the Snow.esp") and not active("ARIS_WI_Patch.esp")'
     tag:
       - Delev
       - Graphics
