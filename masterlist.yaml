@@ -270,7 +270,7 @@ common:
     display: '[Dynamic Animation Replacer](https://www.nexusmods.com/skyrimspecialedition/mods/33746/)'
 
   - &ENBSeries
-    name: '../d3d11.dll'
+    name: '../enblocal.ini'
     display: '[ENBSeries SE](http://enbdev.com/download_mod_tesskyrimse.htm)'
 
   - &EngineFixes
@@ -286,7 +286,7 @@ common:
     display: '[Fores New Idles in Skyrim SE](https://www.nexusmods.com/skyrimspecialedition/mods/3038/)'
 
   - &GraphicsFramework
-    name: '../d3d11.dll'
+    name: '../enblocal.ini'
     display: '[ENBSeries SE](http://enbdev.com/download_mod_tesskyrimse.htm) **OR** [Community Shaders](https://www.nexusmods.com/skyrimspecialedition/mods/86492/)'
     condition: 'not file("SKSE/Plugins/CommunityShaders.dll")'
 
@@ -477,6 +477,12 @@ common:
       - 'Vokrii - Minimalistic Perks of Skyrim'
       - '[Umgak''s Vokrii Compatibility Patch Compendium](https://www.nexusmods.com/skyrimspecialedition/mods/26278/)'
 
+  # &patchUnavailable
+  - &patchUnavailableRequiem
+    <<: *patchUnavailable
+    subs: [ 'Requiem - The Roleplaying Overhaul' ]
+    condition: 'active("Requiem.esp")'
+
   # &requiresMCM_X
   - &requiresMCM
     <<: *requiresMCM_X
@@ -589,41 +595,42 @@ globals:
   - *latestLOOTThread
 
 # Latest Version
-  # Skyrim AE Game Runtime
+  # Skyrim AE
   - <<: *versionOldX
-    subs: [ '**Skyrim Anniversary Update**' ]
+    subs: [ '**Skyrim Anniversary Edition**' ]
     condition: 'not file("../Galaxy64.dll") and not file("../EOSSDK-Win64-Shipping.dll") and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.317.0", >=) and product_version("../SkyrimSE.exe", "1.6.1130.0", <)'
   - <<: *versionUpToDateX
-    subs: [ '**Skyrim Anniversary Update**' ]
+    subs: [ '**Skyrim Anniversary Edition**' ]
     condition: 'not file("../Galaxy64.dll") and not file("../EOSSDK-Win64-Shipping.dll") and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.1130.0", >=)'
-  # Skyrim SE GOG Game Runtime
+  # Skyrim SE GOG
   - <<: *versionOldX
     subs: [ '**Skyrim SE GOG**' ]
     condition: 'file("../Galaxy64.dll") and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.1179.0", <)'
   - <<: *versionUpToDateX
     subs: [ '**Skyrim SE GOG**' ]
     condition: 'file("../Galaxy64.dll") and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.1179.0", >=)'
-  # Skyrim SE EGS Game Runtime
+  # Skyrim SE EGS
   - <<: *versionOldX
     subs: [ '**Skyrim SE Epic Games**' ]
     condition: 'file("../EOSSDK-Win64-Shipping.dll") and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.678.0", <)'
   - <<: *versionUpToDateX
     subs: [ '**Skyrim SE Epic Games**' ]
     condition: 'file("../EOSSDK-Win64-Shipping.dll") and readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.678.0", >=)'
-  # Skyrim SE Game Runtime
+  # Skyrim SE
   - <<: *versionOldX
     subs: [ '**Skyrim SE**' ]
     condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.5.97.0", <)'
   - <<: *versionUpToDateX
     subs: [ '**Skyrim SE**' ]
     condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.5.97.0", ==)'
-  # Skyrim VR Game Runtime
+  # Skyrim VR
   - <<: *versionOldX
     subs: [ '**Skyrim VR**' ]
     condition: 'readable("../SkyrimVR.exe") and product_version("../SkyrimVR.exe", "1.4.15.0", <)'
   - <<: *versionUpToDateX
     subs: [ '**Skyrim VR**' ]
     condition: 'readable("../SkyrimVR.exe") and product_version("../SkyrimVR.exe", "1.4.15.0", >=)'
+
   # SKSE AE
   - <<: *versionOldX
     subs: [ '**[SKSE Anniversary Edition](https://skse.silverlock.org)**' ]
@@ -646,62 +653,41 @@ globals:
     subs: [ '**SKSE VR**' ]
     condition: 'readable("../SkyrimVR.exe") and version("../skseVR_loader.exe", "0.2.0.12", >=) and file("../skseVR_loader.exe")'
 
-# Version Compatibility
-  # SKSE AE - Game Runtime
+# SKSE - Runtime Compatibility
+  # SKSE AE
   - <<: *versionSkseIncSAE
-    condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.317.0", ==) and version("../skse64_loader.exe", "0.2.1.0", <) and file("../skse64_loader.exe")'
-  - <<: *versionSkseIncSAE
-    condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.318.0", ==) and version("../skse64_loader.exe", "0.2.1.1", <) and file("../skse64_loader.exe")'
-  - <<: *versionSkseIncSAE
-    condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.323.0", ==) and version("../skse64_loader.exe", "0.2.1.3", <) and file("../skse64_loader.exe")'
-  - <<: *versionSkseIncSAE
-    condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.342.0", ==) and version("../skse64_loader.exe", "0.2.1.4", <) and file("../skse64_loader.exe")'
-  - <<: *versionSkseIncSAE
-    condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.353.0", ==) and version("../skse64_loader.exe", "0.2.1.5", <) and file("../skse64_loader.exe")'
-  - <<: *versionSkseIncSAE
-    condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.629.0", ==) and version("../skse64_loader.exe", "0.2.2.0", <) and file("../skse64_loader.exe")'
-  - <<: *versionSkseIncSAE
-    condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.640.0", ==) and not file("../skse64_1_6_640.dll") and file("../skse64_loader.exe")'
+    condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.1170.0", ==) and not file("../skse64_1_6_1170.dll") and file("../skse64_loader.exe")'
   - <<: *versionSkseIncSAE
     condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.1130.0", ==) and not file("../skse64_1_6_1130.dll") and file("../skse64_loader.exe")'
   - <<: *versionSkseIncSAE
-    condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.1170.0", ==) and not file("../skse64_1_6_1170.dll") and file("../skse64_loader.exe")'
-  # SKSE AE GOG - Game Runtime
-  - <<: *versionSkseIncSSE
-    condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.659.0", ==) and not file("../skse64_1_6_659.dll") and file("../skse64_loader.exe")'
+    condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.640.0", ==) and not file("../skse64_1_6_640.dll") and file("../skse64_loader.exe")'
+  - <<: *versionSkseIncSAE
+    condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.629.0", ==) and version("../skse64_loader.exe", "0.2.2.0", <) and file("../skse64_loader.exe")'
+  # SKSE AE GOG
   - <<: *versionSkseIncSSE
     condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.1179.0", ==) and not file("../skse64_1_6_1179.dll") and file("../skse64_loader.exe")'
-  # SKSE AE EGS - Game Runtime
+  - <<: *versionSkseIncSSE
+    condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.6.659.0", ==) and not file("../skse64_1_6_659.dll") and file("../skse64_loader.exe")'
+  # SKSE AE EGS
   - <<: *versionSkseIncSSE
     condition: 'file("../SkyrimSE.exe") and file("../EOSSDK-Win64-Shipping.dll") and file("../skse64_loader.exe")'
-  # SKSE SE - Game Runtime
+  # SKSE SE
+  - <<: *versionSkseIncSSE
+    condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.5.97.0", ==) and version("../skse64_loader.exe", "0.2.0.20", <) and file("../skse64_loader.exe")'
   - <<: *versionSkseIncSSE
     condition: 'file("../SkyrimSE.exe") and file("../skse(vr)?_loader.exe") and not file("../skse64_loader.exe")'
-  - <<: *versionSkseIncSSE
-    condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.5.50.0", ==) and version("../skse64_loader.exe", "0.2.0.8", <) and file("../skse64_loader.exe")'
-  - <<: *versionSkseIncSSE
-    condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.5.53.0", ==) and version("../skse64_loader.exe", "0.2.0.9", <) and file("../skse64_loader.exe")'
-  - <<: *versionSkseIncSSE
-    condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.5.62.0", ==) and version("../skse64_loader.exe", "0.2.0.11", <) and file("../skse64_loader.exe")'
-  - <<: *versionSkseIncSSE
-    condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.5.73.0", ==) and version("../skse64_loader.exe", "0.2.0.13", <) and file("../skse64_loader.exe")'
-  - <<: *versionSkseIncSSE
-    condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.5.80.0", ==) and version("../skse64_loader.exe", "0.2.0.16", <) and file("../skse64_loader.exe")'
-  - <<: *versionSkseIncSSE
-    condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.5.97.0", ==) and version("../skse64_loader.exe", "0.2.0.17", <) and file("../skse64_loader.exe")'
-  # SKSE VR - Game Runtime
+  # SKSE VR
+  - <<: *versionSkseIncSVR
+    condition: 'product_version("../SkyrimVR.exe", "1.4.15.0", ==) and version("../sksevr_loader.exe", "0.2.0.12", <) and file("../sksevr_loader.exe")'
   - <<: *versionSkseIncSVR
     condition: 'file("../SkyrimVR.exe") and file("../skse(?:64)?_loader.exe") and not file("../sksevr_loader.exe")'
-  - <<: *versionSkseIncSVR
-    condition: 'product_version("../SkyrimVR.exe", "1.3.64.0", ==) and version("../sksevr_loader.exe", "0.2.0.8", <) and file("../sksevr_loader.exe")'
-  - <<: *versionSkseIncSVR
-    condition: 'product_version("../SkyrimVR.exe", "1.4.15.0", ==) and version("../sksevr_loader.exe", "0.2.0.9", <) and file("../sksevr_loader.exe")'
-  # ENBSeries
+
+# ENBSeries Compatibility
   - <<: *versionXIncY
     subs:
       - '**[ENB Helper SE](https://www.nexusmods.com/skyrimspecialedition/mods/23174/)**'
       - '**[ENBSeries SE](http://enbdev.com/download_mod_tesskyrimse.htm)**'
-    condition: 'file("SKSE/Plugins/ENBHelperSE.dll") and file("../d3d11.dll") and version("SKSE/Plugins/ENBHelperSE.dll", "1.3.1.0", ==) and product_version("../d3d11.dll", "0.3.7.1", <)'
+    condition: 'file("SKSE/Plugins/ENBHelperSE.dll") and file("../enblocal.ini") and version("SKSE/Plugins/ENBHelperSE.dll", "1.3.1.0", ==) and product_version("../d3d11.dll", "0.3.7.1", <)'
 
 # SKSE
   # Missing AE
@@ -741,13 +727,18 @@ globals:
     subs:
       - '[ENBSeries SE](http://enbdev.com/download_mod_tesskyrimse.htm)'
       - 'ENB Helper SE'
-    condition: 'file("SKSE/Plugins/ENBHelperSE.dll") and not file("../d3d11.dll")'
+    condition: 'file("SKSE/Plugins/ENBHelperSE.dll") and not file("../enblocal.ini")'
   # DLL Loaders
   - <<: *missingRequirementXforY
     subs:
-      - '[SSE Engine Fixes - Part 2](https://www.nexusmods.com/skyrimspecialedition/mods/17230/)'
-      - 'SSE Engine Fixes - Part 1'
-    condition: 'file("SKSE/Plugins/EngineFixes.dll") and (not file("../d3dx9_42.dll") or not file("../tbb.dll") or not file("../tbbmalloc.dll"))'
+      - '[(Part 2) Engine Fixes 7.0 - skse64 Preloader ONLY](https://www.nexusmods.com/skyrimspecialedition/mods/17230/)'
+      - 'SSE Engine Fixes v7.0+'
+    condition: 'version("SKSE/Plugins/EngineFixes.dll", "7.0.0", >=) and not file("../d3dx9_42.dll")'
+  - <<: *missingRequirementXforY
+    subs:
+      - '[(Part 2) Engine Fixes - skse64 Preloader and TBB Lib](https://www.nexusmods.com/skyrimspecialedition/mods/17230/)'
+      - 'SSE Engine Fixes'
+    condition: 'file("SKSE/Plugins/EngineFixes.dll") and version("SKSE/Plugins/EngineFixes.dll", "7.0.0", <) and (not file("../d3dx9_42.dll") or not file("../tbb.dll") or not file("../tbbmalloc.dll"))'
   - <<: *missingRequirementXforY
     subs:
       - '[DLL Plugin Loader](https://www.nexusmods.com/skyrimspecialedition/mods/10546/) or [SSE Engine Fixes - Part 2](https://www.nexusmods.com/skyrimspecialedition/mods/17230/)'
@@ -2898,7 +2889,7 @@ plugins:
     after: [ 'DynDOLOD.esp' ]
     msg: [ *runxLODGen ]
 
-  - name: 'ParallaxGen.esp'
+  - name: 'P(arallaxGen|G_\d+)\.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/120946/' ]
     group: *lateChangesGroup
 
@@ -3203,7 +3194,7 @@ plugins:
     msg:
       - <<: *alsoUseX
         subs: [ '[ENB Helper](https://www.nexusmods.com/skyrimspecialedition/mods/23174/)' ]
-        condition: 'file("../skse64_loader.exe") and file("../d3d11.dll") and not file("skse/plugins/ENBHelperSE.dll")'
+        condition: 'file("../skse64_loader.exe") and file("../enblocal.ini") and not file("skse/plugins/ENBHelperSE.dll")'
     tag:
       - -C.Climate
       - -C.ImageSpace
@@ -3435,8 +3426,11 @@ plugins:
         name: 'ArteFakes - Unique Artifacts Replacer'
   - name: 'ArteFake.esp'
     msg:
+      - <<: *alreadyInX
+        subs: [ '**Requiem.esp**' ]
+        condition: 'active("Requiem.esp") and version("Requiem.esp", "6.0.0", >=)'
       - <<: *patch3rdParty_RPC
-        condition: 'active("Requiem.esp") and not active("Requiem - ArteFakes.esp")'
+        condition: 'active("Requiem.esp") and not active("Requiem - ArteFakes.esp") and version("Requiem.esp", "6.0.0", <)'
     tag:
       - Actors.ACBS
       - Actors.DeathItem
@@ -3584,7 +3578,7 @@ plugins:
         subs:
           - 'ENBSeries SE v0.483 or less'
           - '[Deadly Spell Impacts Transparency Fix for ENB](https://www.nexusmods.com/skyrimspecialedition/mods/41284/)'
-        condition: 'file("../d3d11.dll") and product_version("../d3d11.dll", "0.4.8.4", <) and version("DeadlySpellImpacts.esp", "1.70", ==) and not active("DeadlySpellImpacts Transparency Fix.esp") and not active("PSI.esp")'
+        condition: 'file("../enblocal.ini") and product_version("../d3d11.dll", "0.4.8.4", <) and version("DeadlySpellImpacts.esp", "1.70", ==) and not active("DeadlySpellImpacts Transparency Fix.esp") and not active("PSI.esp")'
     tag: [ Graphics ]
     clean:
       - crc: 0x72B9103C
@@ -3604,7 +3598,7 @@ plugins:
         condition: 'file("DeadlySpellImpacts.esp") and version("DeadlySpellImpacts.esp", "1.70", !=)'
       - <<: *alreadyInOrFixedByX
         subs: [ 'ENBSeries v0.484+' ]
-        condition: 'product_version("../d3d11.dll", "0.4.8.4", >=)'
+        condition: 'file("../enblocal.ini") and product_version("../d3d11.dll", "0.4.8.4", >=)'
       - <<: *alreadyInOrFixedByX
         subs: [ 'Parallax Spell Impacts' ]
         condition: 'active("PSI.esp")'
@@ -4997,7 +4991,7 @@ plugins:
         subs:
           - '0.379'
           - '[ENBSeries SE](http://enbdev.com/download_mod_tesskyrimse.htm)'
-        condition: 'product_version("../d3d11.dll", "0, 3, 7, 9", <) and file("../d3d11.dll")'
+        condition: 'product_version("../d3d11.dll", "0, 3, 7, 9", <) and file("../enblocal.ini")'
     req: [ *ENBSeries ]
     clean:
       - crc: 0xFD4F2E74
@@ -5011,6 +5005,15 @@ plugins:
     clean:
       - crc: 0x799931DF
         util: 'SSEEdit v4.0.3'
+
+  - name: '(Ambiance( - Light Colors)?|Darker Interior Ambient Fog)\.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/46383/'
+        name: 'Ambiance - A Vanilla(plus) Ambient Lighting Overhaul'
+  - name: 'Ambiance.esp'
+    group: *cellLightingGroup
+  - name: 'Darker Interior Ambient Fog.esp'
+    group: *cellLightingGroup
 
   - name: 'Autumn Skies.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/14379/' ]
@@ -5081,6 +5084,17 @@ plugins:
     clean:
       - crc: 0x59766837
         util: 'SSEEdit v4.0.3'
+
+  - name: 'CS Light.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/138443/'
+        name: 'CS Light'
+    group: *cellLightingGroup
+    req:
+      - *CommunityShaders
+      - name: 'SKSE/Plugins/po3_LightPlacer.dll'
+        display: '[Light Placer](https://www.nexusmods.com/skyrimspecialedition/mods/127557/)'
+    after: [ 'TL Bulbs ISL.esp' ]
 
   - name: 'Dolomite Weathers.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/7895/' ]
@@ -5350,7 +5364,7 @@ plugins:
       - *GraphicsFramework
       - name: 'Shaders/LightLimitFix/LightLimitFix.hlsli'
         display: '[Light Limit Fix](https://www.nexusmods.com/skyrimspecialedition/mods/99548/)'
-        condition: 'not (file("../d3d11.dll")) and file("SKSE/Plugins/CommunityShaders.dll")'
+        condition: 'not file("../enblocal.ini") and file("SKSE/Plugins/CommunityShaders.dll")'
     msg:
       - <<: *requiresResources
         subs: [ '[Particle Patch for ENB](https://www.nexusmods.com/skyrimspecialedition/mods/65720/)' ]
@@ -5362,6 +5376,9 @@ plugins:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/46289/'
         name: 'Improved Fog and Lighting'
     group: *cellLightingGroup
+    after:
+      - 'Open Cities Skyrim.esp'
+      - 'SR Exterior Cities.esp'
     inc:
       - 'ELE_SSE.esp'
       - 'EnhancedLightsandFX.esp'
@@ -6145,6 +6162,41 @@ plugins:
       - Deactivate
       - Graphics
 
+  - name: '(.*True Light|TL) .+\.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/135488/'
+        name: 'True Light'
+  - name: 'True Light - Shadows and Ambient.esp'
+    group: *earlyLoadersGroup
+  - name: 'TL Bulbs ISL.esp'
+    group: *cellLightingGroup
+    req:
+      - *CommunityShaders
+      - name: 'SKSE/Plugins/LightingUtil.dll'
+        display: '[Ambient Templates for Lighting Mods](https://www.nexusmods.com/skyrimspecialedition/mods/153425/)'
+      - name: 'Shaders/InverseSquareLighting/InverseSquareLighting.hlsli'
+        display: '[Inverse Square Lighting](https://www.nexusmods.com/skyrimspecialedition/mods/153542/)'
+      - name: 'SKSE/Plugins/po3_LightPlacer.dll'
+        display: '[Light Placer](https://www.nexusmods.com/skyrimspecialedition/mods/127557/)'
+      - name: 'SKSE/Plugins/SkyPatcher.dll'
+        display: '[SkyPatcher](https://www.nexusmods.com/skyrimspecialedition/mods/106659/)'
+    inc:
+      - *ENBSeries
+      - 'ELFX Shadows.esp'
+      - 'EnhancedLightsandFX.esp'
+      - 'Lux.esp'
+      # A05D4081: Full v3.0
+      # C5529E7D: Interiors only v3.0
+      - name: 'RelightingSkyrim_SSE.esp'
+        detail: 'Incompatible with interiors versions.'
+        condition: 'checksum("RelightingSkyrim_SSE.esp", A05D4081) or checksum("RelightingSkyrim_SSE.esp", C5529E7D)'
+      - 'Skyrim is Luminous.esp'
+  # True Light Patches
+  - name: 'True Light - USSEP Patch.esp'
+    req:
+      - 'True Light - Shadows and Ambient.esp'
+      - 'unofficial skyrim special edition patch.esp'
+
   - name: 'TrueStormsSE.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/2472/' ]
     group: *earlyLoadersGroup
@@ -6437,6 +6489,44 @@ plugins:
       - crc: 0x377C96B6
         util: 'SSEEdit v4.0.3'
 
+  - name: 'Window Shadows Ultimate( Supplement)?\.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/150494/'
+        name: 'Window Shadows Ultimate'
+  - name: 'Window Shadows Ultimate.esp'
+    group: *cellLightingGroup
+    req:
+      - *BaseObjSwap
+      - name: 'SKSE/Plugins/LightingUtil.dll'
+        display: '[Ambient Templates for Lighting Mods](https://www.nexusmods.com/skyrimspecialedition/mods/153425/)'
+      - name: 'SKSE/Plugins/XEMIUtil.dll'
+        display: '[XEMI Utility](https://www.nexusmods.com/skyrimspecialedition/mods/159084/)'
+    inc:
+      - 'ELFX Shadows.esp'
+      - 'EnhancedLightsandFX.esp'
+      - 'Lux.esp'
+      # A05D4081: Full v3.0
+      # C5529E7D: Interiors only v3.0
+      - name: 'RelightingSkyrim_SSE.esp'
+        detail: 'Incompatible with interiors versions.'
+        condition: 'checksum("RelightingSkyrim_SSE.esp", A05D4081) or checksum("RelightingSkyrim_SSE.esp", C5529E7D)'
+      - 'Shadows.esp'
+      - 'Skyrim is Luminous.esp'
+    msg:
+      - <<: *compatPatch
+        subs: [ '[Window Shadows Ultimate - Patch Hub](https://www.nexusmods.com/skyrimspecialedition/mods/151548/)' ]
+    dirty:
+      - <<: *quickClean
+        crc: 0x8B4AC778
+        util: '[SSEEdit v4.1.5o](https://www.nexusmods.com/skyrimspecialedition/mods/164)'
+        itm: 1
+  - name: 'Window Shadows Ultimate Supplement.esp'
+    dirty:
+      - <<: *quickClean
+        crc: 0x5C3B3806
+        util: '[SSEEdit v4.1.5o](https://www.nexusmods.com/skyrimspecialedition/mods/164)'
+        itm: 7
+
   - name: 'WinterOverhaul.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/22071/' ]
     dirty:
@@ -6491,6 +6581,9 @@ plugins:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/198/'
         name: 'Caliente''s Beautiful Bodies Enhancer'
   - name: 'CBBE.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/74257/'
+        name: 'Caliente''s Beautiful Bodies Enhancer -CBBE SFW Edition-'
     msg:
       - <<: *alsoUseX
         subs: [ '[Unofficial Skyrim Special Edition Patch](https://www.nexusmods.com/skyrimspecialedition/mods/266/)' ]
@@ -6510,6 +6603,9 @@ plugins:
         util: 'SSEEdit v4.0.3'
       - crc: 0x7187204B
         util: 'SSEEdit v4.0.3'
+      # SFW
+      - crc: 0x2B603962
+        util: 'SSEEdit v4.1.5o'
   - name: 'RaceMenuMorphsCBBE.esp'
     after: [ 'RaceMenuPlugin.esp' ]
     req:
@@ -6536,8 +6632,8 @@ plugins:
       - *HDT_SMP
     msg:
       - <<: *requiresX
-        subs: [ '[Caliente''s Beautiful Bodies Enhancer (CBBE)](https://www.nexusmods.com/skyrimspecialedition/mods/198/) **OR** [Touched by Dibella (TBD)](https://www.nexusmods.com/skyrimspecialedition/mods/20024/) **OR** [BHUNP (UUNP Next Generation) SSE](https://www.nexusmods.com/skyrimspecialedition/mods/31126/)' ]
-        condition: 'not active("CBBE.esp") and not active("TouchedbyDibella.esp") and not active("BHUNP3BBB.esp")'
+        subs: [ '[Caliente''s Beautiful Bodies Enhancer (CBBE)](https://www.nexusmods.com/skyrimspecialedition/mods/198/) **OR** [Caliente''s Beautiful Bodies Enhancer -CBBE SFW Edition-](https://www.nexusmods.com/skyrimspecialedition/mods/74257/) **OR** [Touched by Dibella (TBD)](https://www.nexusmods.com/skyrimspecialedition/mods/20024/) **OR** [BHUNP (UUNP Next Generation) SSE](https://www.nexusmods.com/skyrimspecialedition/mods/31126/)' ]
+        condition: 'not (file("CalienteTools/BodySlide/SliderSets/CBBE( \(SFW\))?\.osp") or active("TouchedbyDibella.esp") or active("BHUNP3BBB.esp"))'
     clean:
       - crc: 0x9DE3D3D1
         util: 'SSEEdit v4.0.3'
@@ -7104,9 +7200,13 @@ plugins:
       - crc: 0x9B789EF8
         util: 'SSEEdit v4.0.3f'
   - name: 'AI Overhaul - KaliliesNPCs Patch.esp'
-    url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/30247/' ]
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/30247/'
+        name: 'Kalilies NPCs'
     req:
       - name: 'cutting room floor.esp'
+        display: 'a version of Cutting Room Floor older than v3.1.23'
+        constraint: 'version("cutting room floor.esp", "3.1.23", <)'
         condition: 'checksum("AI Overhaul - KaliliesNPCs Patch.esp", D063D027)'
     msg:
       - <<: *useVersion
@@ -8602,6 +8702,7 @@ plugins:
           - 'Wintersun - Faiths of Skyrim'
           - '[Wintersun - More Patches](https://www.nexusmods.com/skyrimspecialedition/mods/24228/)'
         condition: 'active("Wintersun - Faiths of Skyrim.esp") and not active("Wintersun - SIC Patch.esp")'
+      - <<: *patchUnavailableRequiem
       - *requiresMCM
       - *requiresMCMVR
       - type: say
@@ -9323,6 +9424,10 @@ plugins:
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/17909/' ]
     group: *earlyLoadersGroup
 
+  - name: 'HappyPBRTrees.esp'
+    url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/129150' ]
+    after: [ 'HappyLittleTrees.esp' ]
+
   - name: 'HD Lods SSE.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/3333/' ]
     group: *fixesGroup
@@ -9381,21 +9486,20 @@ plugins:
     msg:
       - <<: *patchIncluded
         subs: [ 'Complete Alchemy and Cooking Overhaul' ]
-        condition: 'active("Complete Alchemy & Cooking Overhaul.esp") and not active("Landscape and Water Fixes - Patch - CACO.esp")'
+        # 0x6D655320: Default v9.9.1A (Free Crops not checked in FOMOD)
+        condition: 'active("Complete Alchemy & Cooking Overhaul.esp") and checksum("Landscape and Water Fixes.esp", 6D655320) and not active("Landscape and Water Fixes - Patch - CACO.esp")'
       - <<: *patchIncluded
         subs: [ 'Enhanced Lights and FX' ]
         condition: 'active("EnhancedLightsandFX.esp") and not active("Landscape and Water Fixes - Patch - ELFX.esp") and not active("ELFX Shadows.esp")'
       - <<: *patchIncluded
         subs: [ 'Landscape Fixes For Grass Mods' ]
-        condition: 'active("Landscape Fixes For Grass Mods.esp") and not active("Landscape and Water Fixes - Patch - LFfGM.esp")'
+        condition: 'active("Landscape Fixes For Grass Mods.esp") and not active("Landscape and Water Fixes( - Patch)? - LFfGM( - GotT)?( - Water for ENB)?( patch)?\.esp")'
     tag:
       - C.Climate
       - C.ImageSpace
       - C.Light
       - C.Water
-    clean:
-      - crc: 0x1E5FE174
-        util: 'SSEEdit v4.0.3g'
+    # Do not clean - ITMs are intentional according to the author.
   - name: 'Skyrim Landscape and Water Fixes - Light Sources.esp'
     group: *fixesGroup
     inc:
@@ -9405,6 +9509,12 @@ plugins:
       - crc: 0xCC137B4C
         util: 'SSEEdit v4.0.3g'
   # Skyrim Landscape and Water Fixes Patches #
+  - name: 'Landscape and Water Fixes - Patch - Alternate Start - LFfGM.esp'
+    after:
+      - 'Landscape and Water Fixes - LFfGM - GotT - Water for ENB patch.esp'
+      - 'Landscape and Water Fixes - LFfGM - GotT patch.esp'
+      - 'Landscape and Water Fixes - LFfGM - Water for ENB patch.esp'
+      - 'Landscape and Water Fixes - Patch - LFfGM.esp'
   - name: 'Landscape and Water Fixes - Patch - ELFX.esp'
     inc: [ 'ELFX Shadows.esp' ]
   - name: 'Landscape and Water Fixes - Patch - Relighting Skyrim.esp'
@@ -9491,6 +9601,12 @@ plugins:
         util: 'SSEEdit v4.0.4b'
   - name: 'Landscape (Fixes )?For Grass Mods .*\.esp'
     after: [ 'Landscape Fixes For Grass Mods.esp' ]
+  - name: 'Landscape Fixes For Grass mods - Alternate start Locations.esp'
+    after:
+      - 'Landscape and Water Fixes - LFfGM - GotT - Water for ENB patch.esp'
+      - 'Landscape and Water Fixes - LFfGM - GotT patch.esp'
+      - 'Landscape and Water Fixes - LFfGM - Water for ENB patch.esp'
+      - 'Landscape and Water Fixes - Patch - LFfGM.esp'
   - name: 'Landscape For Grass Mods - Arthmoor''s Dragon Bridge PATCH.esp'
     after: [ 'dragon bridge.esp' ]
   - name: 'Landscape For Grass Mods -Immersive Citizens PATCH.esp'
@@ -9538,7 +9654,18 @@ plugins:
     msg:
       - <<: *compatIssuesWithX
         subs: [ 'ENBSeries' ]
-        condition: 'file("../d3d11.dll")'
+        condition: 'file("../enblocal.ini")'
+
+  - name: 'NoGrassias( (Extended|Lite|Ultimate))?\.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/35639/'
+        name: 'No Grassias - A Universal Grass Fix For Grass Mods'
+    group: *lowPriorityGroup
+    msg:
+      - <<: *useOnlyOneX
+        subs: [ 'No Grassias ESP' ]
+        condition: 'many("NoGrassias( (Extended|Lite|Ultimate))?\.esp")'
+    # Do not clean - ITMs are intentional according to the author.
 
   - name: 'NoGrassINCaves.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/12431/' ]
@@ -9797,6 +9924,28 @@ plugins:
   - name: 'TerrainLodRedone.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/9135/' ]
     group: *fixesGroup
+
+  - name: 'Themarshlands.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/23062/'
+        name: 'The Marshlands'
+    dirty:
+      # V1.6
+      - <<: *quickClean
+        crc: 0x0D5CCE60
+        util: '[SSEEdit v4.1.5o](https://www.nexusmods.com/skyrimspecialedition/mods/164)'
+        itm: 100
+        udr: 116
+      # V1.6 JK's Morthal edition
+      - <<: *quickClean
+        crc: 0xC82A513F
+        util: '[SSEEdit v4.1.5o](https://www.nexusmods.com/skyrimspecialedition/mods/164)'
+        itm: 99
+        udr: 113
+    clean:
+      # V2.0
+      - crc: 0x8FD613C5
+        util: 'SSEEdit v4.1.5o'
 
   - name: 'Trees in Cities( - Open Cities Skyrim Edition)?\.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/1941/' ]
@@ -10592,16 +10741,53 @@ plugins:
         name: 'Requiem - The Roleplaying Overhaul'
     group: *perksGroup
     inc:
+      - 'Adamant.esp'
+      - 'Aetherius.esp'
+      - 'Andromeda - Unique Standing Stones of Skyrim.esp'
+      - 'Apothecary.esp'
+      - 'Arena.esp'
+      - 'Artificer.esp'
+      - 'Evenstar - Minimalistic Standing Stones of Skyrim.esp'
+      - 'Freyr - Integrated Standing Stones of Skyrim.esp'
+      - 'Gourmet.esp'
+      - 'HandtoHand.esp'
+      - 'Imperious - Races of Skyrim.esp'
+      - 'Manbeast.esp'
+      - 'Mannaz - Integrated Races of Skyrim.esp'
+      - 'Morningstar - Minimalistic Races of Skyrim.esl'
+      - 'Mundus.esp'
+      - 'MysticismMagic.esp'
+      - 'Odin - Skyrim Magic Overhaul.esp'
       - 'Ordinator - Perks of Skyrim.esp'
+      - 'PathOfSorcery.esp'
       - 'PerkusMaximus_Mage.esp'
       - 'PerkusMaximus_Master.esp'
       - 'PerkusMaximus_Thief.esp'
       - 'PerkusMaximus_Warrior.esp'
       - 'PerkusMaximus_CombatPlus.esp'
+      - 'Pilgrim.esp'
+      - 'Scion.esp'
       - 'SkyRe_Main.esp'
+      - 'Sorcerer.esp'
+      - 'Stormcrown.esp'
+      - 'Thaumaturgy.esp'
+      - 'Trua - Minimalistic Faiths of Skyrim.esp'
+      - 'Vokrii - Minimalistic Perks of Skyrim.esp'
     msg:
       - <<: *compatNotes
-        subs: [ 'https://requiem.atlassian.net/wiki/spaces/RSSE/pages/2658926593/Compatibility+Advice' ]
+        subs: [ 'https://github.com/ProbablyManuel/requiem/wiki#compatibility-advice' ]
+      - <<: *compatIssuesWithX
+        subs: [ '**Blade and Blunt - A Combat Overhaul**' ]
+        condition: 'active("BladeAndBlunt.esp")'
+      - <<: *compatIssuesWithX
+        subs: [ '**Smilodon - Combat of Skyrim**' ]
+        condition: 'active("Smilodon - Combat of Skyrim.esp")'
+      - <<: *compatIssuesWithX
+        subs: [ '**Valravn - Integrated Combat of Skyrim**' ]
+        condition: 'active("Valravn - Integrated Combat of Skyrim.esp")'
+      - <<: *compatIssuesWithX
+        subs: [ '**Wildcat - Combat of Skyrim**' ]
+        condition: 'active("Wildcat - Combat of Skyrim.esp")'
       - *includesMBBF
   - name: 'Requiem - No Overencumbered Messages.esp'
     url:
@@ -11629,9 +11815,11 @@ plugins:
         subs:
           - 'Requiem - The Roleplaying Overhaul'
           - '[Requiem - WACCF CCOR ACE Patches](https://www.nexusmods.com/skyrimspecialedition/mods/31758/)'
-        condition: 'active("Requiem.esp") and not active("Requiem - CCOR.esp")'
+        condition: 'active("Requiem.esp") and not active("Requiem - CCOR.esp") and version("Requiem.esp", "6.0.0", <)'
       - <<: *patch3rdParty_LotD
         condition: 'active("LegacyoftheDragonborn.esm") and not active("DBM_CCOR_Patch.esp") and version("LegacyoftheDragonborn.esm", "5.0.24", >=)'
+      - <<: *patchUnavailableRequiem
+        condition: 'active("Requiem.esp") and version("Requiem.esp", "6.0.0", >=)'
       - <<: *patchUpdateAvailable
         type: warn
         subs: [ '[CCOR PRUFEI Chest CTD Hotfix](https://www.nexusmods.com/skyrimspecialedition/mods/28608/)' ]
@@ -11651,6 +11839,15 @@ plugins:
     clean:
       - crc: 0x3D3D8005
         util: 'SSEEdit v4.0.4c'
+
+  - name: 'cut the wheat.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/151606/'
+        name: 'Cut The Wheat - OIF'
+    msg:
+      - <<: *requiresResources
+        subs: [ '[Wheat Replacer](https://www.nexusmods.com/skyrimspecialedition/mods/112074/) **OR** [Real Wheat Fields](https://www.nexusmods.com/skyrimspecialedition/mods/151229/)' ]
+        condition: 'not file("textures/plants/CITSWheat.dds")'
 
   - name: 'HarvestOverhaul_Redone.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/2398/' ]
@@ -13055,7 +13252,7 @@ plugins:
         subs:
           - 'Requiem - The Roleplaying Overhaul'
           - '[Requiem - WACCF CCOR ACE Patches](https://www.nexusmods.com/skyrimspecialedition/mods/31758/)'
-        condition: 'active("Requiem.esp") and not active("Requiem - WACCF.esp")'
+        condition: 'active("Requiem.esp") and not active("Requiem - WACCF.esp") and version("Requiem.esp", "6.0.0", <)'
       - <<: *patch3rdParty
         subs:
           - 'Triss Armor Retextured'
@@ -13067,6 +13264,8 @@ plugins:
         condition: 'active("Vokrii - Minimalistic Perks of Skyrim.esp") and not active("Vokrii - WACCF Patch.esp") and not active("Complete Crafting Overhaul_Remastered.esp")'
       - <<: *patch3rdParty_LotD
         condition: 'active("LegacyoftheDragonborn.esm") and not active("DBM_WACCF_Patch.esp")'
+      - <<: *patchUnavailableRequiem
+        condition: 'active("Requiem.esp") and version("Requiem.esp", "6.0.0", >=)'
     clean:
       - crc: 0xA8EBA40E
         util: 'SSEEdit v4.0.3h (Hotfix 1)'
@@ -13246,6 +13445,11 @@ plugins:
         subs: [ 'https://www.nexusmods.com/skyrimspecialedition/articles/136/' ]
       - *includesMBBF
       - *patch3rdParty_SRPC
+      - <<: *patch3rdParty
+        subs:
+          - 'Requiem - The Roleplaying Overhaul'
+          - '[Requiem - Apocalypse - Magic of Skyrim patch](https://www.nexusmods.com/skyrimspecialedition/mods/78643/)'
+        condition: 'active("Requiem.esp") and not active("Requiem - Apocalypse Compatibility Patch.esp")'
       - <<: *patchProvided
         subs: [ 'Ordinator - Perks of Skyrim' ]
         condition: 'active("Ordinator - Perks of Skyrim.esp") and not active("Apocalypse - Ordinator Compatibility Patch.esp")'
@@ -13459,7 +13663,9 @@ plugins:
 
   - name: 'Cosmic Spells.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/29352/' ]
-    msg: [ *patch3rdParty_SRPC_Redux ]
+    msg:
+      - <<: *patch3rdParty_SRPC_Redux
+      - <<: *patchUnavailableRequiem
 
   - name: 'Daedric Entity Restoration Project.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/3604/' ]
@@ -14419,6 +14625,13 @@ plugins:
       - <<: *patchProvided
         subs: [ 'Adamant: A Perk Overhaul' ]
         condition: 'active("Adamant.esp") and not active("Triumvirate - Adamant Compatibility Patch.esp")'
+      - <<: *patch3rdParty
+        subs:
+          - 'Requiem - The Roleplaying Overhaul'
+          - '[Requiem - Triumvirate Mage Archetypes](https://www.nexusmods.com/skyrimspecialedition/mods/88561/)'
+        condition: 'active("Requiem.esp") and not active("Requiem - Triumvirate.esp") and version("Requiem.esp", "6.0.0", <)'
+      - <<: *patchUnavailableRequiem
+        condition: 'active("Requiem.esp") and version("Requiem.esp", "6.0.0", >=)'
     clean:
       - crc: 0x8949A9E7
         util: 'SSEEdit v4.0.3'
@@ -14498,6 +14711,11 @@ plugins:
           - 'Zim''s Immersive Artifacts'
           - '[Wintersun - More Patches](https://www.nexusmods.com/skyrimspecialedition/mods/24228/)'
         condition: 'active("ZIA_Complete Pack.esp") and not active("Wintersun - ZIA Patch.esp")'
+      - <<: *patch3rdParty
+        subs:
+          - 'Requiem - The Roleplaying Overhaul'
+          - '[Requiem - Wintersun Patch SSE Plotinuz Update](https://www.nexusmods.com/skyrimspecialedition/mods/61069/)'
+        condition: 'active("Requiem.esp") and not active("Requiem - Wintersun Patch SSE Plotinuz Update.esp")'
       - <<: *patch3rdParty_KPH_CACO
         condition: 'active("Complete Alchemy & Cooking Overhaul.esp") and not active("CACO_Wintersun.esp")'
       - <<: *patch3rdParty_KPH_TCIY
@@ -15570,6 +15788,22 @@ plugins:
       - <<: *patchOutdated
         condition: 'checksum("Wild World - SIC.esp", 724A874D)'
 
+  - name: 'YoungLovers-VoiceOverhaul.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/85908/'
+        name: 'YoungLover''s - Voice Overhaul'
+    msg:
+      - <<: *patch3rdParty
+        subs:
+          - 'Nether''s Follower Framework'
+          - '[YoungLover''s - Voice Overhaul Patches](https://www.nexusmods.com/skyrimspecialedition/mods/164049/)'
+        condition: 'active("nwsFollowerFramework.esp") and not active("YoungLovers and NFF Patch.esp")'
+      - <<: *patch3rdParty
+        subs:
+          - 'Unofficial Skyrim Special Edition Patch'
+          - '[YoungLover''s - Voice Overhaul Patches](https://www.nexusmods.com/skyrimspecialedition/mods/164049/)'
+        condition: 'active("unofficial skyrim special edition patch.esp") and not active("YoungLovers and USSE Patch.esp")'
+
 ###### Gameplay - Quests ######
   - name: 'AgentOfRighteousMight.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/29067/' ]
@@ -15602,9 +15836,13 @@ plugins:
       - 'Original Opening Scene.esp'
       - 'QuickVanillaStart.esl'
       - 'Random Alternate Start Reborn SE.esp'
-      - 'Realm of Lorkhan - Custom Alternate Start - Choose your own adventure.esp'
       - 'Skyrim Unbound.esp'
     msg:
+      - <<: *patch3rdParty
+        subs:
+          - 'Realm of Lorkhan - Freeform Alternate Start'
+          - '[Alternate Perspective - Realm of Lorkhan Patch](https://www.nexusmods.com/skyrimspecialedition/mods/104545/)'
+        condition: 'file("Realm of Lorkhan - Custom Alternate Start - Choose your own adventure.esp") and not file("SHE_LorkhanPerspective.esp")'
       - <<: *patchUnavailable
         subs: [ 'Touring Carriages' ]
         condition: 'active("TouringCarriages.esp")'
@@ -16584,6 +16822,17 @@ plugins:
         util: '[SSEEdit v4.0.3](https://www.nexusmods.com/skyrimspecialedition/mods/164)'
         itm: 47
 
+  - name: 'ksws07_quest(_no_start_requirements|_shrubs)?\.es[mp]'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/159911/'
+        name: 'The Frozen Heart - Quest Mod'
+  - name: 'ksws07_quest.esm'
+    dirty:
+      - <<: *quickClean
+        crc: 0x7ECC2544
+        util: '[SSEEdit v4.1.5p 32bit fix version](https://www.nexusmods.com/skyrimspecialedition/mods/164)'
+        itm: 2
+
   - name: 'LovelyLetter.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/21916/' ]
     after:
@@ -16835,7 +17084,7 @@ plugins:
 
   - name: 'Religion.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/25487/' ]
-    after: [ 'Requiem.esp' ]
+    msg: [ *patchUnavailableRequiem ]
     tag:
       - Graphics
       - Keywords
@@ -17422,7 +17671,7 @@ plugins:
 
   - name: 'EnchantingAwakened.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/18558/' ]
-    after: [ 'Requiem.esp' ]
+    msg: [ *patchUnavailableRequiem ]
 
   - name: 'Growl - Werebeasts of Skyrim.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/31245/' ]
@@ -17463,6 +17712,11 @@ plugins:
       - <<: *compatNotes
         subs: [ 'https://www.nexusmods.com/skyrimspecialedition/articles/1519' ]
       - *includesMBBF
+      - <<: *patch3rdParty
+        subs:
+          - 'Requiem - The Roleplaying Overhaul'
+          - '[Requiem - Growl](https://www.nexusmods.com/skyrimspecialedition/mods/72577/)'
+        condition: 'active("Requiem.esp") and not active("Requiem - Growl.esp")'
       - <<: *patch3rdParty
         subs:
           - 'Mortal Enemies'
@@ -17644,7 +17898,6 @@ plugins:
       - 'Adamant.esp'
       - name: 'Ordinator - Perks of Skyrim.esp'
         condition: 'not file("Path to Ordinance.esp") and not file("Vokriinator( Black)?\.esp")'
-      - 'Requiem.esp'
       - 'SPERG-SSE.esp'
       - name: 'Vokrii - Minimalistic Perks of Skyrim.esp'
         condition: 'not file("Vokriinator( Black)?\.esp")'
@@ -17703,7 +17956,15 @@ plugins:
       - Sound
       - SpellStats
       - Text
-    msg: [ *includesMBBF ]
+    msg:
+      - *includesMBBF
+      - <<: *patch3rdParty
+        subs:
+          - 'Requiem - The Roleplaying Overhaul'
+          - '[Requiem - Sacrilege](https://www.nexusmods.com/skyrimspecialedition/mods/72578/)'
+        condition: 'active("Requiem.esp") and not active("Requiem - Sacrilege.esp") and version("Requiem.esp", "6.0.0", <)'
+      - <<: *patchUnavailableRequiem
+        condition: 'active("Requiem.esp") and version("Requiem.esp", "6.0.0", >=)'
     clean:
       - crc: 0x96E2166B
         util: 'SSEEdit v4.0.3f'
@@ -17729,6 +17990,13 @@ plugins:
       - <<: *compatNotes
         subs: [ 'https://www.nexusmods.com/skyrimspecialedition/articles/54' ]
       - *includesMBBF
+      - <<: *patch3rdParty
+        subs:
+          - 'Requiem - The Roleplaying Overhaul'
+          - '[Requiem - Sacrosanct Patch](https://www.nexusmods.com/skyrimspecialedition/mods/62406/)'
+        condition: 'active("Requiem.esp") and not active("Requiem - Sacrosanct Patch.esp") and version("Requiem.esp", "6.0.0", <)'
+      - <<: *patchUnavailableRequiem
+        condition: 'active("Requiem.esp") and version("Requiem.esp", "6.0.0", >=)'
       - <<: *patch3rdParty_KPH_CACO
         condition: 'active("Complete Alchemy & Cooking Overhaul.esp") and not active("Sacrosanct_CACO_Patch.esp")'
     clean:
@@ -17833,7 +18101,6 @@ plugins:
       - 'PerkusMaximus_Master.esp'
       - 'PerkusMaximus_Thief.esp'
       - 'PerkusMaximus_Warrior.esp'
-      - 'Requiem.esp'
     tag:
       - Delev
       - EffectStats
@@ -17965,7 +18232,7 @@ plugins:
     msg:
       - <<: *patchUpdateAvailable
         subs: [ '[QuickLootIE](https://www.nexusmods.com/skyrimspecialedition/mods/120075/) **OR** [1.6.1170 Support (DLL Only) - Fixed](https://github.com/WaterFace/QuickLootEE/releases/latest)' ]
-        condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.5.97.0", >) and version("SKSE/Plugins/QuickLootEE.dll", "1.2.0.0", <) and not file("SKSE/Plugins/QuickLootEE-NG.dll")'
+        condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.5.97.0", >) and not version("SKSE/Plugins/QuickLootEE.dll", "1.2.0.0", >=) and not file("SKSE/Plugins/QuickLootEE-NG.dll")'
       - *requiresMCM
       - *requiresMCMVR
       - <<: *useOnlyOneX
@@ -17975,7 +18242,7 @@ plugins:
         subs:
           - 'QuickLoot EE'
           - 'Skyrim'
-        condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.5.97.0", >) and version("SKSE/Plugins/QuickLootEE.dll", "1.2.0.0", <) and not file("SKSE/Plugins/QuickLootEE-NG.dll")'
+        condition: 'readable("../SkyrimSE.exe") and product_version("../SkyrimSE.exe", "1.5.97.0", >) and not version("SKSE/Plugins/QuickLootEE.dll", "1.2.0.0", >=) and not file("SKSE/Plugins/QuickLootEE-NG.dll")'
     clean:
       - crc: 0x0F6F63D9
         util: 'SSEEdit v4.1.5g'
@@ -18191,7 +18458,7 @@ plugins:
   - name: 'Apocrypha Paper Map for FWMF.esp'
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/92774/'
-        name: 'Apocrypha Paper Map for FWMF'   
+        name: 'Apocrypha Paper Map for FWMF'
   - name: 'Blackreach Paper Map for FWMF.esp'
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/53878/'
@@ -18288,7 +18555,7 @@ plugins:
         name: 'Midwood Isle Paper Map for FWMF'
   - name: 'Sea of Causality Paper Map for FWMF by Limon.esp'
     url:
-      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/146754/' 
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/146754/'
         name: 'DAc0da Paper Map for FWMF by Limon'
   - name: 'Vigilant Paper Map for FWMF.esp'
     url:
@@ -18377,6 +18644,8 @@ plugins:
         condition: 'active("Complete Crafting Overhaul_Remastered.esp") and not active("AetheriumSwordsnArmor_CCOR_Patch.esp")'
       - <<: *patch3rdParty_LotD
         condition: 'active("LegacyoftheDragonborn.esm") and not active("DBM_AetheriumWeapons_Patch.esp") and version("LegacyoftheDragonborn.esm", "5.0.24", >=)'
+      - <<: *patch3rdParty_RPC
+        condition: 'active("Requiem.esp") and not active("Requiem - Aetherium Armor.esp")'
     clean:
       - crc: 0xFA7F23A7
         util: 'SSEEdit v4.0.4b'
@@ -18556,7 +18825,9 @@ plugins:
         subs:
           - 'Requiem - The Roleplaying Overhaul'
           - '[Requiem - WACCF CCOR ACE Patches](https://www.nexusmods.com/skyrimspecialedition/mods/31758/)'
-        condition: 'active("Requiem.esp") and not active("Requiem - WACCF - ACE.esp")'
+        condition: 'active("Requiem.esp") and not active("Requiem - WACCF - ACE.esp") and version("Requiem.esp", "6.0.0", <)'
+      - <<: *patchUnavailableRequiem
+        condition: 'active("Requiem.esp") and version("Requiem.esp", "6.0.0", >=)'
       - *requiresMCM
       - *requiresMCMVR
     tag:
@@ -19327,6 +19598,7 @@ plugins:
         condition: 'active("LegacyoftheDragonborn.esm") and not active("DBM_IA_Patch.esp")'
       - <<: *patch3rdParty_KPH_CCOR
         condition: 'active("Complete Crafting Overhaul_Remastered.esp") and not active("Hothtrooper44_ArmorCompilation_CCOR_Patch.esp") and not active("IARR, CCOR Patch.esp")'
+      - <<: *patchUnavailableRequiem
       - <<: *requiresResources
         subs: [ '[Immersive Armors - Asdasfa Tweaks and Fixes](https://www.nexusmods.com/skyrimspecialedition/mods/85433/)' ]
         condition: 'version("Hothtrooper44_ArmorCompilation.esp", "1.2.0IARR", ==) and not file("meshes/armor/ala")'
@@ -19468,6 +19740,7 @@ plugins:
           - 'A Rose in the Snow - Reborn'
           - '[Patch for A Rose in the Snow - Reborn and Immersive Weapons](https://www.nexusmods.com/skyrimspecialedition/mods/149020/)'
         condition: 'active("A Rose in the Snow.esp") and not active("ARIS_WI_Patch.esp")'
+      - <<: *patchUnavailableRequiem
     tag:
       - Delev
       - Graphics
@@ -19628,12 +19901,15 @@ plugins:
   - name: 'KatanaCrafting.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/5306/' ]
     msg:
+      - <<: *alreadyInX
+        subs: [ '**Requiem.esp**' ]
+        condition: 'active("Requiem.esp") and version("Requiem.esp", "5.3.0", >=)'
       - <<: *patch3rdParty_KPH_CCOR
         condition: 'active("Complete Crafting Overhaul_Remastered.esp") and not active("KatanaCrafting_CCOR_Patch.esp")'
       - <<: *patch3rdParty_KPH_WACCF
         condition: 'active("Weapons Armor Clothing & Clutter Fixes.esp") and not active("Complete Crafting Overhaul_Remastered.esp") and not active("KatanaCrafting_WACCF_Patch.esp")'
       - <<: *patch3rdParty_RPC
-        condition: 'active("Requiem.esp") and not active("Requiem - Katana Crafting.esp")'
+        condition: 'active("Requiem.esp") and not active("Requiem - Katana Crafting.esp") and version("Requiem.esp", "5.3.0", <)'
 
   - name: 'ktWeaponPackSE.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/15050/' ]
@@ -20069,7 +20345,12 @@ plugins:
       - <<: *patch3rdParty_MLU
         condition: 'active("MLU.esp") and not active("MLU_HeavyArmory Patch.esp")'
       - <<: *patch3rdParty_RPC
-        condition: 'active("Requiem.esp") and not active("Requiem - Heavy Armory.esp")'
+        condition: 'active("Requiem.esp") and not active("Requiem - Heavy Armory.esp") and version("Requiem.esp", "5.3.0", <)'
+      - <<: *patch3rdParty
+        subs:
+          - 'Requiem - The Roleplaying Overhaul'
+          - '[Requiem - Heavy Armory Patch](https://www.nexusmods.com/skyrimspecialedition/mods/89009/)'
+        condition: 'active("Requiem.esp") and not active("Requiem - Heavy Armory Patch.esp") and version("Requiem.esp", "5.3.0", >=)'
       - <<: *patchIncluded
         subs: [ 'Weapons Armor Clothing and Clutter Fixes' ]
         condition: 'active("Weapons Armor Clothing & Clutter Fixes.esp") and not active("PrvtI_HeavyArmory_WACCF_Patch.esp")'
@@ -20430,6 +20711,13 @@ plugins:
           - 'Weapons Armor Clothing and Clutter Fixes'
           - '[Summermyst - WACCF Patch](https://www.nexusmods.com/skyrimspecialedition/mods/34547/)'
         condition: 'active("Weapons Armor Clothing & Clutter Fixes.esp") and not active("Summermyst - WACCF Patch.esp")'
+      - <<: *patch3rdParty
+        subs:
+          - 'Requiem - The Roleplaying Overhaul'
+          - '[Requiem - Summermyst](https://www.nexusmods.com/skyrimspecialedition/mods/67594/)'
+        condition: 'active("Requiem.esp") and not active("Requiem - Summermyst.esp") and version("Requiem.esp", "5.3.0", <)'
+      - <<: *patchUnavailableRequiem
+        condition: 'active("Requiem.esp") and version("Requiem.esp", "5.3.0", >=)'
     clean:
       # version: 3.07SSE
       - crc: 0x1F17FC44
@@ -23945,8 +24233,10 @@ plugins:
   - name: 'HS(DragonBridge|Markarth|PlayerHomes|Riften|Riverwood|Solitude|Whiterun|Wilderness|Windhelm) - .+\.esp'
     after:
       - 'EnhancedLightsandFX.esp'
+      - 'Flower Girls NPC Relationships.esp'
       - 'Immersive Citizens - AI Overhaul.esp'
       - 'Lux.esp'
+      - 'SexLab-AmorousAdventures.esp'
 
   - name: 'InnCredible.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/790/' ]
@@ -24124,7 +24414,7 @@ plugins:
         display: 'Dawn of Skyrim (Director''s Cut)'
         condition: 'not active("JKs Skyrim_Dawn of Skyrim_Patch.esp")'
       - name: 'open cities skyrim.esp'
-        condition: 'not active("JKs Skyrim_Open Cities_Patch.esp") and not active("JK - DoS - OCS Patch.esp")'
+        condition: 'not active("JKs Skyrim - Open Cities Skyrim patch.esp") and not active("JK - DoS - OCS Patch.esp")'
       - 'Paradise_City_Merged.esp'
       - 'Paradise_City_MergedNoWindhelm.esp'
       - 'Paradise_City_MergedSummerWindhelm.esp'
@@ -24234,63 +24524,102 @@ plugins:
           - 'The Great City of Rorikstead & Arthmoor''s Rorikstead'
           - '[Rob''s Bug Fixes - TGC Rorikstead](https://www.nexusmods.com/skyrimspecialedition/mods/68559/)'
         condition: 'active("The Great City of Rorikstead.esp") and active("rorikstead.esp") and not active("The Great City of Rorikstead - JK''s + Arth''s Patch.esp")'
-      - <<: *patchProvided
-        subs: [ 'Arthmoor''s Dawnstar' ]
-        condition: 'active("dawnstar.esp") and not active("JKs Skyrim_(Dawnstar|Arth( CRF)? DA DB FA IV RO|Arthmoor All)_Patch\.esp")'
-      - <<: *patchProvided
-        subs: [ 'Arthmoor''s Dragon Bridge' ]
-        condition: 'active("dragon bridge.esp") and not active("The Great City of Dragon Bridge.esp") and not active("JKs Skyrim_(Dragon Bridge|Arth( CRF)? DA DB FA IV RO|Arthmoor All)_Patch\.esp")'
-      - <<: *patchProvided
-        subs: [ 'Arthmoor''s Falkreath' ]
-        condition: 'active("falkreath.esp") and not active("JKs Skyrim_(Falkreath|Arth( CRF)? DA DB FA IV RO|Arthmoor All)_Patch\.esp")'
-      - <<: *patchProvided
-        subs: [ 'Arthmoor''s Ivarstead' ]
-        condition: 'active("ivarstead.esp") and not active("JKs Skyrim_(Ivarstead|Arth( CRF)? DA DB FA IV RO|Arthmoor All)_Patch\.esp")'
-      - <<: *patchProvided
-        subs: [ 'Arthmoor''s Rorikstead' ]
-        condition: 'active("rorikstead.esp") and not active("The Great City of Rorikstead.esp") and not active("JKs Skyrim_(Rorikstead|Arth( CRF)? DA DB FA IV RO|Arthmoor All)_Patch\.esp")'
-      - <<: *patchProvided
-        subs: [ 'Better City Entrances' ]
-        condition: 'active("Better City Entrances - All in one - SSE.esp") and not active("JKs Skyrim_Better City Entrances_Patch.esp")'
-      - <<: *patchProvided
-        subs: [ 'Better Docks' ]
-        condition: 'active("BetterDocks-MP-DLC-Compatible.esp") and not active("JKs Skyrim_Better Docks_Patch.esp")'
-      - <<: *patchProvided
-        subs: [ 'Blowing in the Wind' ]
-        condition: 'active("Blowing in the Wind SSE.esp") and not file("Blowing in the Wind SSE_SWAP.ini") and not active("Dawn of Skyrim.esp") and not active("ETaC - Complete.esp") and not active("Blowing in the Wind - JKs Skyrim Patch.esp")'
-      - <<: *patchProvided
-        subs: [ 'Bring Out Your Dead' ]
-        condition: 'active("bring out your dead.esp") and not active("JKs Skyrim_(BOYD|Arthmoor All)_Patch\.esp")'
-      - <<: *patchProvided
-        subs: [ 'Carriage and Ferry Travel Overhaul' ]
-        condition: 'active("CFTO.esp") and not active("CFTO-JK-Patch.esp") and not active("ETaC - Complete.esp")'
-      - <<: *patchProvided
-        subs: [ 'Clockwork' ]
-        condition: 'active("Clockwork.esp") and not active("JKs Skyrim_Clockwork_Patch.esp")'
-      - <<: *patchProvided
-        subs: [ 'Cutting Room Floor' ]
-        condition: 'active("cutting room floor.esp") and not active("JKs Skyrim_(Cutting Room Floor|Arth CRF DA DB FA IV RO|Arthmoor All)_Patch\.esp")'
-      - <<: *patchProvided
-        subs: [ 'Holidays' ]
-        condition: 'active("Holidays.esp") and not active("JKs Skyrim_Holidays_Patch.esp") and not active("Dawn of Skyrim.esp") and not active("ETaC - Complete.esp")'
-      - <<: *patchProvided
-        subs: [ 'Mirai' ]
-        condition: 'active("zMirai.esp") and not active("JKs Skyrim_Mirai_Patch.esp")'
-      - <<: *patchProvided
-        subs: [ 'Oblivion Gates' ]
-        condition: 'active("oblivion gates in cities.esp") and not active("JKs Skyrim_(Oblivion Gates|Arthmoor All)_Patch\.esp")'
-      - <<: *patchProvided
-        subs: [ 'Open Cities Skyrim' ]
-        condition: 'active("open cities skyrim.esp") and not active("JKs Skyrim_Open Cities_Patch.esp") and not active("JK - DoS - OCS Patch.esp")'
-      - <<: *patchProvided
-        subs: [ 'Realistic Water Two' ]
-        condition: 'active("RealisticWaterTwo.esp") and not active("JKs Skyrim_RWT_Patch.esp")'
-      - <<: *patchProvided
-        subs: [ 'Storefront' ]
-        condition: 'active("storefront.esp") and not active("JKs Skyrim_(Storefront|Arthmoor All)_Patch\.esp")'
-      - <<: *patchProvided
-        subs: [ 'Thunderchild' ]
-        condition: 'active("Thunderchild - Epic Shout Package.esp") and not active("JKs Skyrim_Thunderchild_Patch.esp")'
+      # JK's Skyrim Patch Collection #
+      - <<: *patch3rdParty
+        subs:
+          - 'Arthmoor''s Dawnstar'
+          - '[JK''s Skyrim Patch Collection](https://www.nexusmods.com/skyrimspecialedition/mods/154077/)'
+        condition: 'active("dawnstar.esp") and not active("JKs Skyrim - (Dawnstar|Arthmoor ((CRF )?DA DB FA IV RO|All)) patch\.esp")'
+      - <<: *patch3rdParty
+        subs:
+          - 'Arthmoor''s Dragon Bridge'
+          - '[JK''s Skyrim Patch Collection](https://www.nexusmods.com/skyrimspecialedition/mods/154077/)'
+        condition: 'active("dragon bridge.esp") and not active("The Great City of Dragon Bridge.esp") and not active("JKs Skyrim - (Dragon Bridge|Arthmoor ((CRF )?DA DB FA IV RO|All)) patch\.esp")'
+      - <<: *patch3rdParty
+        subs:
+          - 'Arthmoor''s Falkreath'
+          - '[JK''s Skyrim Patch Collection](https://www.nexusmods.com/skyrimspecialedition/mods/154077/)'
+        condition: 'active("falkreath.esp") and not active("JKs Skyrim - (Falkreath|Arthmoor ((CRF )?DA DB FA IV RO|All)) patch\.esp")'
+      - <<: *patch3rdParty
+        subs:
+          - 'Arthmoor''s Ivarstead'
+          - '[JK''s Skyrim Patch Collection](https://www.nexusmods.com/skyrimspecialedition/mods/154077/)'
+        condition: 'active("ivarstead.esp") and not active("JKs Skyrim - (Ivarstead|Arthmoor ((CRF )?DA DB FA IV RO|All)) patch\.esp")'
+      - <<: *patch3rdParty
+        subs:
+          - 'Arthmoor''s Rorikstead'
+          - '[JK''s Skyrim Patch Collection](https://www.nexusmods.com/skyrimspecialedition/mods/154077/)'
+        condition: 'active("rorikstead.esp") and not active("The Great City of Rorikstead.esp") and not active("JKs Skyrim - (Rorikstead|Arthmoor ((CRF )?DA DB FA IV RO|All)) patch\.esp")'
+      - <<: *patch3rdParty
+        subs:
+          - 'Better City Entrances'
+          - '[JK''s Skyrim Patch Collection](https://www.nexusmods.com/skyrimspecialedition/mods/154077/)'
+        condition: 'active("Better City Entrances - All in one - SSE.esp") and not active("JKs Skyrim - Better City Entrances patch.esp")'
+      - <<: *patch3rdParty
+        subs:
+          - 'Better Docks'
+          - '[JK''s Skyrim Patch Collection](https://www.nexusmods.com/skyrimspecialedition/mods/154077/)'
+        condition: 'active("BetterDocks-MP-DLC-Compatible.esp") and not active("JKs Skyrim - Better Docks patch.esp")'
+      - <<: *patch3rdParty
+        subs:
+          - 'Blowing in the Wind'
+          - '[JK''s Skyrim Patch Collection](https://www.nexusmods.com/skyrimspecialedition/mods/154077/)'
+        condition: 'active("Blowing in the Wind SSE.esp") and not file("Blowing in the Wind SSE_SWAP.ini") and not active("Dawn of Skyrim.esp") and not active("ETaC - Complete.esp") and not active("JKs Skyrim - Blowing in the Wind patch.esp")'
+      - <<: *patch3rdParty
+        subs:
+          - 'Bring Out Your Dead'
+          - '[JK''s Skyrim Patch Collection](https://www.nexusmods.com/skyrimspecialedition/mods/154077/)'
+        condition: 'active("bring out your dead.esp") and not active("JKs Skyrim - (BOYD|Arthmoor All) patch\.esp")'
+      - <<: *patch3rdParty
+        subs:
+          - 'Carriage and Ferry Travel Overhaul'
+          - '[JK''s Skyrim Patch Collection](https://www.nexusmods.com/skyrimspecialedition/mods/154077/)'
+        condition: 'active("CFTO.esp") and not active("JKs Skyrim - CFTO patch.esp") and not active("ETaC - Complete.esp")'
+      - <<: *patch3rdParty
+        subs:
+          - 'Clockwork'
+          - '[JK''s Skyrim Patch Collection](https://www.nexusmods.com/skyrimspecialedition/mods/154077/)'
+        condition: 'active("Clockwork.esp") and not active("JKs Skyrim - Clockwork patch.esp")'
+      - <<: *patch3rdParty
+        subs:
+          - 'Cutting Room Floor'
+          - '[JK''s Skyrim Patch Collection](https://www.nexusmods.com/skyrimspecialedition/mods/154077/)'
+        condition: 'active("cutting room floor.esp") and not active("JKs Skyrim - (Cutting Room Floor|Arthmoor (CRF DA DB FA IV RO|All)) patch\.esp")'
+      - <<: *patch3rdParty
+        subs:
+          - 'Holidays'
+          - '[JK''s Skyrim Patch Collection](https://www.nexusmods.com/skyrimspecialedition/mods/154077/)'
+        condition: 'active("Holidays.esp") and not active("JKs Skyrim - Holidays patch.esp") and not active("Dawn of Skyrim.esp") and not active("ETaC - Complete.esp")'
+      - <<: *patch3rdParty
+        subs:
+          - 'Mirai'
+          - '[JK''s Skyrim Patch Collection](https://www.nexusmods.com/skyrimspecialedition/mods/154077/)'
+        condition: 'active("zMirai.esp") and not active("JKs Skyrim - Mirai patch.esp")'
+      - <<: *patch3rdParty
+        subs:
+          - 'Oblivion Gates'
+          - '[JK''s Skyrim Patch Collection](https://www.nexusmods.com/skyrimspecialedition/mods/154077/)'
+        condition: 'active("oblivion gates in cities.esp") and not active("JKs Skyrim - (Oblivion Gates|Arthmoor All) patch\.esp")'
+      - <<: *patch3rdParty
+        subs:
+          - 'Open Cities Skyrim'
+          - '[JK''s Skyrim Patch Collection](https://www.nexusmods.com/skyrimspecialedition/mods/154077/)'
+        condition: 'active("open cities skyrim.esp") and not active("JKs Skyrim - Open Cities Skyrim patch.esp") and not active("JK - DoS - OCS Patch.esp")'
+      - <<: *patch3rdParty
+        subs:
+          - 'Realistic Water Two'
+          - '[JK''s Skyrim Patch Collection](https://www.nexusmods.com/skyrimspecialedition/mods/154077/)'
+        condition: 'active("RealisticWaterTwo.esp") and not active("JKs Skyrim - RWT patch.esp")'
+      - <<: *patch3rdParty
+        subs:
+          - 'Storefront'
+          - '[JK''s Skyrim Patch Collection](https://www.nexusmods.com/skyrimspecialedition/mods/154077/)'
+        condition: 'active("storefront.esp") and not active("JKs Skyrim - (Storefront|Arthmoor All) patch\.esp")'
+      - <<: *patch3rdParty
+        subs:
+          - 'Thunderchild'
+          - '[JK''s Skyrim Patch Collection](https://www.nexusmods.com/skyrimspecialedition/mods/154077/)'
+        condition: 'active("Thunderchild - Epic Shout Package.esp") and not active("JKs Skyrim - Thunderchild patch.esp")'
     clean:
       # Original
       - crc: 0xC2ACB37F
@@ -24298,31 +24627,23 @@ plugins:
       # ETaC Replacer
       - crc: 0x932DCD5F
         util: 'SSEEdit v4.0.4c'
-  # JK's Skyrim - Patches #
-  - name: '.*JKs[ _]Skyrim.*Patch\.esp'
+  # JK's Skyrim Patch Collection #
+  - name: 'JKs Skyrim - .+ patch\.esp'
     url:
-      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/6289/'
-        name: 'JK''s Skyrim'
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/154077/'
+        name: 'JK''s Skyrim Patch Collection'
     after: [ 'JKs Skyrim - Rob''s Bug Fixes.esp' ]
-  - name: 'Blowing in the Wind - JKs Skyrim Patch.esp'
+  - name: 'JKs Skyrim - (Blowing in the Wind|Holidays) patch.esp'
     inc:
       - 'Blues Skyrim.esp'
       - 'Dawn of Skyrim.esp'
       - 'ETaC - Complete.esp'
-  - name: 'CFTO-JK-Patch.esp'
-    url:
-      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/6289/'
-        name: 'JK''s Skyrim'
+  - name: 'JKs Skyrim - CFTO patch.esp'
     inc: [ 'ETaC - Complete.esp' ]
-  - name: 'JKs Skyrim_(Dragon Bridge|Arth( CRF)? DA DB FA IV RO|Arthmoor All)_Patch\.esp'
+  - name: 'JKs Skyrim - (Dragon Bridge|Arthmoor ((CRF )?DA DB FA IV RO|All)) patch\.esp'
     inc: [ 'The Great City of Dragon Bridge - JK''s + Arth''s Patch.esp' ]
-  - name: 'JKs Skyrim_(Rorikstead|Arth( CRF)? DA DB FA IV RO|Arthmoor All)_Patch\.esp'
+  - name: 'JKs Skyrim - (Rorikstead|Arthmoor ((CRF )?DA DB FA IV RO|All)) patch\.esp'
     inc: [ 'The Great City of Rorikstead - JK''s + Arth''s Patch.esp' ]
-  - name: 'JKs Skyrim_Holidays_Patch.esp'
-    inc:
-      - 'Blues Skyrim.esp'
-      - 'Dawn of Skyrim.esp'
-      - 'ETaC - Complete.esp'
 
   - name: 'JK''s Temple of Talos.esp'
     url:
@@ -25093,7 +25414,7 @@ plugins:
         subs:
           - '1.5.00'
           - 'OCW_Obscure''s_CollegeofWinterhold.esp'
-        condition: 'version("OCW_Obscure''s_CollegeofWinterhold.esp", "1.5.00", <)'
+        condition: 'not version("OCW_Obscure''s_CollegeofWinterhold.esp", "1.5.00", >=)'
     clean:
       # OCW
       - crc: 0xB8CF33F0
@@ -25841,6 +26162,13 @@ plugins:
     clean:
       - crc: 0x5D72E944
         util: 'SSEEdit v4.0.3h (Hotfix 1)'
+
+  - name: 'SR Exterior Cities.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/87954/'
+        name: 'SR Exterior Cities Series'
+    group: *ocsGroup
+    inc: [ 'Open Cities Skyrim.esp' ]
 
   - name: 'SurWR.esp'
     url:
@@ -28652,6 +28980,15 @@ plugins:
         name: 'Alternate Start - No More Blinkenlights'
     req: [ 'alternate start - live another life.esp' ]
 
+  ### Bards College Expansion - Unofficial Patches ###
+  - name: 'Bards College Expansion - Inigo Patch.esp'
+    url:
+      - link: 'https://forum.kinggathcreations.com/resources/bards-college-expansion-unofficial-patches.5/'
+        name: 'Bards College Expansion - Unofficial Patches'
+    after:
+      - 'Inigo Official Patch SE.esp'
+      - 'Inigo Official Patch SE (ESPFE).esp'
+
   - name: 'BaseFL-.*\.esp'
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/74626/'
@@ -29075,6 +29412,15 @@ plugins:
         subs: [ '[Requiem - Improved Closefaced Helmets.esp](https://www.nexusmods.com/skyrimspecialedition/mods/64410/)' ]
         condition: 'active("Requiem.esp")'
 
+  - name: 'Inigo Official Patch SE( \(ESPFE\))?\.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/62868/'
+        name: 'Inigo Official Patch'
+    msg:
+      - <<: *useOnlyOneX
+        subs: [ 'Inigo Official Patch ESP' ]
+        condition: 'many("Inigo Official Patch SE( \(ESPFE\))?\.esp")'
+
   - name: 'ISC_drinking_sound_fix.esp'
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/58623/'
@@ -29385,7 +29731,21 @@ plugins:
         subs: [ 'Requiem - Legacy of the Dragonborn patch' ]
         condition: 'file("DBM_Requiem_Patch.esp")'
 
+  - name: 'Fozars_Dragonborn_-_Requiem_Patch.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/34829/'
+        name: 'Requiem - Dragonborn Patch'
+    msg:
+      - <<: *alreadyInX
+        subs: [ '**Requiem.esp**' ]
+        condition: 'active("Requiem.esp") and version("Requiem.esp", "6.0.0", >=)'
+
   ### Requiem Patch Central ###
+  - name: 'Requiem - Aetherium Armor.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/64410/'
+        name: 'Requiem Patch Central'
+    after: [ 'Requiem - Improved Closefaced Helmets.esp' ]
   - name: 'Requiem - ArteFakes.esp'
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/64410/'
@@ -29400,7 +29760,8 @@ plugins:
         name: 'Requiem Patch Central'
     after:
       - 'Fozars_Dragonborn_-_Requiem_Patch.esp'
-      - 'Requiem - Cutting Room Floor.esp'
+      - name: 'Requiem - Cutting Room Floor.esp'
+        condition: 'version("Requiem - Audio Overhaul Skyrim.esp", "5.06", <)'
   - name: 'Requiem - Book Covers Skyrim.esp'
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/64410/'
@@ -29427,7 +29788,9 @@ plugins:
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/64410/'
         name: 'Requiem Patch Central'
-    after: [ 'Requiem - Minor Arcana - Roleplaying.esp' ]
+    after:
+      - name: 'Requiem - Minor Arcana - Roleplaying.esp'
+        condition: 'version("Requiem - ESF Companions.esp", "5.02", <)'
   - name: 'Requiem - Flora Fixes.esp'
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/64410/'
@@ -29455,7 +29818,9 @@ plugins:
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/64410/'
         name: 'Requiem Patch Central'
-    after: [ 'Fozars_Dragonborn_-_Requiem_Patch.esp' ]
+    after:
+      - 'Fozars_Dragonborn_-_Requiem_Patch.esp'
+      - 'Requiem - Creation Club.esp'
   - name: 'Requiem - Rough Leather Armor.esp'
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/64410/'
@@ -29468,7 +29833,8 @@ plugins:
     after:
       - 'Fozars_Dragonborn_-_Requiem_Patch.esp'
       - 'Requiem - Minor Arcana - Vigilants of Stendarr.esp'
-      - 'Requiem - Warmonger Armory.esp'
+      - name: 'Requiem - Warmonger Armory.esp'
+        condition: 'version("Requiem - Royal Armory.esp", "5.02", <)'
   - name: 'Requiem - Scoped Bows.esp'
     url:
       - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/64410/'
@@ -29513,6 +29879,59 @@ plugins:
         name: 'Requiem Patch Central'
     after: [ 'Fozars_Dragonborn_-_Requiem_Patch.esp' ]
     inc: [ 'Requiem - SkyTEST.esp' ]
+
+  - name: 'Requiem - Standing Stones Reimagined.esp'
+    url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/113346/' ]
+    msg:
+      - <<: *patchOutdated
+        condition: 'version("Requiem.esp", "6.0.0", >=)'
+
+  ### Requiem - WACCF CCOR ACE Patches ###
+  - name: 'Requiem - WACCF.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/31758/'
+        name: 'Requiem - WACCF CCOR ACE Patches'
+    msg:
+      - <<: *patchOutdated
+        condition: 'version("Requiem.esp", "6.0.0", >=)'
+  - name: 'Requiem - WACCF - ACE.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/31758/'
+        name: 'Requiem - WACCF CCOR ACE Patches'
+    msg:
+      - <<: *patchOutdated
+        condition: 'version("Requiem.esp", "6.0.0", >=)'
+  - name: 'Requiem - CCOR.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/31758/'
+        name: 'Requiem - WACCF CCOR ACE Patches'
+    msg:
+      - <<: *patchOutdated
+        condition: 'version("Requiem.esp", "6.0.0", >=)'
+
+  - name: 'Requiem - Sacrilege.esp'
+    url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/72578/' ]
+    msg:
+      - <<: *patchOutdated
+        condition: 'version("Requiem.esp", "6.0.0", >=)'
+
+  - name: 'Requiem - Sacrosanct Patch.esp'
+    url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/62406/' ]
+    msg:
+      - <<: *patchOutdated
+        condition: 'version("Requiem.esp", "6.0.0", >=)'
+
+  - name: 'Requiem - Summermyst.esp'
+    url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/67594/' ]
+    msg:
+      - <<: *patchOutdated
+        condition: 'version("Requiem.esp", "5.3.0", >=)'
+
+  - name: 'Requiem - Triumvirate.esp'
+    url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/88561/' ]
+    msg:
+      - <<: *patchOutdated
+        condition: 'version("Requiem.esp", "6.0.0", >=)'
 
   - name: 'rll(_lite)?_scarcity_patch\.esp'
     url:
@@ -29773,7 +30192,7 @@ plugins:
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/16852/' ]
     inc:
       - 'Dawn of Skyrim_Holidays_Patch.esp'
-      - 'JKs Skyrim_Holidays_Patch.esp'
+      - 'JKs Skyrim - Holidays patch.esp'
 
   # JK's Skyrim - ETaC - Patches #
   - name: 'ETaC - Complete_JKs Skyrim_.*\.esp'
@@ -29790,7 +30209,7 @@ plugins:
   - name: 'ETaC - Complete_JKs Skyrim_Holidays_Patch.esp'
     inc:
       - 'Dawn of Skyrim_Holidays_Patch.esp'
-      - 'JKs Skyrim_Holidays_Patch.esp'
+      - 'JKs Skyrim - Holidays patch.esp'
       - 'JKS_DoS_Holidays_Patch.esp'
   - name: 'ETaC - Complete_JKs Skyrim_NSUTR_Patch.esp'
     inc:
@@ -29807,7 +30226,7 @@ plugins:
     inc:
       - 'Dawn of Skyrim_Holidays_Patch.esp'
       - 'ETaC - Complete_JKs Skyrim_Holidays_Patch.esp'
-      - 'JKs Skyrim_Holidays_Patch.esp'
+      - 'JKs Skyrim - Holidays patch.esp'
       - 'JKS_DoS_Holidays_Patch.esp'
 
   # JK's Skyrim - No Snow Under the Roof #
@@ -30553,3 +30972,16 @@ plugins:
       - C.Owner
       - Keywords
       - Names
+
+  - name: 'VMUVM.esp'
+    url:
+      - link: 'https://www.nexusmods.com/skyrimspecialedition/mods/3125/'
+        name: 'Vastly More Unique Visage of Mzund'
+    msg:
+      - <<: *alreadyInX
+        subs: [ '**Requiem.esp**' ]
+        condition: 'active("Requiem.esp") and version("Requiem.esp", "6.0.0", >=)'
+
+  - name: 'Tonal Architect.esp'
+    url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/51199/' ]
+    msg: [ *patchUnavailableRequiem ]
