@@ -2988,9 +2988,6 @@ plugins:
         display: '[Skyrim VR Tools](https://www.nexusmods.com/skyrimspecialedition/mods/27782/)'
         condition: 'file("../SkyrimVR.exe")'
     msg:
-      - <<: *alsoUseX
-        subs: [ '[SkyUI SE - Flashing Savegames Fix](https://www.nexusmods.com/skyrimspecialedition/mods/20406/)' ]
-        condition: 'not file("interface/quest_journal.swf") or checksum("interface/quest_journal.swf", 44FB8C35)'
       - <<: *essentialFiles
         subs: [ '**scripts/ski_playerloadgamealias.pex**' ]
         condition: 'checksum("scripts/ski_playerloadgamealias.pex", 8B234B3B) or (not file("scripts/ski_playerloadgamealias.pex") and ((active("SofiaFollower.esp") and checksum("SofiaFollower.bsa", 2F513E13)) or (active("ConfigureCommentaryRate.esp") and checksum("ConfigureCommentaryRate.bsa", EF4CBA70)) or (active("Thunderchild - Epic Shout Package.esp") and checksum("Thunderchild - Epic Shout Package.bsa", A599B10F))))'
@@ -5386,6 +5383,9 @@ plugins:
       - 'RelightingSkyrim_SSE.esp'
       - 'RLO - Interiors.esp'
       - 'WSEnhancer.esp'
+    tag:
+      - C.Light
+      - Graphics
 
   - name: 'ImprovedHearthfireLighting.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/721/' ]
@@ -10726,6 +10726,7 @@ plugins:
       - 'NPCs Protected Redux.esp'
       - 'Protected NPCs.esp'
       - 'PyP_Legendary.esp'
+    tag: [ Actors.ACBS ]
 
   - name: 'Ravengate.esp'
     url: [ 'https://www.nexusmods.com/skyrimspecialedition/mods/12617/' ]
